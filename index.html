@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jack Johnson · Financial Crimes & Compliance</title>
+<meta name="description" content="15+ year financial crimes and compliance professional. BSA/AML, Fraud Investigation, TPRM, Risk Analytics. JM FSU · CAMS · CFE.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════════════ */
+:root {
+  --ink:      #0C1220;
+  --ink2:     #141E32;
+  --ink3:     #1B2744;
+  --teal:     #1D6E7E;
+  --teal-lt:  #2F95AA;
+  --teal-glow:#5ECFDF;
+  --gold:     #B8860B;
+  --gold-lt:  #D4A017;
+  --gold-pale:#EAC96A;
+  --cream:    #F5EDD8;
+  --paper:    #FAF7F0;
+  --smoke:    #8B9AB5;
+  --fog:      #566070;
+  --rule:     rgba(184,134,11,0.2);
+  --rule2:    rgba(184,134,11,0.08);
+  --glow:     rgba(47,149,170,0.07);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Libre Baskerville',Georgia,serif;
+  background:var(--ink);color:var(--paper);
+  line-height:1.65;overflow-x:hidden;
+}
+
+/* ─── GRAIN OVERLAY ─── */
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23g)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity:.6;
+}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:18px 56px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(12,18,32,.94);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--rule);
+  transition:padding .3s;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;font-weight:700;letter-spacing:.03em;
+  color:var(--gold-lt);text-decoration:none;
+}
+.nav-logo sup{
+  font-family:'DM Mono',monospace;
+  font-size:.55rem;letter-spacing:.12em;color:var(--teal-glow);
+  vertical-align:top;margin-left:4px;
+}
+.nav-links{display:flex;gap:34px;list-style:none}
+.nav-links a{
+  font-family:'DM Mono',monospace;
+  font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--smoke);text-decoration:none;
+  transition:color .2s;
+}
+.nav-links a:hover{color:var(--gold-lt)}
+.nav-cta{
+  font-family:'DM Mono',monospace;font-size:.65rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:9px 20px;border:1px solid var(--gold);
+  color:var(--gold-lt);text-decoration:none;
+  transition:background .2s,color .2s;
+}
+.nav-cta:hover{background:var(--gold);color:var(--ink)}
+
+/* ─── HERO ─── */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:140px 56px 80px;
+  background:
+    radial-gradient(ellipse 60% 70% at 80% 30%, var(--glow), transparent),
+    linear-gradient(160deg, var(--ink) 0%, var(--ink3) 100%);
+  position:relative;
+}
+/* subtle grid */
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--rule2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule2) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 60% at 20% 50%, black 30%, transparent 80%);
+}
+.hero-inner{max-width:800px;position:relative;z-index:1}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-family:'DM Mono',monospace;
+  font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--teal-lt);margin-bottom:30px;
+}
+.eyebrow::before{content:'';width:36px;height:1px;background:var(--teal-lt)}
+
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(3.4rem,7.5vw,6.5rem);
+  font-weight:900;line-height:.95;
+  letter-spacing:-.025em;color:var(--paper);
+  margin-bottom:20px;
+}
+h1 .accent{color:var(--gold-lt);font-style:italic}
+
+.hero-role{
+  font-family:'DM Mono',monospace;
+  font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--smoke);margin-bottom:36px;
+  display:flex;align-items:center;gap:14px;
+}
+.hero-role::after{content:'';flex:1;max-width:200px;height:1px;background:var(--rule)}
+
+.hero-summary{
+  font-size:1.05rem;font-weight:400;
+  color:rgba(250,247,240,.75);line-height:1.8;
+  max-width:640px;margin-bottom:48px;
+  padding-left:20px;
+  border-left:2px solid var(--gold);
+}
+
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:72px}
+.btn-gold{
+  padding:14px 34px;background:var(--gold-lt);color:var(--ink);
+  font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  font-weight:500;border:none;text-decoration:none;
+  transition:background .2s,transform .15s;
+  display:inline-block;
+}
+.btn-gold:hover{background:var(--gold-pale);transform:translateY(-2px)}
+.btn-ghost{
+  padding:14px 34px;background:transparent;color:var(--paper);
+  font-family:'DM Mono',monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid rgba(250,247,240,.2);text-decoration:none;
+  transition:border-color .2s,color .2s;display:inline-block;
+}
+.btn-ghost:hover{border-color:var(--gold-lt);color:var(--gold-lt)}
+
+.hero-stats{
+  display:flex;gap:56px;padding-top:40px;
+  border-top:1px solid var(--rule);
+}
+.stat-n{
+  font-family:'Playfair Display',serif;
+  font-size:2.6rem;font-weight:700;color:var(--gold-lt);line-height:1
+}
+.stat-l{
+  font-family:'DM Mono',monospace;
+  font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--fog);margin-top:5px
+}
+
+/* ─── SECTION SHELL ─── */
+.section{padding:100px 56px}
+.sec-label{
+  font-family:'DM Mono',monospace;
+  font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--teal-lt);margin-bottom:14px;
+  display:flex;align-items:center;gap:10px;
+}
+.sec-label::before{content:'';width:22px;height:1px;background:var(--teal-lt)}
+h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.05;
+  color:var(--paper);margin-bottom:14px;letter-spacing:-.01em;
+}
+h2 em{color:var(--gold-lt);font-style:italic}
+.sec-intro{
+  font-size:.95rem;color:var(--smoke);
+  line-height:1.75;max-width:580px;margin-bottom:60px;
+}
+
+/* ─── EXPERTISE GRID ─── */
+.expertise-bg{background:var(--ink2)}
+.exp-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+  gap:1px;background:var(--rule2);
+}
+.exp-card{
+  background:var(--ink2);padding:42px 36px;
+  border-top:2px solid transparent;
+  transition:border-color .25s,background .25s;
+  position:relative;
+}
+.exp-card:hover{border-top-color:var(--gold);background:var(--ink3)}
+.exp-icon{font-size:1.9rem;margin-bottom:18px;display:block}
+.exp-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;font-weight:700;color:var(--paper);margin-bottom:10px;
+}
+.exp-body{font-size:.87rem;color:var(--smoke);line-height:1.7}
+.exp-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.tag{
+  font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;
+  padding:3px 9px;color:var(--teal-lt);
+  background:rgba(47,149,170,.1);border:1px solid rgba(47,149,170,.22);
+}
+
+/* ─── PROJECTS ─── */
+.projects-bg{background:var(--ink)}
+.proj-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:20px;
+}
+.proj-card{
+  background:var(--ink2);border:1px solid var(--rule);
+  padding:36px;position:relative;overflow:hidden;
+  transition:transform .2s,box-shadow .2s;
+}
+.proj-card:hover{transform:translateY(-5px);box-shadow:0 24px 56px rgba(0,0,0,.5)}
+.proj-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--gold),var(--teal-lt));
+}
+.proj-type{
+  font-family:'DM Mono',monospace;
+  font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold-lt);margin-bottom:12px;
+}
+.proj-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;color:var(--paper);margin-bottom:10px;
+}
+.proj-desc{font-size:.87rem;color:var(--smoke);line-height:1.7;margin-bottom:22px}
+.proj-link{
+  font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.1em;
+  color:var(--gold-lt);text-decoration:none;
+  display:inline-flex;align-items:center;gap:7px;
+  transition:gap .2s;
+}
+.proj-link:hover{gap:12px}
+.proj-badge{
+  position:absolute;top:20px;right:20px;
+  font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;
+  padding:3px 8px;background:rgba(47,149,170,.12);
+  border:1px solid rgba(94,207,223,.25);color:var(--teal-glow);
+}
+
+/* ─── TALENT MAP ─── */
+.talent-bg{background:var(--ink3)}
+.talent-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:48px;
+}
+.talent-col h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;color:var(--gold-lt);
+  margin-bottom:24px;padding-bottom:12px;
+  border-bottom:1px solid var(--rule);
+}
+.talent-item{
+  display:flex;align-items:flex-start;gap:14px;
+  margin-bottom:22px;
+}
+.talent-bar-wrap{flex:1}
+.talent-name{
+  font-size:.88rem;font-weight:700;color:var(--paper);margin-bottom:6px;
+}
+.talent-note{font-size:.78rem;color:var(--smoke);line-height:1.5;margin-bottom:8px}
+.talent-track{
+  height:4px;background:rgba(255,255,255,.06);
+  border-radius:2px;overflow:hidden;
+}
+.talent-fill{
+  height:100%;border-radius:2px;
+  background:linear-gradient(90deg,var(--teal),var(--teal-lt));
+  transition:width 1.2s cubic-bezier(.25,.8,.25,1);
+  width:0;
+}
+.talent-fill.gold-fill{background:linear-gradient(90deg,var(--gold),var(--gold-pale))}
+.talent-pct{
+  font-family:'DM Mono',monospace;
+  font-size:.62rem;color:var(--fog);margin-top:4px;
+}
+
+/* ─── TIMELINE ─── */
+.career-bg{background:var(--ink2)}
+.timeline{position:relative;padding-left:28px}
+.timeline::before{
+  content:'';position:absolute;left:0;top:8px;bottom:8px;
+  width:1px;background:var(--rule);
+}
+.tl-item{
+  padding-left:32px;margin-bottom:52px;position:relative;
+}
+.tl-item::before{
+  content:'';position:absolute;left:-34px;top:7px;
+  width:9px;height:9px;border-radius:50%;
+  background:var(--gold);border:2px solid var(--ink2);
+  box-shadow:0 0 0 3px rgba(184,134,11,.2);
+}
+.tl-date{
+  font-family:'DM Mono',monospace;font-size:.65rem;
+  letter-spacing:.12em;color:var(--gold-lt);text-transform:uppercase;
+  margin-bottom:7px;
+}
+.tl-role{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;color:var(--paper);margin-bottom:3px;
+}
+.tl-org{font-size:.85rem;color:var(--teal-lt);font-weight:400;margin-bottom:11px}
+.tl-desc{font-size:.87rem;color:var(--smoke);line-height:1.7;max-width:580px}
+
+/* ─── CREDENTIALS ─── */
+.creds-bg{background:var(--ink)}
+.creds-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
+.cred-card{
+  background:var(--ink2);border:1px solid var(--rule);
+  padding:28px 30px;display:flex;align-items:flex-start;gap:18px;
+}
+.cred-badge{
+  width:52px;height:52px;flex-shrink:0;
+  background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.3);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;font-size:.58rem;font-weight:500;
+  color:var(--gold-lt);letter-spacing:.06em;line-height:1.4;text-align:center;
+}
+.cred-name{font-size:.92rem;font-weight:700;color:var(--paper);margin-bottom:5px}
+.cred-body{font-size:.78rem;color:var(--smoke);line-height:1.55}
+.status-pill{
+  display:inline-block;margin-top:8px;
+  font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;
+  padding:3px 9px;
+}
+.sp-earned{background:rgba(184,134,11,.12);color:var(--gold-pale);border:1px solid rgba(184,134,11,.3)}
+.sp-active{background:rgba(47,149,170,.12);color:var(--teal-glow);border:1px solid rgba(94,207,223,.25)}
+
+/* ─── CONTACT ─── */
+.contact-bg{
+  background:linear-gradient(160deg,var(--ink3),var(--ink));
+  border-top:1px solid var(--rule);
+}
+.contact-inner{max-width:700px}
+.contact-row{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px}
+.contact-item{
+  display:flex;align-items:center;gap:10px;
+  padding:13px 22px;border:1px solid var(--rule);
+  color:var(--paper);text-decoration:none;font-size:.85rem;
+  transition:border-color .2s,color .2s;
+}
+.contact-item:hover{border-color:var(--gold-lt);color:var(--gold-lt)}
+.contact-item .icon{font-size:1rem}
+
+/* ─── FOOTER ─── */
+footer{
+  padding:26px 56px;background:#070C18;
+  border-top:1px solid var(--rule2);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:10px;
+}
+.ft{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--fog);letter-spacing:.06em}
+
+/* ─── ANIMATIONS ─── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){
+  nav{padding:16px 24px}
+  .nav-links{display:none}
+  .section,.hero{padding-left:24px;padding-right:24px}
+  .talent-grid{grid-template-columns:1fr}
+  footer{padding:20px 24px}
+}
+@media(max-width:600px){
+  .hero-stats{flex-wrap:wrap;gap:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ NAV ════════════ -->
+<nav>
+  <a class="nav-logo" href="#">Jack Johnson<sup>FC&amp;C</sup></a>
+  <ul class="nav-links">
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#talent">Skills</a></li>
+    <li><a href="#career">Career</a></li>
+    <li><a href="#credentials">Credentials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:jajohnson2@cox.net" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- ════════════ HERO ════════════ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Financial Crimes &amp; Compliance · Van Buren, AR · Remote / Relocation Ready</div>
+    <h1>Jack<br><span class="accent">Johnson</span></h1>
+    <div class="hero-role">
+      BSA · AML · Fraud Investigation · TPRM · Risk Analytics
+    </div>
+    <p class="hero-summary">
+      Fifteen years building financial crimes programs, running fraud investigations, and bringing
+      analytical discipline to regulatory risk. I work at the intersection of law, data, and
+      operational controls — translating complex compliance requirements into decisions that hold up
+      under examination.
+    </p>
+    <div class="hero-actions">
+      <a href="https://www.linkedin.com/in/jack-johnson-27336a97/" target="_blank" class="btn-gold">LinkedIn Profile</a>
+      <a href="#projects" class="btn-ghost">View Work Samples ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-n">15+</div>
+        <div class="stat-l">Years in Compliance &amp; Risk</div>
+      </div>
+      <div>
+        <div class="stat-n">3</div>
+        <div class="stat-l">Regulatory Environments</div>
+      </div>
+      <div>
+        <div class="stat-n">J.M.</div>
+        <div class="stat-l">Financial Regulation · FSU</div>
+      </div>
+      <div>
+        <div class="stat-n">2</div>
+        <div class="stat-l">Certs in Active Pursuit</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ EXPERTISE ════════════ -->
+<section class="section expertise-bg" id="expertise">
+  <div class="sec-label">What I Do</div>
+  <h2>Core <em>Expertise</em></h2>
+  <p class="sec-intro">Financial crimes compliance isn't checkbox work. It's investigative thinking, regulatory judgment, and operational discipline applied together.</p>
+  <div class="exp-grid">
+
+    <div class="exp-card reveal">
+      <span class="exp-icon">🔍</span>
+      <div class="exp-title">Fraud Investigation &amp; FIU</div>
+      <div class="exp-body">End-to-end fraud case management: alert triage, investigation methodology, link analysis across multi-subject cases, SAR recommendation and narrative drafting, law enforcement coordination, and case management documentation. Built across Amazon, Walmart, and Arvest Bank.</div>
+      <div class="exp-tags"><span class="tag">Alert Triage</span><span class="tag">Case Mgmt</span><span class="tag">SAR/CTR</span><span class="tag">Link Analysis</span></div>
+    </div>
+
+    <div class="exp-card reveal">
+      <span class="exp-icon">🏦</span>
+      <div class="exp-title">BSA / AML Compliance</div>
+      <div class="exp-body">15 years in OCC/FDIC-regulated BSA/AML environments: transaction monitoring, suspicious activity identification and escalation, CIP/KYC/CDD/EDD lifecycle management, USA PATRIOT Act compliance, OFAC/sanctions screening, and elder financial exploitation detection.</div>
+      <div class="exp-tags"><span class="tag">BSA/AML</span><span class="tag">KYC/CDD/EDD</span><span class="tag">OFAC</span><span class="tag">PATRIOT Act</span></div>
+    </div>
+
+    <div class="exp-card reveal">
+      <span class="exp-icon">🔗</span>
+      <div class="exp-title">Third-Party Risk / TPRM</div>
+      <div class="exp-body">Designed and administered Arvest Bank's vendor risk management program across 7+ years under OCC Guidance. Due diligence, contract review, risk tiering, ongoing monitoring, corrective action plans, and OCC/FDIC examination readiness.</div>
+      <div class="exp-tags"><span class="tag">TPRM</span><span class="tag">OCC Guidance</span><span class="tag">Vendor Due Diligence</span><span class="tag">Contract Review</span></div>
+    </div>
+
+    <div class="exp-card reveal">
+      <span class="exp-icon">📊</span>
+      <div class="exp-title">Risk Analytics &amp; Data</div>
+      <div class="exp-body">Enterprise-scale fraud and compliance data analysis at Amazon as Investigation Specialist / ML Analyst. Power BI dashboards, advanced Excel modeling, ML-adjacent pattern recognition, behavioral anomaly detection, and executive reporting across large transaction datasets.</div>
+      <div class="exp-tags"><span class="tag">Power BI</span><span class="tag">Advanced Excel</span><span class="tag">Pattern Recognition</span><span class="tag">ML Analysis</span></div>
+    </div>
+
+    <div class="exp-card reveal">
+      <span class="exp-icon">✅</span>
+      <div class="exp-title">Compliance QA &amp; Testing</div>
+      <div class="exp-body">Quality assurance review of compliance controls and operational workflows. Variance identification, corrective action documentation, process gap analysis, and compliance testing execution at Walmart Home Office and across Arvest compliance administration.</div>
+      <div class="exp-tags"><span class="tag">QA Review</span><span class="tag">Control Testing</span><span class="tag">GAP Analysis</span><span class="tag">Corrective Action</span></div>
+    </div>
+
+    <div class="exp-card reveal">
+      <span class="exp-icon">⚖️</span>
+      <div class="exp-title">Regulatory Knowledge</div>
+      <div class="exp-body">Graduate-level regulatory education (JM, FSU College of Law) covering BSA/AML, consumer protection statutes (Reg E, FCRA, UDAAP, Reg CC), financial services oversight frameworks, money laundering typologies, and OCC/FDIC compliance program requirements.</div>
+      <div class="exp-tags"><span class="tag">Reg E / FCRA</span><span class="tag">UDAAP</span><span class="tag">OCC/FDIC</span><span class="tag">FinCEN Guidance</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════ PROJECTS ════════════ -->
+<section class="section projects-bg" id="projects">
+  <div class="sec-label">Work Samples</div>
+  <h2>Projects &amp; <em>Demonstrations</em></h2>
+  <p class="sec-intro">Practical frameworks and tools built to show how I think about compliance problems — not theory, but operational methodology.</p>
+  <div class="proj-grid">
+
+    <div class="proj-card reveal">
+      <span class="proj-badge">Live Demo</span>
+      <div class="proj-type">Analytics · Power BI Equivalent</div>
+      <div class="proj-title">Compliance Operations Dashboard</div>
+      <div class="proj-desc">Interactive FIU operations dashboard: alert volume trends, SAR pipeline tracking, CDD refresh monitoring, case age reporting, and vendor risk coverage gauges. Demonstrates the analytics and executive reporting capabilities built at Amazon.</div>
+      <a href="compliance-dashboard.html" class="proj-link">Open Dashboard →</a>
+    </div>
+
+    <div class="proj-card reveal">
+      <span class="proj-badge">Framework</span>
+      <div class="proj-type">BSA/AML · SAR Triage</div>
+      <div class="proj-title">SAR Decision Framework</div>
+      <div class="proj-desc">Structured decision matrix for suspicious activity report triage — mapping typology indicators to risk scores, documentation requirements, and escalation thresholds aligned with FinCEN guidance and OCC BSA examination expectations.</div>
+      <a href="sar-framework.html" class="proj-link">View Framework →</a>
+    </div>
+
+    <div class="proj-card reveal">
+      <span class="proj-badge">Template</span>
+      <div class="proj-type">TPRM · Due Diligence</div>
+      <div class="proj-title">Vendor Risk Assessment Template</div>
+      <div class="proj-desc">OCC Guidance–aligned third-party risk assessment covering initial due diligence, ongoing monitoring criteria, risk tiering logic, and contract review checklist — built from 7+ years of TPRM program administration at Arvest Bank.</div>
+      <a href="vendor-risk-template.html" class="proj-link">View Template →</a>
+    </div>
+
+    <div class="proj-card reveal">
+      <span class="proj-badge">Template</span>
+      <div class="proj-type">Investigation · Case Management</div>
+      <div class="proj-title">Fraud Case Documentation Template</div>
+      <div class="proj-desc">End-to-end fraud case framework: intake documentation, evidence log, link analysis worksheet, disposition matrix, and SAR/law enforcement referral decision tree. Based on investigation methodology developed across Amazon and Walmart roles.</div>
+      <a href="fraud-case-template.html" class="proj-link">View Template →</a>
+    </div>
+
+    <div class="proj-card reveal">
+      <span class="proj-badge">Reference</span>
+      <div class="proj-type">AML · Regulatory Education</div>
+      <div class="proj-title">Financial Crimes Typology Reference</div>
+      <div class="proj-desc">Practitioner guide to key money laundering, terrorist financing, and fraud typologies — red flag indicators, transaction patterns, FinCEN regulatory citations, and detection approaches. Content drawn from JM FSU Financial Regulation coursework.</div>
+      <a href="typology-reference.html" class="proj-link">View Reference →</a>
+    </div>
+
+    <div class="proj-card reveal">
+      <span class="proj-badge">Framework</span>
+      <div class="proj-type">KYC · CDD/EDD</div>
+      <div class="proj-title">CDD/EDD Customer Risk Framework</div>
+      <div class="proj-desc">Customer risk rating methodology: standard CDD criteria, EDD trigger conditions, high-risk customer categories (PEPs, MSBs, cash-intensive businesses), and ongoing monitoring thresholds — aligned with FinCEN CDD Final Rule and OCC expectations.</div>
+      <a href="cdd-framework.html" class="proj-link">View Framework →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════ TALENT MAP ════════════ -->
+<section class="section talent-bg" id="talent">
+  <div class="sec-label">Skill Assessment</div>
+  <h2>Talent <em>Map</em></h2>
+  <p class="sec-intro">An honest assessment of depth and development stage across both established expertise and emerging capabilities.</p>
+  <div class="talent-grid">
+
+    <div class="talent-col">
+      <h3>Established Expertise</h3>
+
+      <div class="talent-item reveal">
+        <div class="talent-bar-wrap">
+          <div class="talent-name">BSA / AML Compliance</div>
+          <div class="talent-note">15 years OCC/FDIC-regulated: transaction monitoring, SAR/CTR, KYC/CDD/EDD, PATRIOT Act, typology recognition.</div>
+          <div class="talent-track"><div class="talent-fill" data-w="97"></div></div>
+          <div class="talent-pct">15+ years · OCC/FDIC Regulated · JM FSU Education</div>
+        </div>
+      </div>
+
+      <div class="talent-item reveal">
+        <div class="talent-bar-wrap">
+          <div class="talent-name">Fraud Investigation</div>
+          <div class="talent-note">End-to-end case management, link analysis, alert triage, investigative reporting — Amazon, Walmart, Arvest.</div>
+          <div class="talent-track"><div class="talent-fill" data-w="95"></div></div>
+          <div class="talent-pct">3+ years primary investigation role · Enterprise scale</div>
+        </div>
+      </div>
+
+      <div class="talent-item reveal">
+        <div class="talent-bar-wrap">
+          <div class="talent-name">Third-Party Risk Management</div>
+          <div class="talent-note">Built and administered TPRM program at Arvest: OCC Guidance alignment, risk tiering, contract review, monitoring.</div>
+          <div class="talent-track"><div class="talent-fill" data-w="92"></div></div>
+          <div class="talent-pct">7+ years · TPRM program ownership · OCC Guidance</div>
+        </div>
+      </div>
+
+      <div class="talent-item reveal">
+        <div class="talent-bar-wrap">
+          <div class="talent-name">Regulatory Compliance (Banking)</div>
+          <div class="talent-note">Reg E, FCRA, Reg CC, Reg DD, UDAAP, BSA/AML, OCC/FDIC examination support, consumer protection.</div>
+          <div class="talent-track"><div class="talent-fill" data-w="90"></div></div>
+          <div class="talent-pct">15 years practice · JM graduate education</div>
+        </div>
+      </div>
+
+      <div class="talent-item reveal">
+        <div class="talent-bar-wrap">
+          <div class="talent-name">Analytical Reporting &amp; Documentation</div>
+          <div class="talent-note">Executive-ready investigative reports, compliance documentation, audit-ready records, and decision narratives.</div>
+          <div class="talent-track"><div class="talent-fill" data-w="91"></div></div>
+          <div class="talent-pct">All roles · Amazon primary documentation function</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="talent-col">
+      <h3>Developing Capabilities</h3>
+
+      <div class="talent-item reveal">
+        <div class="talent-bar-wrap">
+          <div class="talent-name">CAMS Certification (ACAMS)</div>
+          <div class="talent-note">Certified Anti-Money Laundering Specialist — the global standard for AML professionals. In active preparation.</div>
+          <div class="talent-track"><div class="talent-fill gold-fill" data-w="72"></div></div>
+          <div class="talent-pct">In active pursuit · ACAMS · 15yr foundation</div>
+        </div>
+      </div>
+
+      <div class="talent-item reveal">
+        <div class="talent-bar-wrap">
+          <div class="talent-name">CFE Certification (ACFE)</div>
+          <div class="talent-note">Certified Fraud Examiner — the premier credential for fraud investigation and prevention professionals.</div>
+          <div class="talent-track"><div class="talent-fill gold-fill" data-w="68"></div></div>
+          <div class="talent-pct">In active pursuit · ACFE · Investigation experience</div>
+        </div>
+      </div>
+
+      <div class="talent-item reveal">
+        <div class="talent-bar-wrap">
+          <div class="talent-name">Data Visualization (Power BI)</div>
+          <div class="talent-note">Executive dashboard development, compliance KPI tracking, alert trend analysis, and risk reporting visualization.</div>
+          <div class="talent-track"><div class="talent-fill gold-fill" data-w="74"></div></div>
+          <div class="talent-pct">Amazon ML Analyst role · Applied enterprise use</div>
+        </div>
+      </div>
+
+      <div class="talent-item reveal">
+        <div class="talent-bar-wrap">
+          <div class="talent-name">Compliance Program Management</div>
+          <div class="talent-note">Policy development, training program administration, program gap analysis, and cross-functional compliance coordination.</div>
+          <div class="talent-track"><div class="talent-fill gold-fill" data-w="80"></div></div>
+          <div class="talent-pct">Arvest VMC/TPRM roles · Program admin 7+ years</div>
+        </div>
+      </div>
+
+      <div class="talent-item reveal">
+        <div class="talent-bar-wrap">
+          <div class="talent-name">Constitutional &amp; Administrative Law</div>
+          <div class="talent-note">Self-directed 30-day constitutional law study roadmap in progress. Praxis Social Studies 157 — broad foundational knowledge.</div>
+          <div class="talent-track"><div class="talent-fill gold-fill" data-w="52"></div></div>
+          <div class="talent-pct">Self-directed · Praxis 157 · JM legal education</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ CAREER ════════════ -->
+<section class="section career-bg" id="career">
+  <div class="sec-label">Work History</div>
+  <h2>Career <em>Timeline</em></h2>
+  <p class="sec-intro">A coherent arc — every role adds a layer. Banking compliance built the foundation. Amazon built the investigative and analytical muscle. Walmart put it inside the largest retail compliance environment in the world.</p>
+  <div class="timeline">
+
+    <div class="tl-item reveal">
+      <div class="tl-date">Apr 2025 – Oct 2025</div>
+      <div class="tl-role">Compliance / QA / Fraud Specialist</div>
+      <div class="tl-org">U.S. Tech Solutions → Walmart Home Office · Bentonville, AR</div>
+      <div class="tl-desc">Executed fraud investigations and QA compliance reviews at Walmart Home Office. Analyzed operational data for fraud risk indicators, maintained case documentation, and supported compliance program reporting in a large-scale enterprise environment with complex multi-system oversight requirements.</div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-date">Jan 2022 – Mar 2025</div>
+      <div class="tl-role">Investigation Specialist / ML Analyst</div>
+      <div class="tl-org">Amazon · Remote</div>
+      <div class="tl-desc">Led end-to-end fraud investigations and link analysis across enterprise-scale datasets. Applied ML-adjacent behavioral anomaly detection using Power BI and advanced Excel to identify suspicious patterns, managed concurrent caseloads, and produced comprehensive investigative reports for senior leadership, Legal, and cross-functional partners.</div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-date">Nov 2016 – Feb 2019</div>
+      <div class="tl-role">Third-Party Provider Risk Analyst</div>
+      <div class="tl-org">Arvest Bank · OCC/FDIC Regulated · Fort Smith, AR</div>
+      <div class="tl-desc">Performed risk-based due diligence and ongoing monitoring of third-party provider relationships under OCC Guidance frameworks. Conducted compliance assessments, maintained audit-ready documentation, and coordinated corrective action with compliance leadership and third-party contacts.</div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-date">Mar 2012 – Nov 2016</div>
+      <div class="tl-role">Vendor Management Compliance Specialist</div>
+      <div class="tl-org">Arvest Bank · OCC/FDIC Regulated · Fort Smith, AR</div>
+      <div class="tl-desc">Built and administered Arvest Bank's vendor management compliance program from the ground up — OCC Guidance alignment, contract review, risk tiering methodology, performance monitoring, corrective action framework design, BSA/AML compliance oversight across the vendor portfolio, and OCC/FDIC examination preparation and support.</div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-date">Nov 2005 – Mar 2012</div>
+      <div class="tl-role">Customer Account Representative / Supervisor</div>
+      <div class="tl-org">Arvest Bank · OCC/FDIC Regulated · Fort Smith, AR</div>
+      <div class="tl-desc">Seven-year front-line banking foundation: BSA/AML compliance at the account level, CIP/KYC/CDD/EDD administration, consumer fraud investigation (Reg E, FCRA, account takeover, elder financial exploitation), SAR/CTR identification and escalation, and supervision of customer account representatives.</div>
+    </div>
+
+    <div class="tl-item reveal">
+      <div class="tl-date">Oct 2020 – Nov 2021</div>
+      <div class="tl-role">Legal Default Specialist</div>
+      <div class="tl-org">Arvest Bank · OCC/FDIC Regulated · Fort Smith, AR</div>
+      <div class="tl-desc">Reviewed consumer loan documentation for fraud indicators, FCRA compliance issues, and legal default triggers. Coordinated with Legal and compliance partners on findings and regulatory reporting obligations.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════ CREDENTIALS ════════════ -->
+<section class="section creds-bg" id="credentials">
+  <div class="sec-label">Education &amp; Certifications</div>
+  <h2>Credentials &amp; <em>Qualifications</em></h2>
+  <p class="sec-intro">Graduate legal education in financial regulation combined with the industry's two most sought-after financial crimes certifications in active pursuit.</p>
+  <div class="creds-grid">
+
+    <div class="cred-card reveal">
+      <div class="cred-badge">J.M.<br>FSU</div>
+      <div>
+        <div class="cred-name">Juris Master — Financial Regulation &amp; Compliance</div>
+        <div class="cred-body">Florida State University College of Law. BSA/AML frameworks, money laundering typologies, financial crimes compliance, USA PATRIOT Act, and financial services regulation.</div>
+        <span class="status-pill sp-earned">Graduate Degree</span>
+      </div>
+    </div>
+
+    <div class="cred-card reveal">
+      <div class="cred-badge">CAMS<br>ACAMS</div>
+      <div>
+        <div class="cred-name">CAMS — Certified Anti-Money Laundering Specialist</div>
+        <div class="cred-body">Association of Certified Anti-Money Laundering Specialists. The globally recognized gold standard for AML compliance professionals. In active pursuit.</div>
+        <span class="status-pill sp-active">In Active Pursuit</span>
+      </div>
+    </div>
+
+    <div class="cred-card reveal">
+      <div class="cred-badge">CFE<br>ACFE</div>
+      <div>
+        <div class="cred-name">CFE — Certified Fraud Examiner</div>
+        <div class="cred-body">Association of Certified Fraud Examiners. Premier credential for fraud investigation, detection, and deterrence professionals. In active pursuit.</div>
+        <span class="status-pill sp-active">In Active Pursuit</span>
+      </div>
+    </div>
+
+    <div class="cred-card reveal">
+      <div class="cred-badge">B.A.<br>ATU</div>
+      <div>
+        <div class="cred-name">Bachelor of Arts — Professional Studies</div>
+        <div class="cred-body">Arkansas Tech University, Russellville, AR.</div>
+        <span class="status-pill sp-earned">Completed</span>
+      </div>
+    </div>
+
+    <div class="cred-card reveal">
+      <div class="cred-badge">A.A.<br>UAFS</div>
+      <div>
+        <div class="cred-name">Associate of Arts</div>
+        <div class="cred-body">University of Arkansas – Fort Smith.</div>
+        <span class="status-pill sp-earned">Completed</span>
+      </div>
+    </div>
+
+    <div class="cred-card reveal">
+      <div class="cred-badge">PRAXIS<br>157</div>
+      <div>
+        <div class="cred-name">Praxis — Social Studies · Score: 157</div>
+        <div class="cred-body">Arkansas teaching credential eligibility. Demonstrates analytical breadth across economics, civics, history, and social science — applicable to compliance research and policy analysis contexts.</div>
+        <span class="status-pill sp-earned">Passed</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════ CONTACT ════════════ -->
+<section class="section contact-bg" id="contact">
+  <div class="contact-inner">
+    <div class="sec-label">Get In Touch</div>
+    <h2>Let's <em>Connect</em></h2>
+    <p class="sec-intro">Available for financial crimes compliance, AML/BSA, fraud investigation, TPRM, and risk analytics roles. Remote-first, open to relocation to Dallas/Plano TX, Chicago/Lake Forest IL, and other markets.</p>
+    <div class="contact-row">
+      <a href="https://www.linkedin.com/in/jack-johnson-27336a97/" target="_blank" class="contact-item"><span class="icon">💼</span> LinkedIn</a>
+      <a href="mailto:jajohnson2@cox.net" class="contact-item"><span class="icon">✉️</span> jajohnson2@cox.net</a>
+      <a href="tel:4796516836" class="contact-item"><span class="icon">📞</span> (479) 651-6836</a>
+      <a href="https://github.com/jajohn1-sudo" target="_blank" class="contact-item"><span class="icon">⚙️</span> GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer>
+  <div class="ft">© 2026 Jack Johnson · Financial Crimes &amp; Compliance · Van Buren, AR</div>
+  <div class="ft">BSA · AML · Fraud · TPRM · Risk Analytics · JM FSU · CAMS · CFE</div>
+</footer>
+
+<script>
+// ── scroll reveal ──
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      const siblings = e.target.parentElement.querySelectorAll('.reveal:not(.in)');
+      let delay = 0;
+      siblings.forEach(s => { if (s === e.target) return; });
+      setTimeout(() => e.target.classList.add('in'), delay);
+    }
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  // stagger siblings
+  el.style.transitionDelay = (i % 6) * 0.08 + 's';
+  obs.observe(el);
+});
+
+// ── talent bars ──
+const barObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const fill = e.target.querySelector('.talent-fill');
+      if (fill) fill.style.width = fill.dataset.w + '%';
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.talent-item').forEach(el => barObs.observe(el));
+</script>
+</body>
+</html>
