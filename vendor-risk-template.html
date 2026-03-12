@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vendor Risk Assessment Template · Jack Johnson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a0f1e;
+    --navy2: #111827;
+    --navy3: #1a2332;
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --teal-dim: rgba(13,148,136,0.15);
+    --amber: #d97706;
+    --amber-light: #f59e0b;
+    --amber-dim: rgba(217,119,6,0.15);
+    --red: #dc2626;
+    --red-dim: rgba(220,38,38,0.12);
+    --green: #16a34a;
+    --green-dim: rgba(22,163,74,0.12);
+    --blue: #2563eb;
+    --blue-dim: rgba(37,99,235,0.12);
+    --slate-dim: rgba(148,163,184,0.08);
+    --border: rgba(148,163,184,0.12);
+    --border2: rgba(148,163,184,0.2);
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --mono: 'IBM Plex Mono', monospace;
+    --serif: 'Libre Baskerville', serif;
+    --sans: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; min-height: 100vh; }
+
+  nav { border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: rgba(10,15,30,0.95); backdrop-filter: blur(8px); z-index: 100; }
+  .nav-brand { font-family: var(--mono); font-size: 13px; color: var(--teal); letter-spacing: 0.08em; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { font-size: 13px; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal-light); }
+  .nav-back { font-family: var(--mono); font-size: 12px; color: var(--teal); text-decoration: none; border: 1px solid var(--teal); padding: 6px 14px; border-radius: 4px; transition: all 0.2s; }
+  .nav-back:hover { background: var(--teal-dim); }
+
+  .hero { padding: 56px 40px 40px; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+  .badge { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--teal); background: var(--teal-dim); border: 1px solid rgba(13,148,136,0.3); padding: 4px 12px; border-radius: 2px; margin-bottom: 20px; text-transform: uppercase; }
+  .hero h1 { font-family: var(--serif); font-size: 38px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; color: #f1f5f9; }
+  .hero h1 span { color: var(--teal-light); }
+  .hero p { font-size: 16px; color: var(--text2); max-width: 700px; line-height: 1.7; }
+  .meta-row { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+  .meta-chip { font-family: var(--mono); font-size: 11px; color: var(--text3); border: 1px solid var(--border); padding: 4px 10px; border-radius: 2px; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  /* SECTION NAV SIDEBAR */
+  .layout { display: grid; grid-template-columns: 220px 1fr; gap: 40px; }
+  @media (max-width: 800px) { .layout { grid-template-columns: 1fr; } }
+
+  .sidebar { position: sticky; top: 72px; height: fit-content; }
+  .sidebar-nav { display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-item { font-size: 13px; color: var(--text3); padding: 8px 12px; border-radius: 4px; cursor: pointer; transition: all 0.15s; border-left: 2px solid transparent; }
+  .sidebar-item:hover { color: var(--text2); background: var(--slate-dim); }
+  .sidebar-item.active { color: var(--teal-light); background: var(--teal-dim); border-left-color: var(--teal); }
+  .sidebar-group { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--text3); text-transform: uppercase; padding: 16px 12px 6px; }
+
+  .content-area > section { display: none; }
+  .content-area > section.active { display: block; }
+
+  .section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--text3); text-transform: uppercase; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .section-title { font-family: var(--serif); font-size: 22px; color: #f1f5f9; margin-bottom: 8px; }
+  .section-desc { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 28px; max-width: 680px; }
+
+  .info-box { background: var(--teal-dim); border: 1px solid rgba(13,148,136,0.25); border-radius: 4px; padding: 14px 18px; font-size: 13px; color: var(--text2); margin-bottom: 24px; line-height: 1.6; }
+  .info-box strong { color: var(--teal-light); }
+
+  /* FORM ELEMENTS */
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  @media (max-width: 600px) { .field-row, .field-row-3 { grid-template-columns: 1fr; } }
+  .field-full { margin-bottom: 16px; }
+  .field-group { display: flex; flex-direction: column; gap: 6px; }
+  .field-label { font-family: var(--mono); font-size: 11px; color: var(--text2); letter-spacing: 0.06em; }
+  .field-label .req { color: var(--teal); margin-left: 4px; }
+  input[type="text"], input[type="date"], input[type="number"], select, textarea {
+    background: var(--navy2); border: 1px solid var(--border2); border-radius: 4px; color: var(--text); font-family: var(--sans); font-size: 14px; padding: 10px 14px; width: 100%; transition: border-color 0.2s; appearance: none; -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); }
+  select option { background: var(--navy2); }
+  textarea { resize: vertical; min-height: 72px; }
+
+  /* RADIO GROUPS */
+  .radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+  .radio-btn { padding: 6px 14px; border: 1px solid var(--border2); border-radius: 4px; font-size: 13px; color: var(--text2); cursor: pointer; transition: all 0.15s; user-select: none; }
+  .radio-btn:hover { border-color: var(--teal); color: var(--teal-light); }
+  .radio-btn.selected { background: var(--teal-dim); border-color: var(--teal); color: var(--teal-light); }
+
+  /* TIERING VISUAL */
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+  @media (max-width: 700px) { .tier-grid { grid-template-columns: 1fr; } }
+  .tier-card { border-radius: 6px; padding: 20px; border: 1px solid; }
+  .tier-card.t1 { background: var(--green-dim); border-color: rgba(22,163,74,0.3); }
+  .tier-card.t2 { background: var(--amber-dim); border-color: rgba(217,119,6,0.3); }
+  .tier-card.t3 { background: var(--red-dim); border-color: rgba(220,38,38,0.3); }
+  .tier-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .t1 .tier-label { color: #4ade80; }
+  .t2 .tier-label { color: #fbbf24; }
+  .t3 .tier-label { color: #f87171; }
+  .tier-name { font-weight: 600; font-size: 16px; margin-bottom: 8px; }
+  .tier-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+  .tier-list li { font-size: 12px; color: var(--text2); padding-left: 14px; position: relative; }
+  .tier-list li::before { content: '·'; position: absolute; left: 4px; }
+  .tier-reqs { font-size: 12px; color: var(--text3); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+
+  /* SCORE WIDGET */
+  .score-row { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; padding: 20px; background: var(--navy2); border: 1px solid var(--border); border-radius: 6px; }
+  .score-big { font-family: var(--mono); font-size: 40px; font-weight: 500; min-width: 80px; text-align: center; }
+  .score-big.low { color: #4ade80; }
+  .score-big.medium { color: #fbbf24; }
+  .score-big.high { color: #f87171; }
+  .score-info { flex: 1; }
+  .score-tier-label { font-family: var(--mono); font-size: 12px; color: var(--text2); margin-bottom: 4px; }
+  .score-bar-wrap { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+  .score-bar-fill { height: 100%; border-radius: 3px; transition: width 0.4s ease, background 0.4s ease; }
+  .score-reqs { font-size: 13px; color: var(--text2); }
+
+  /* CHECKLIST */
+  .checklist { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 24px; }
+  .check-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.15s; }
+  .check-row:last-child { border-bottom: none; }
+  .check-row:hover { background: var(--slate-dim); }
+  .check-row.done { background: rgba(13,148,136,0.06); }
+  .check-box-sq { width: 18px; height: 18px; min-width: 18px; border: 1px solid var(--border2); border-radius: 3px; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
+  .check-row.done .check-box-sq { background: var(--teal); border-color: var(--teal); }
+  .check-row.done .check-box-sq::after { content: '✓'; font-size: 11px; color: white; font-weight: 700; }
+  .check-content { flex: 1; }
+  .check-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .check-row.done .check-title { color: var(--text3); text-decoration: line-through; }
+  .check-sub { font-size: 12px; color: var(--text3); line-height: 1.4; }
+  .check-tag { font-family: var(--mono); font-size: 10px; color: var(--text3); background: var(--border); padding: 2px 6px; border-radius: 2px; white-space: nowrap; }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 28px; }
+  .data-table th { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: var(--text3); text-transform: uppercase; text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--border2); background: var(--navy2); }
+  .data-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text2); line-height: 1.5; }
+  .data-table tr:hover td { background: var(--slate-dim); }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .pill { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.06em; }
+  .pill-green { background: var(--green-dim); color: #4ade80; border: 1px solid rgba(22,163,74,0.3); }
+  .pill-amber { background: var(--amber-dim); color: #fbbf24; border: 1px solid rgba(217,119,6,0.3); }
+  .pill-red { background: var(--red-dim); color: #f87171; border: 1px solid rgba(220,38,38,0.3); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal-light); border: 1px solid rgba(13,148,136,0.3); }
+  .pill-blue { background: var(--blue-dim); color: #93c5fd; border: 1px solid rgba(37,99,235,0.3); }
+
+  /* RISK QUESTIONNAIRE */
+  .q-section { background: var(--navy2); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 16px; overflow: hidden; }
+  .q-header { padding: 14px 16px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+  .q-header:hover { background: var(--slate-dim); }
+  .q-header-title { font-weight: 500; font-size: 14px; }
+  .q-header-score { font-family: var(--mono); font-size: 12px; color: var(--text2); }
+  .q-body { padding: 0 16px 16px; }
+  .q-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .q-item:last-child { border-bottom: none; }
+  .q-text { font-size: 13px; color: var(--text2); margin-bottom: 10px; }
+  .q-options { display: flex; gap: 8px; flex-wrap: wrap; }
+  .q-opt { font-size: 12px; font-family: var(--mono); padding: 4px 12px; border: 1px solid var(--border2); border-radius: 3px; cursor: pointer; color: var(--text3); transition: all 0.15s; }
+  .q-opt:hover { border-color: var(--teal); color: var(--teal); }
+  .q-opt.sel-low { background: var(--green-dim); border-color: rgba(22,163,74,0.5); color: #4ade80; }
+  .q-opt.sel-med { background: var(--amber-dim); border-color: rgba(217,119,6,0.5); color: #fbbf24; }
+  .q-opt.sel-high { background: var(--red-dim); border-color: rgba(220,38,38,0.5); color: #f87171; }
+
+  .btn-primary { background: var(--teal); color: white; border: none; border-radius: 4px; padding: 12px 24px; font-family: var(--sans); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--teal-light); }
+  .btn-secondary { background: transparent; color: var(--text2); border: 1px solid var(--border2); border-radius: 4px; padding: 10px 20px; font-family: var(--sans); font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal-light); }
+  .btn-row { display: flex; gap: 12px; align-items: center; margin-top: 20px; }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 40px; max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  footer p { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+  footer a { color: var(--teal); text-decoration: none; }
+
+  .progress-bar-wrap { display: flex; gap: 4px; margin-bottom: 28px; }
+  .progress-seg { height: 3px; flex: 1; border-radius: 2px; background: var(--border); transition: background 0.3s; }
+  .progress-seg.done { background: var(--teal); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">JJ · FC&amp;C</span>
+  <div class="nav-links">
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects">Work Samples</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#expertise">Expertise</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#contact">Contact</a>
+  </div>
+  <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects" class="nav-back">← Portfolio</a>
+</nav>
+
+<div class="hero">
+  <div class="badge">TPRM · OCC Guidance · Vendor Due Diligence</div>
+  <h1>Vendor Risk <span>Assessment Template</span></h1>
+  <p>OCC Guidance–aligned third-party risk assessment framework covering initial due diligence, risk tiering, ongoing monitoring criteria, and contract review — built from 7+ years administering Arvest Bank's vendor management compliance program.</p>
+  <div class="meta-row">
+    <span class="meta-chip">OCC Bulletin 2013-29</span>
+    <span class="meta-chip">FDIC FIL-44-2008</span>
+    <span class="meta-chip">FFIEC IT Examination Handbook</span>
+    <span class="meta-chip">Developed: Arvest Bank VMC 2012–2019</span>
+  </div>
+</div>
+
+<main>
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-nav">
+        <div class="sidebar-group">Assessment Sections</div>
+        <div class="sidebar-item active" onclick="showSection('overview')">Program Overview</div>
+        <div class="sidebar-item" onclick="showSection('tiering')">Risk Tiering Framework</div>
+        <div class="sidebar-item" onclick="showSection('questionnaire')">Risk Questionnaire</div>
+        <div class="sidebar-group">Due Diligence</div>
+        <div class="sidebar-item" onclick="showSection('initial-dd')">Initial Due Diligence</div>
+        <div class="sidebar-item" onclick="showSection('ongoing')">Ongoing Monitoring</div>
+        <div class="sidebar-group">Controls</div>
+        <div class="sidebar-item" onclick="showSection('contract')">Contract Review</div>
+        <div class="sidebar-item" onclick="showSection('corrective')">Corrective Action</div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content-area">
+
+      <!-- OVERVIEW -->
+      <section id="sec-overview" class="active">
+        <div class="section-label">Program Foundation</div>
+        <div class="section-title">TPRM Program Overview</div>
+        <div class="section-desc">Third-party risk management under OCC Bulletin 2013-29 requires a risk-based lifecycle approach to vendor oversight — from initial due diligence through contract execution, ongoing monitoring, and termination. This framework reflects the program architecture built and administered at Arvest Bank.</div>
+
+        <div class="info-box">
+          <strong>OCC Guidance Scope:</strong> Applies to all third-party relationships that involve critical activities — those that could cause a bank to face significant risk if the vendor fails to perform, including relationships that require regulators' attention. Risk level dictates depth of due diligence and frequency of monitoring.
+        </div>
+
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Lifecycle Stage</th><th>Key Activities</th><th>Documentation</th><th>Frequency</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Planning</strong></td><td>Business need identification, risk assessment initiation, senior management approval for critical activities</td><td>Vendor request form, business justification</td><td>Pre-engagement</td></tr>
+              <tr><td><strong>Due Diligence</strong></td><td>Financial review, BSA/AML controls assessment, SOC 1/SOC 2 review, regulatory history, subcontractor review</td><td>Due diligence package, risk rating worksheet</td><td>Pre-contract</td></tr>
+              <tr><td><strong>Contract Negotiation</strong></td><td>OCC-required provisions review, SLA definition, audit rights, data security, termination clauses, BSA compliance obligations</td><td>Contract review checklist, legal sign-off</td><td>Pre-execution</td></tr>
+              <tr><td><strong>Ongoing Monitoring</strong></td><td>Performance reviews, financial health monitoring, regulatory action checks, subcontractor changes, control reassessment</td><td>Monitoring reports, annual review memos</td><td>Per risk tier (see tiering)</td></tr>
+              <tr><td><strong>Termination</strong></td><td>Transition planning, data return/destruction verification, final assessment, regulatory notification if applicable</td><td>Termination checklist, data disposition cert.</td><td>At contract end or early exit</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-label" style="margin-top: 28px;">Regulatory Framework References</div>
+        <table class="data-table">
+          <thead><tr><th>Guidance</th><th>Scope</th><th>Key Requirements</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill pill-teal">OCC 2013-29</span></td><td>National banks, federal savings associations</td><td>Risk-based lifecycle management, board oversight, critical activity identification</td></tr>
+            <tr><td><span class="pill pill-blue">FDIC FIL-44-2008</span></td><td>FDIC-supervised institutions</td><td>Technology service provider oversight, disaster recovery, business continuity</td></tr>
+            <tr><td><span class="pill pill-amber">FFIEC IT Handbook</span></td><td>All FFIEC member agencies</td><td>IT outsourcing risk, information security controls, audit rights</td></tr>
+            <tr><td><span class="pill pill-green">SR 13-19 (FRB)</span></td><td>State member banks, BHCs</td><td>Aligns with OCC 2013-29; applies to all third-party activities not just critical</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- TIERING -->
+      <section id="sec-tiering">
+        <div class="section-label">Risk Classification</div>
+        <div class="section-title">Vendor Risk Tiering Framework</div>
+        <div class="section-desc">Risk tier determines the depth of due diligence, contract requirements, and ongoing monitoring frequency. Classification is based on inherent risk factors including access to critical systems, customer data, and regulatory exposure.</div>
+
+        <div class="tier-grid">
+          <div class="tier-card t1">
+            <div class="tier-label">Tier 1</div>
+            <div class="tier-name">Low Risk</div>
+            <ul class="tier-list">
+              <li>No access to customer data or core systems</li>
+              <li>Non-critical operational support</li>
+              <li>Easily replaceable in market</li>
+              <li>No regulatory reporting role</li>
+            </ul>
+            <div class="tier-reqs">Monitoring: Annual review · DD: Standard checklist · Contract: Basic provisions</div>
+          </div>
+          <div class="tier-card t2">
+            <div class="tier-label">Tier 2</div>
+            <div class="tier-name">Moderate Risk</div>
+            <ul class="tier-list">
+              <li>Access to non-sensitive systems or limited PII</li>
+              <li>Supports significant operational function</li>
+              <li>Moderate replacement difficulty</li>
+              <li>Some regulatory compliance role</li>
+            </ul>
+            <div class="tier-reqs">Monitoring: Semi-annual · DD: Enhanced checklist · Contract: OCC-required provisions</div>
+          </div>
+          <div class="tier-card t3">
+            <div class="tier-label">Tier 3 — Critical</div>
+            <div class="tier-name">High Risk</div>
+            <ul class="tier-list">
+              <li>Access to core banking systems or extensive PII</li>
+              <li>Critical to business continuity</li>
+              <li>Difficult/costly to replace</li>
+              <li>Significant regulatory compliance dependency</li>
+              <li>BSA/AML or OFAC-related function</li>
+            </ul>
+            <div class="tier-reqs">Monitoring: Quarterly + event-triggered · DD: Full package incl. SOC 2 · Contract: All OCC-required provisions + audit rights</div>
+          </div>
+        </div>
+
+        <div class="section-label">Tiering Questionnaire — Key Factors</div>
+        <table class="data-table">
+          <thead><tr><th>Factor</th><th>Low (Tier 1)</th><th>Moderate (Tier 2)</th><th>High (Tier 3)</th><th>Weight</th></tr></thead>
+          <tbody>
+            <tr><td>Customer data access</td><td>None</td><td>Limited / de-identified</td><td>Full PII / financial data</td><td>High</td></tr>
+            <tr><td>Core system access</td><td>None</td><td>Peripheral systems only</td><td>Core banking / payment systems</td><td>High</td></tr>
+            <tr><td>Criticality to operations</td><td>Non-essential</td><td>Significant but replaceable</td><td>Mission-critical / no ready substitute</td><td>High</td></tr>
+            <tr><td>Regulatory role</td><td>None</td><td>Indirect compliance support</td><td>BSA, OFAC, CRA, consumer protection</td><td>Medium</td></tr>
+            <tr><td>Subcontractor exposure</td><td>None / self-perform</td><td>Limited, approved</td><td>Extensive / fourth-party risk</td><td>Medium</td></tr>
+            <tr><td>Financial health</td><td>Strong / established</td><td>Adequate with monitoring</td><td>Concentrated dependency / financial stress</td><td>Medium</td></tr>
+            <tr><td>Geographic / jurisdiction risk</td><td>U.S. domestic only</td><td>Limited international</td><td>High-risk jurisdictions / OFAC exposure</td><td>Medium</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- QUESTIONNAIRE -->
+      <section id="sec-questionnaire">
+        <div class="section-label">Inherent Risk Scoring</div>
+        <div class="section-title">Vendor Risk Questionnaire</div>
+        <div class="section-desc">Score each risk factor below. The tool calculates inherent risk and recommends a tier classification. All high-risk responses generate enhanced due diligence requirements.</div>
+
+        <div class="score-row" id="q-score-row">
+          <div class="score-big" id="q-score-val" style="color: var(--text3);">—</div>
+          <div class="score-info">
+            <div class="score-tier-label" id="q-tier-label">Answer questions below to calculate risk score</div>
+            <div class="score-bar-wrap"><div class="score-bar-fill" id="q-bar" style="width:0%;background:var(--teal)"></div></div>
+            <div class="score-reqs" id="q-reqs-text"></div>
+          </div>
+        </div>
+
+        <div class="q-section">
+          <div class="q-header" onclick="toggleQ(this)">
+            <span class="q-header-title">Data &amp; System Access</span>
+            <span class="q-header-score" id="qs1-score">0 / 30 pts</span>
+          </div>
+          <div class="q-body">
+            <div class="q-item">
+              <div class="q-text">What level of customer data does this vendor access?</div>
+              <div class="q-options">
+                <span class="q-opt" onclick="selectOpt(this,'q1',0,'low')">No data access</span>
+                <span class="q-opt" onclick="selectOpt(this,'q1',5,'low')">Aggregated / de-identified only</span>
+                <span class="q-opt" onclick="selectOpt(this,'q1',10,'med')">Limited PII (name, address)</span>
+                <span class="q-opt" onclick="selectOpt(this,'q1',20,'high')">Full PII + financial account data</span>
+              </div>
+            </div>
+            <div class="q-item">
+              <div class="q-text">What level of system access does this vendor require?</div>
+              <div class="q-options">
+                <span class="q-opt" onclick="selectOpt(this,'q2',0,'low')">No system access</span>
+                <span class="q-opt" onclick="selectOpt(this,'q2',3,'low')">Read-only reporting systems</span>
+                <span class="q-opt" onclick="selectOpt(this,'q2',8,'med')">Peripheral operational systems</span>
+                <span class="q-opt" onclick="selectOpt(this,'q2',15,'high')">Core banking / payment systems</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-section">
+          <div class="q-header" onclick="toggleQ(this)">
+            <span class="q-header-title">Operational Criticality</span>
+            <span class="q-header-score" id="qs2-score">0 / 25 pts</span>
+          </div>
+          <div class="q-body">
+            <div class="q-item">
+              <div class="q-text">How critical is this vendor to the bank's operations?</div>
+              <div class="q-options">
+                <span class="q-opt" onclick="selectOpt(this,'q3',0,'low')">Non-essential / easily replaced</span>
+                <span class="q-opt" onclick="selectOpt(this,'q3',8,'med')">Significant but replaceable in 30–90 days</span>
+                <span class="q-opt" onclick="selectOpt(this,'q3',15,'high')">Critical — replacement would take 6+ months</span>
+                <span class="q-opt" onclick="selectOpt(this,'q3',20,'high')">Mission-critical — no ready substitute</span>
+              </div>
+            </div>
+            <div class="q-item">
+              <div class="q-text">Does the vendor perform a regulatory compliance function (BSA, OFAC, CRA)?</div>
+              <div class="q-options">
+                <span class="q-opt" onclick="selectOpt(this,'q4',0,'low')">No regulatory role</span>
+                <span class="q-opt" onclick="selectOpt(this,'q4',3,'med')">Indirect / administrative support</span>
+                <span class="q-opt" onclick="selectOpt(this,'q4',8,'high')">Direct BSA, OFAC, or consumer protection role</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-section">
+          <div class="q-header" onclick="toggleQ(this)">
+            <span class="q-header-title">Financial &amp; Subcontractor Risk</span>
+            <span class="q-header-score" id="qs3-score">0 / 25 pts</span>
+          </div>
+          <div class="q-body">
+            <div class="q-item">
+              <div class="q-text">What is the vendor's financial health / stability?</div>
+              <div class="q-options">
+                <span class="q-opt" onclick="selectOpt(this,'q5',0,'low')">Established — strong financials</span>
+                <span class="q-opt" onclick="selectOpt(this,'q5',5,'med')">Adequate — monitoring recommended</span>
+                <span class="q-opt" onclick="selectOpt(this,'q5',12,'high')">Concerns — concentrated dependency</span>
+              </div>
+            </div>
+            <div class="q-item">
+              <div class="q-text">Does the vendor use subcontractors for material services?</div>
+              <div class="q-options">
+                <span class="q-opt" onclick="selectOpt(this,'q6',0,'low')">No subcontractors — self-performs all</span>
+                <span class="q-opt" onclick="selectOpt(this,'q6',5,'med')">Limited, approved subcontractors</span>
+                <span class="q-opt" onclick="selectOpt(this,'q6',15,'high')">Extensive subcontractor chain / fourth-party risk</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="q-section">
+          <div class="q-header" onclick="toggleQ(this)">
+            <span class="q-header-title">Jurisdiction &amp; OFAC Exposure</span>
+            <span class="q-header-score" id="qs4-score">0 / 20 pts</span>
+          </div>
+          <div class="q-body">
+            <div class="q-item">
+              <div class="q-text">Where is the vendor and its key subcontractors domiciled?</div>
+              <div class="q-options">
+                <span class="q-opt" onclick="selectOpt(this,'q7',0,'low')">U.S. domestic only</span>
+                <span class="q-opt" onclick="selectOpt(this,'q7',5,'med')">FATF member nations only</span>
+                <span class="q-opt" onclick="selectOpt(this,'q7',15,'high')">Operations in FATF non-cooperative or OFAC-monitored jurisdictions</span>
+              </div>
+            </div>
+            <div class="q-item">
+              <div class="q-text">Has the vendor had regulatory enforcement actions in the past 5 years?</div>
+              <div class="q-options">
+                <span class="q-opt" onclick="selectOpt(this,'q8',0,'low')">None known</span>
+                <span class="q-opt" onclick="selectOpt(this,'q8',5,'med')">Minor / resolved with remediation</span>
+                <span class="q-opt" onclick="selectOpt(this,'q8',15,'high')">Material regulatory actions, fines, or consent orders</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-primary" onclick="calcScore()">Calculate Risk Tier</button>
+          <button class="btn-secondary" onclick="resetQ()">Reset</button>
+        </div>
+      </section>
+
+      <!-- INITIAL DD -->
+      <section id="sec-initial-dd">
+        <div class="section-label">Pre-Contract Assessment</div>
+        <div class="section-title">Initial Due Diligence Checklist</div>
+        <div class="section-desc">Complete prior to contract execution. Documentation requirements scale by risk tier. All Tier 3 (Critical) items are mandatory regardless of score. Use the checklist to track completion status.</div>
+
+        <div class="section-label" style="margin-bottom: 12px;">Tier 1 — Standard</div>
+        <div class="checklist">
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Business license / corporate registration verified</div><div class="check-sub">Confirm entity is properly registered and in good standing</div></div><span class="check-tag">Tier 1+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Insurance certificate reviewed — general liability at minimum</div><div class="check-sub">Verify coverage limits appropriate to contract value</div></div><span class="check-tag">Tier 1+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">OFAC screening completed on vendor entity and key principals</div><div class="check-sub">Screen against SDN list and applicable sanctions programs</div></div><span class="check-tag">Tier 1+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Reference checks completed (minimum 2)</div><div class="check-sub">Documented conversations with prior or current financial institution clients preferred</div></div><span class="check-tag">Tier 1+</span></div>
+        </div>
+
+        <div class="section-label" style="margin-bottom: 12px;">Tier 2 — Enhanced</div>
+        <div class="checklist">
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Audited financial statements reviewed (2 most recent years)</div><div class="check-sub">Assess financial stability, any going-concern qualifications</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Information security questionnaire completed and reviewed</div><div class="check-sub">Align with FFIEC IT Handbook standards; document any gaps</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Business continuity and disaster recovery plan reviewed</div><div class="check-sub">Confirm RPO/RTO commitments; verify testing schedule</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Regulatory history search completed</div><div class="check-sub">CFPB, OCC, FDIC enforcement actions; litigation review</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Subcontractor list obtained and approved</div><div class="check-sub">Key subcontractors screened; material changes require bank approval</div></div><span class="check-tag">Tier 2+</span></div>
+        </div>
+
+        <div class="section-label" style="margin-bottom: 12px;">Tier 3 — Critical Activity</div>
+        <div class="checklist">
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">SOC 1 and/or SOC 2 Type II report reviewed — within 12 months</div><div class="check-sub">Exception noted and management response reviewed for all findings</div></div><span class="check-tag">Tier 3</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">BSA/AML compliance program reviewed (if vendor has compliance role)</div><div class="check-sub">Obtain written description of vendor BSA controls; assess adequacy</div></div><span class="check-tag">Tier 3</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Onsite or virtual deep-dive assessment completed</div><div class="check-sub">Tour operational environment; interview key personnel; document findings</div></div><span class="check-tag">Tier 3</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Exit strategy and transition plan documented pre-contract</div><div class="check-sub">Confirm data portability, transition timeline, knowledge transfer obligations</div></div><span class="check-tag">Tier 3</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Senior management and/or board approval obtained</div><div class="check-sub">OCC 2013-29 requires board or senior management approval for critical vendor relationships</div></div><span class="check-tag">Tier 3</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Cyber insurance coverage verified</div><div class="check-sub">Minimum coverage thresholds per bank policy; named as additional insured where applicable</div></div><span class="check-tag">Tier 3</span></div>
+        </div>
+      </section>
+
+      <!-- ONGOING -->
+      <section id="sec-ongoing">
+        <div class="section-label">Post-Contract Oversight</div>
+        <div class="section-title">Ongoing Monitoring Program</div>
+        <div class="section-desc">Ongoing monitoring ensures vendor relationships remain within acceptable risk tolerance throughout the contract lifecycle. Monitoring intensity scales with risk tier and is supplemented by event-triggered reviews.</div>
+
+        <table class="data-table">
+          <thead><tr><th>Activity</th><th>Tier 1 — Low</th><th>Tier 2 — Moderate</th><th>Tier 3 — Critical</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Comprehensive review</strong></td><td>Annual</td><td>Semi-annual</td><td>Quarterly</td></tr>
+            <tr><td><strong>Financial health check</strong></td><td>Annual</td><td>Semi-annual</td><td>Quarterly + upon material event</td></tr>
+            <tr><td><strong>OFAC re-screening</strong></td><td>Annual</td><td>Semi-annual</td><td>Quarterly + upon ownership change</td></tr>
+            <tr><td><strong>Regulatory/enforcement search</strong></td><td>Annual</td><td>Semi-annual</td><td>Quarterly</td></tr>
+            <tr><td><strong>SOC report review</strong></td><td>N/A</td><td>Annual if applicable</td><td>Annual (Type II required)</td></tr>
+            <tr><td><strong>Performance / SLA review</strong></td><td>Annual</td><td>Quarterly</td><td>Monthly + escalation tracking</td></tr>
+            <tr><td><strong>Subcontractor re-review</strong></td><td>Upon change</td><td>Annual + upon change</td><td>Semi-annual + upon material change</td></tr>
+            <tr><td><strong>BSA/AML controls review</strong></td><td>N/A</td><td>If compliance role: Annual</td><td>Annual (if compliance role) + examination readiness</td></tr>
+          </tbody>
+        </table>
+
+        <div class="section-label" style="margin-top: 28px;">Event-Triggered Review Checklist</div>
+        <div class="info-box">These events require an out-of-cycle review regardless of scheduled monitoring. Document the triggering event, review findings, and any remediation actions taken.</div>
+        <div class="checklist">
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Vendor acquires or is acquired by another entity</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Material regulatory enforcement action against vendor</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Security incident or data breach at vendor affecting bank or bank customers</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Significant operational disruption — SLA breach, extended outage</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Material change in vendor key personnel (CEO, CISO, compliance officer)</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Vendor adds new material subcontractor(s)</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Adverse media or financial distress indicators emerge</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">OCC/FDIC examiner inquiry regarding vendor relationship</div></div></div>
+        </div>
+      </section>
+
+      <!-- CONTRACT REVIEW -->
+      <section id="sec-contract">
+        <div class="section-label">OCC 2013-29 Required Provisions</div>
+        <div class="section-title">Contract Review Checklist</div>
+        <div class="section-desc">OCC Bulletin 2013-29 identifies specific contract provisions required for third-party relationships involving critical activities. This checklist ensures contract adequacy prior to execution. Tier 3 critical vendor contracts require all items.</div>
+
+        <div class="checklist">
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Scope of services — specific, measurable, and unambiguous</div><div class="check-sub">Services clearly defined; excludes function creep</div></div><span class="check-tag">All Tiers</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Performance standards and SLA metrics defined with remedies</div><div class="check-sub">Uptime, accuracy, turnaround time; financial penalties for non-performance</div></div><span class="check-tag">All Tiers</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Audit rights — bank and regulators</div><div class="check-sub">Right to audit vendor operations; regulators may examine third parties</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Confidentiality and data security provisions</div><div class="check-sub">Information security standards; breach notification timelines (72-hour preferred)</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Ownership and portability of bank data</div><div class="check-sub">Data remains bank property; portability on termination; format specification</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Business continuity and disaster recovery obligations</div><div class="check-sub">RPO/RTO commitments; BCP testing requirements; notification to bank</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Subcontracting restrictions and approval requirements</div><div class="check-sub">Material subcontractors require bank approval; flow-down of key obligations</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">BSA/AML and regulatory compliance obligations (if applicable)</div><div class="check-sub">Vendor must maintain compliance program; cooperate with law enforcement requests</div></div><span class="check-tag">Tier 3</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Indemnification and liability allocation</div><div class="check-sub">Mutual indemnification; limitation of liability provisions reviewed by Legal</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Termination for convenience and for cause provisions</div><div class="check-sub">Adequate notice period; cure period; termination without penalty on regulatory direction</div></div><span class="check-tag">All Tiers</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Transition / wind-down obligations on termination</div><div class="check-sub">Knowledge transfer; continued service during transition; timeline specific</div></div><span class="check-tag">Tier 3</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Regulatory examination cooperation clause</div><div class="check-sub">Vendor agrees to cooperate with OCC/FDIC/FRB examination of vendor activities</div></div><span class="check-tag">Tier 2+</span></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Legal review and sign-off documented</div><div class="check-sub">In-house or outside counsel review on file prior to execution</div></div><span class="check-tag">Tier 2+</span></div>
+        </div>
+      </section>
+
+      <!-- CORRECTIVE ACTION -->
+      <section id="sec-corrective">
+        <div class="section-label">Remediation Framework</div>
+        <div class="section-title">Corrective Action Process</div>
+        <div class="section-desc">When monitoring identifies vendor deficiencies, a structured corrective action process ensures timely remediation and protects the bank from regulatory exposure. Documentation is critical for examination readiness.</div>
+
+        <table class="data-table">
+          <thead><tr><th>Finding Severity</th><th>Examples</th><th>Response Timeline</th><th>Escalation</th><th>Documentation</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pill pill-green">Low</span></td><td>Minor SLA miss, documentation gap, process improvement opportunity</td><td>30–60 days to remediate</td><td>Relationship owner</td><td>Email documentation, next review inclusion</td></tr>
+            <tr><td><span class="pill pill-amber">Moderate</span></td><td>Repeated SLA failures, security control gap, subcontractor change without approval</td><td>30 days cure period; escalation if unresolved</td><td>Compliance officer + supervisor</td><td>Formal corrective action letter, written remediation plan, follow-up review</td></tr>
+            <tr><td><span class="pill pill-red">High</span></td><td>Data breach, BSA/AML control failure, regulatory action, material misrepresentation</td><td>Immediate — 5 business day response required</td><td>BSA Officer, Legal, senior management</td><td>Formal CAP, legal hold considerations, potential termination notice</td></tr>
+            <tr><td><span class="pill pill-red">Critical</span></td><td>OFAC match, confirmed fraud, vendor insolvency, material regulatory enforcement</td><td>Immediate escalation; contract termination likely</td><td>CEO / Board notification; Legal; regulators if required</td><td>Full incident file; law enforcement referral as appropriate</td></tr>
+          </tbody>
+        </table>
+
+        <div class="section-label" style="margin-top: 24px;">Corrective Action Plan — Required Elements</div>
+        <div class="checklist">
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Finding description — specific, factual, and dated</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Root cause analysis completed by vendor</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Remediation steps with specific owner(s) and target dates</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Interim controls documented (if applicable during remediation period)</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Validation evidence required for closure (not self-reported)</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Risk rating impact assessed — potential tier reclassification</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">CAP accepted and signed by vendor and bank compliance officer</div></div></div>
+          <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Logged in vendor management system / examination file</div></div></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p>Jack Johnson · Financial Crimes &amp; Compliance · <a href="mailto:jajohnson2@cox.net">jajohnson2@cox.net</a></p>
+  <p>TPRM · OCC Bulletin 2013-29 · Developed from Arvest Bank VMC program 2012–2019</p>
+</footer>
+
+<script>
+const scores = {};
+
+function showSection(name) {
+  document.querySelectorAll('.content-area > section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function toggleQ(header) {
+  const body = header.nextElementSibling;
+  body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function selectOpt(el, key, val, level) {
+  const parent = el.parentElement;
+  parent.querySelectorAll('.q-opt').forEach(o => o.className = 'q-opt');
+  el.classList.add('sel-' + level);
+  scores[key] = val;
+  updateQScore();
+}
+
+function updateQScore() {
+  const total = Object.values(scores).reduce((a, b) => a + b, 0);
+  // Group scores
+  const s1 = (scores.q1 || 0) + (scores.q2 || 0);
+  const s2 = (scores.q3 || 0) + (scores.q4 || 0);
+  const s3 = (scores.q5 || 0) + (scores.q6 || 0);
+  const s4 = (scores.q7 || 0) + (scores.q8 || 0);
+  document.getElementById('qs1-score').textContent = s1 + ' / 35 pts';
+  document.getElementById('qs2-score').textContent = s2 + ' / 28 pts';
+  document.getElementById('qs3-score').textContent = s3 + ' / 27 pts';
+  document.getElementById('qs4-score').textContent = s4 + ' / 30 pts';
+}
+
+function calcScore() {
+  if (Object.keys(scores).length < 4) {
+    alert('Please answer at least the first question in each section before calculating.');
+    return;
+  }
+  const total = Object.values(scores).reduce((a, b) => a + b, 0);
+  const pct = Math.min(Math.round((total / 100) * 100), 100);
+
+  const el = document.getElementById('q-score-val');
+  const bar = document.getElementById('q-bar');
+  const tierLabel = document.getElementById('q-tier-label');
+  const reqs = document.getElementById('q-reqs-text');
+
+  el.textContent = total;
+
+  let tier, color, barColor, reqText;
+  if (total <= 20) {
+    tier = 'Tier 1 — Low Risk'; color = '#4ade80'; barColor = '#16a34a';
+    reqText = 'Standard due diligence · Annual monitoring · Basic contract provisions';
+  } else if (total <= 45) {
+    tier = 'Tier 2 — Moderate Risk'; color = '#fbbf24'; barColor = '#d97706';
+    reqText = 'Enhanced due diligence · Semi-annual monitoring · OCC-required contract provisions';
+  } else {
+    tier = 'Tier 3 — Critical'; color = '#f87171'; barColor = '#dc2626';
+    reqText = 'Full DD including SOC 2 · Quarterly monitoring · All OCC provisions + board/senior mgmt approval';
+  }
+
+  el.style.color = color;
+  bar.style.width = pct + '%';
+  bar.style.background = barColor;
+  tierLabel.textContent = tier;
+  reqs.textContent = reqText;
+}
+
+function resetQ() {
+  Object.keys(scores).forEach(k => delete scores[k]);
+  document.querySelectorAll('.q-opt').forEach(o => o.className = 'q-opt');
+  document.getElementById('q-score-val').textContent = '—';
+  document.getElementById('q-score-val').style.color = 'var(--text3)';
+  document.getElementById('q-bar').style.width = '0%';
+  document.getElementById('q-tier-label').textContent = 'Answer questions below to calculate risk score';
+  document.getElementById('q-reqs-text').textContent = '';
+  ['qs1-score','qs2-score','qs3-score','qs4-score'].forEach((id, i) => {
+    const maxes = [35, 28, 27, 30];
+    document.getElementById(id).textContent = '0 / ' + maxes[i] + ' pts';
+  });
+}
+</script>
+
+</body>
+</html>

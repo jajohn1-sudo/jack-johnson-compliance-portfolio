@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cross-Functional Communication Samples · Jack Johnson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0a0f1e;--navy2:#111827;--navy3:#1a2332;--navy4:#0d1424;
+    --teal:#0d9488;--teal-light:#14b8a6;--teal-dim:rgba(13,148,136,0.15);
+    --amber:#d97706;--amber-dim:rgba(217,119,6,0.15);
+    --red:#dc2626;--red-dim:rgba(220,38,38,0.12);
+    --green:#16a34a;--green-dim:rgba(22,163,74,0.12);
+    --purple:#7c3aed;--purple-dim:rgba(124,58,237,0.12);
+    --blue:#2563eb;--blue-dim:rgba(37,99,235,0.12);
+    --slate-dim:rgba(148,163,184,0.06);
+    --border:rgba(148,163,184,0.12);--border2:rgba(148,163,184,0.2);
+    --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+    --mono:'IBM Plex Mono',monospace;
+    --serif:'Libre Baskerville',serif;
+    --sans:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--navy);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.6;min-height:100vh;}
+
+  nav{border-bottom:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(10,15,30,0.96);backdrop-filter:blur(8px);z-index:100;}
+  .nav-brand{font-family:var(--mono);font-size:13px;color:var(--teal);letter-spacing:0.08em;}
+  .nav-links{display:flex;gap:24px;}
+  .nav-links a{font-size:13px;color:var(--text2);text-decoration:none;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--teal-light);}
+  .nav-back{font-family:var(--mono);font-size:12px;color:var(--teal);text-decoration:none;border:1px solid var(--teal);padding:6px 14px;border-radius:4px;transition:all 0.2s;}
+  .nav-back:hover{background:var(--teal-dim);}
+
+  .hero{padding:56px 40px 44px;max-width:1100px;margin:0 auto;border-bottom:1px solid var(--border);}
+  .badge{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--teal);background:var(--teal-dim);border:1px solid rgba(13,148,136,0.3);padding:4px 12px;border-radius:2px;margin-bottom:20px;text-transform:uppercase;}
+  .hero h1{font-family:var(--serif);font-size:38px;font-weight:700;line-height:1.2;margin-bottom:16px;color:#f1f5f9;}
+  .hero h1 span{color:var(--teal-light);}
+  .hero p{font-size:16px;color:var(--text2);max-width:700px;line-height:1.7;}
+  .meta-row{display:flex;gap:20px;margin-top:24px;flex-wrap:wrap;}
+  .meta-chip{font-family:var(--mono);font-size:11px;color:var(--text3);border:1px solid var(--border);padding:4px 10px;border-radius:2px;}
+
+  main{max-width:1100px;margin:0 auto;padding:48px 40px 96px;}
+
+  /* SAMPLE INDEX */
+  .sample-index{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:52px;}
+  .index-card{background:var(--navy2);border:1px solid var(--border);border-radius:6px;padding:16px 18px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
+  .index-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border2);transition:background 0.2s;}
+  .index-card:hover{border-color:var(--border2);transform:translateY(-1px);}
+  .index-card:hover::before{background:var(--teal);}
+  .index-card.active{border-color:var(--teal);background:var(--teal-dim);}
+  .index-card.active::before{background:var(--teal);}
+  .ic-type{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;}
+  .index-card.active .ic-type{color:var(--teal);}
+  .ic-title{font-size:13px;font-weight:500;color:var(--text2);line-height:1.4;}
+  .index-card.active .ic-title{color:var(--text);}
+  .ic-audience{font-size:11px;color:var(--text3);margin-top:6px;}
+
+  /* SAMPLE DISPLAY */
+  .sample-wrap{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start;}
+  @media(max-width:900px){.sample-wrap{grid-template-columns:1fr;}}
+
+  /* DOCUMENT PANE */
+  .doc-pane{background:var(--navy2);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .doc-toolbar{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--navy3);}
+  .doc-toolbar-label{font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:0.08em;}
+  .doc-format-tag{font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--navy);border:1px solid var(--border);padding:2px 8px;border-radius:2px;}
+
+  /* THE DOCUMENT ITSELF */
+  .doc-body{padding:36px 40px;font-family:var(--sans);}
+  .doc-header{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+  .doc-meta-grid{display:grid;grid-template-columns:80px 1fr;gap:4px 16px;font-size:13px;margin-bottom:16px;}
+  .doc-meta-label{color:var(--text3);font-weight:500;}
+  .doc-meta-val{color:var(--text2);}
+  .doc-subject{font-size:16px;font-weight:600;color:var(--text);margin-top:12px;line-height:1.4;}
+  .doc-body-text{font-size:14px;color:var(--text2);line-height:1.85;}
+  .doc-body-text p{margin-bottom:16px;}
+  .doc-body-text p:last-child{margin-bottom:0;}
+  .doc-section-head{font-weight:600;color:var(--text);font-size:13px;margin-bottom:6px;margin-top:20px;text-transform:uppercase;letter-spacing:0.06em;font-family:var(--mono);}
+  .doc-body-text ul{padding-left:20px;margin-bottom:16px;display:flex;flex-direction:column;gap:6px;}
+  .doc-body-text li{font-size:14px;color:var(--text2);line-height:1.7;}
+  .doc-sig{margin-top:28px;padding-top:20px;border-top:1px solid var(--border);font-size:13px;color:var(--text2);}
+  .doc-sig-name{font-weight:600;color:var(--text);font-size:14px;}
+  .doc-highlight{background:rgba(13,148,136,0.12);border-left:2px solid var(--teal);padding:10px 14px;border-radius:0 4px 4px 0;margin:14px 0;font-size:13px;color:var(--text2);font-style:italic;}
+  .doc-action-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px;}
+  .doc-action-table th{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;padding:8px 12px;border-bottom:1px solid var(--border2);text-align:left;}
+  .doc-action-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;}
+  .doc-action-table tr:last-child td{border-bottom:none;}
+
+  /* ANNOTATION PANE */
+  .ann-pane{display:flex;flex-direction:column;gap:14px;}
+  .ann-header{font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
+  .ann-card{background:var(--navy2);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .ann-card-label{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+  .ann-card-text{font-size:13px;color:var(--text2);line-height:1.65;}
+  .ann-card-text strong{color:var(--teal-light);}
+  .ann-pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+
+  .skill-tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:3px;background:var(--navy3);border:1px solid var(--border);color:var(--text3);}
+  .skill-tag.teal{border-color:rgba(13,148,136,0.4);color:var(--teal-light);background:var(--teal-dim);}
+  .skill-tag.amber{border-color:rgba(217,119,6,0.4);color:#fbbf24;background:var(--amber-dim);}
+  .skill-tag.purple{border-color:rgba(124,58,237,0.4);color:#a78bfa;background:var(--purple-dim);}
+
+  .principle-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px;}
+  .principle-list li{font-size:13px;color:var(--text2);padding-left:16px;position:relative;line-height:1.5;}
+  .principle-list li::before{content:'→';position:absolute;left:0;color:var(--teal);font-size:11px;top:2px;}
+
+  .pill{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:10px;letter-spacing:0.04em;}
+  .pill-teal{background:var(--teal-dim);color:var(--teal-light);border:1px solid rgba(13,148,136,0.3);}
+  .pill-amber{background:var(--amber-dim);color:#fbbf24;border:1px solid rgba(217,119,6,0.3);}
+  .pill-purple{background:var(--purple-dim);color:#a78bfa;border:1px solid rgba(124,58,237,0.3);}
+  .pill-blue{background:var(--blue-dim);color:#93c5fd;border:1px solid rgba(37,99,235,0.3);}
+  .pill-green{background:var(--green-dim);color:#4ade80;border:1px solid rgba(22,163,74,0.3);}
+
+  .section-divider{height:1px;background:var(--border);margin:52px 0 44px;}
+
+  footer{border-top:1px solid var(--border);padding:32px 40px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  footer p{font-size:12px;color:var(--text3);font-family:var(--mono);}
+  footer a{color:var(--teal);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">JJ · FC&amp;C</span>
+  <div class="nav-links">
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects">Work Samples</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#expertise">Expertise</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#contact">Contact</a>
+  </div>
+  <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects" class="nav-back">← Portfolio</a>
+</nav>
+
+<div class="hero">
+  <div class="badge">Communication Samples · Cross-Functional · Annotated</div>
+  <h1>Cross-Functional <span>Communication</span></h1>
+  <p>Compliance doesn't operate in isolation. These samples demonstrate how I communicate across organizational boundaries — with Legal, Operations, vendor contacts, and peer departments — translating regulatory requirements into actionable language without losing precision or professional tone.</p>
+  <div class="meta-row">
+    <span class="meta-chip">Vendor Corrective Action</span>
+    <span class="meta-chip">Legal Escalation</span>
+    <span class="meta-chip">§ 314(a) Coordination</span>
+    <span class="meta-chip">Operations Integration</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- SAMPLE INDEX -->
+  <div class="sample-index">
+    <div class="index-card active" onclick="showSample(0,this)">
+      <div class="ic-type">Memo · TPRM</div>
+      <div class="ic-title">Vendor Corrective Action Letter</div>
+      <div class="ic-audience">To: Third-party vendor · cc: Legal</div>
+    </div>
+    <div class="index-card" onclick="showSample(1,this)">
+      <div class="ic-type">Memo · Investigation</div>
+      <div class="ic-title">Legal Escalation — Active Investigation</div>
+      <div class="ic-audience">To: General Counsel · BSA Officer</div>
+    </div>
+    <div class="index-card" onclick="showSample(2,this)">
+      <div class="ic-type">Notice · BSA / § 314(a)</div>
+      <div class="ic-title">Inter-Department § 314(a) Response Coordination</div>
+      <div class="ic-audience">To: Branch Operations · Deposit Ops</div>
+    </div>
+    <div class="index-card" onclick="showSample(3,this)">
+      <div class="ic-type">Brief · QA / Compliance</div>
+      <div class="ic-title">QA Findings — Operations Corrective Brief</div>
+      <div class="ic-audience">To: Operations Manager · Team Leads</div>
+    </div>
+  </div>
+
+  <!-- SAMPLE DISPLAY AREA -->
+  <div id="sample-area"></div>
+
+</main>
+
+<footer>
+  <p>Jack Johnson · Financial Crimes &amp; Compliance · <a href="mailto:jajohnson2@cox.net">jajohnson2@cox.net</a></p>
+  <p>Communication samples are composites drawn from practice — names, institutions, and specific details are illustrative.</p>
+</footer>
+
+<script>
+const SAMPLES = [
+
+  // 0 — VENDOR CORRECTIVE ACTION
+  {
+    type:"Memo · TPRM / Vendor Management",
+    format:"Formal Corrective Action Letter",
+    audience:"Third-Party Vendor Contact · CC: Legal · BSA Officer",
+    doc:`
+      <div class="doc-header">
+        <div class="doc-meta-grid">
+          <span class="doc-meta-label">DATE</span><span class="doc-meta-val">March 14, 2018</span>
+          <span class="doc-meta-label">TO</span><span class="doc-meta-val">Ms. [Vendor Contact], Compliance Director, [Vendor Name]</span>
+          <span class="doc-meta-label">FROM</span><span class="doc-meta-val">Jack Johnson, Vendor Management Compliance, Arvest Bank</span>
+          <span class="doc-meta-label">CC</span><span class="doc-meta-val">General Counsel; BSA Officer; Relationship Manager</span>
+          <span class="doc-meta-label">RE</span><span class="doc-meta-val">Contract No. [XXXX] — Corrective Action Required</span>
+        </div>
+        <div class="doc-subject">Formal Notice of Compliance Deficiency and Required Corrective Action Plan</div>
+      </div>
+      <div class="doc-body-text">
+        <p>This letter constitutes formal notice of a compliance deficiency identified during Arvest Bank's semi-annual third-party performance review of [Vendor Name], conducted March 1–12, 2018. The deficiency relates to your organization's information security controls and specifically to the incident notification obligations specified in Section 7.4 of our service agreement.</p>
+
+        <div class="doc-section-head">Finding</div>
+        <p>On February 19, 2018, [Vendor Name] experienced a security incident affecting systems that process Arvest Bank customer data. Our review determined that Arvest Bank was not notified of this incident until March 6, 2018 — a delay of fifteen (15) business days. Section 7.4 of our agreement requires notification within seventy-two (72) hours of a vendor's determination that a security incident may affect bank or bank customer data.</p>
+        <p>This is the first instance of a notification breach in the history of this relationship. Our review found no indication that customer data was exfiltrated as a result of the incident, and we acknowledge your cooperation once contact was established.</p>
+
+        <div class="doc-section-head">Required Corrective Action</div>
+        <p>We require a written Corrective Action Plan (CAP) addressing the following no later than <strong>March 28, 2018</strong>:</p>
+        <ul>
+          <li>Root cause analysis explaining the cause of the notification delay</li>
+          <li>Revised internal escalation and notification procedures, specifically addressing the 72-hour requirement</li>
+          <li>Identification of the personnel responsible for executing the notification obligation</li>
+          <li>Training or process changes implemented or planned as a result of this incident</li>
+          <li>Evidence of implementation — not self-reported; Arvest Bank reserves the right to request documentation</li>
+        </ul>
+
+        <div class="doc-highlight">Arvest Bank's ability to meet its own regulatory obligations — including OCC examination readiness and FinCEN SAR filing where applicable — depends on timely notification from critical vendors. This requirement is non-negotiable and will be subject to heightened review at our next scheduled assessment.</div>
+
+        <p>We value this relationship and do not anticipate that a single breach will affect its continuation, provided the CAP is delivered and implemented on schedule. However, a second breach of Section 7.4 within a 24-month period will require escalation to senior management review and may result in contract termination under Section 14.2(b) of our agreement.</p>
+        <p>Please direct your CAP response to my attention at the address below. I am available to discuss the requirements at your convenience prior to the March 28 deadline.</p>
+
+        <div class="doc-sig">
+          <div class="doc-sig-name">Jack Johnson</div>
+          Vendor Management Compliance Specialist<br>
+          Arvest Bank · Fort Smith, AR<br>
+          [Phone] · [Email]
+        </div>
+      </div>`,
+    annotations:[
+      { label:"Strategic Purpose", text:"A corrective action letter has two jobs: <strong>create a documented record</strong> for examination readiness, and <strong>preserve the vendor relationship</strong> while enforcing the contract. This letter does both — it's firm on the requirement and consequence, but explicitly acknowledges the good-faith history and a path forward." },
+      { label:"Tone Calibration", text:"The language is formal but not adversarial. Phrases like 'we value this relationship' and 'first instance' soften the stakes without diluting the legal effect of the notice. The escalation consequence is stated once, clearly — not repeated or emphasized beyond what the situation requires." },
+      { label:"Regulatory Linkage", text:"The paragraph connecting vendor notification to <strong>OCC examination readiness and SAR filing obligations</strong> is deliberate. It communicates that this isn't a preference — it's a downstream compliance dependency. That reframe is more effective than restating the contract language." },
+      { label:"Skills Demonstrated", text:"", pills:["TPRM Program Administration","Contract Review & Enforcement","OCC Examination Readiness","Cross-functional Writing","Regulatory Linkage"] }
+    ]
+  },
+
+  // 1 — LEGAL ESCALATION
+  {
+    type:"Memo · Investigation / FIU",
+    format:"Internal Legal Escalation Memorandum",
+    audience:"General Counsel · BSA Officer · Senior Management",
+    doc:`
+      <div class="doc-header">
+        <div class="doc-meta-grid">
+          <span class="doc-meta-label">DATE</span><span class="doc-meta-val">November 4, 2023</span>
+          <span class="doc-meta-label">TO</span><span class="doc-meta-val">General Counsel; BSA Compliance Officer</span>
+          <span class="doc-meta-label">FROM</span><span class="doc-meta-val">Jack Johnson, Investigation Specialist, Financial Intelligence Unit</span>
+          <span class="doc-meta-label">RE</span><span class="doc-meta-val">Case No. [XXXX] — Legal Review Requested: Multi-Subject Investigation with Potential Law Enforcement Referral</span>
+          <span class="doc-meta-label">SENSITIVITY</span><span class="doc-meta-val">Confidential — SAR Tipping-Off Restrictions Apply (31 U.S.C. § 5318(g))</span>
+        </div>
+        <div class="doc-subject">Investigation Escalation — Legal Review and SAR Authorization Request</div>
+      </div>
+      <div class="doc-body-text">
+        <div class="doc-section-head">Purpose</div>
+        <p>I am escalating Case No. [XXXX] for Legal review and BSA Officer authorization prior to SAR filing. The investigation involves a multi-subject pattern with indicators that may warrant law enforcement notification. Given the complexity and the potential for law enforcement coordination, Legal involvement is appropriate before we proceed.</p>
+
+        <div class="doc-section-head">Summary of Findings</div>
+        <p>Over a 90-day review period (August 1 – October 31, 2023), our transaction monitoring system identified three customer accounts displaying a coordinated funnel account pattern: multiple small inbound transfers from unrelated originators aggregating to a single large outbound wire, repeated across seven cycles totaling approximately $214,000. Link analysis identified a shared device fingerprint and overlapping IP addresses across all three accounts, suggesting a single actor or coordinated network.</p>
+        <p>One of the three subjects is the subject of an active FinCEN § 314(a) inquiry (reference: [XXXX]). A second subject's SSN returned a partial OFAC name screening flag that has not yet been resolved. I have not contacted any of the three subjects pending Legal guidance on tipping-off risk.</p>
+
+        <div class="doc-section-head">Requested Actions</div>
+        <table class="doc-action-table">
+          <thead><tr><th>Action</th><th>Owner</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr><td>Legal review of complete case file and SAR draft narrative</td><td>General Counsel</td><td>Before SAR filing</td></tr>
+            <tr><td>BSA Officer authorization of SAR filing</td><td>BSA Officer</td><td>Filing deadline: Nov. 18</td></tr>
+            <tr><td>Guidance on law enforcement notification — FBI, FinCEN, local?</td><td>General Counsel</td><td>Concurrent with SAR</td></tr>
+            <tr><td>Resolve OFAC partial match — Subject 2</td><td>Compliance + Legal</td><td>Within 48 hours</td></tr>
+            <tr><td>Account restriction decision — all three subjects</td><td>BSA Officer + Legal</td><td>Pending Legal guidance</td></tr>
+          </tbody>
+        </table>
+
+        <div class="doc-section-head">Filing Deadline</div>
+        <p>The 30-day FinCEN SAR filing window expires November 18, 2023. A complete draft SAR narrative, evidence log, and link analysis diagram are attached. I am available for a call or meeting at any point before that date.</p>
+
+        <div class="doc-sig">
+          <div class="doc-sig-name">Jack Johnson</div>
+          Investigation Specialist · Financial Intelligence Unit<br>
+          [Contact]
+        </div>
+      </div>`,
+    annotations:[
+      { label:"Audience Awareness", text:"Legal and BSA Officers are not investigators — they need a clear situation summary, not a case file download. The opening paragraph answers the only question they care about: <strong>why am I receiving this and what do you need from me?</strong> Everything else is supporting context." },
+      { label:"The Action Table", text:"Senior reviewers in complex situations don't want prose lists of asks. A three-column table (action, owner, priority) makes the handoff explicit. It also creates a paper trail — if any action is missed, the record shows it was requested. That matters for examination readiness." },
+      { label:"Legal Sensitivity Handling", text:"The sensitivity header citing 31 U.S.C. § 5318(g) is deliberate — it communicates to recipients that <strong>no verbal discussion of this memo is permitted with the subjects</strong> and protects the institution in the event of a tipping-off allegation. Flagging it in the header rather than the body ensures it's seen first." },
+      { label:"Skills Demonstrated", text:"", pills:["Multi-subject Investigation","SAR Narrative Drafting","Legal Coordination","Link Analysis","§ 314(a) Process","OFAC Screening"] }
+    ]
+  },
+
+  // 2 — 314(a) COORDINATION
+  {
+    type:"Notice · BSA / § 314(a)",
+    format:"Internal Department Coordination Notice",
+    audience:"Branch Managers · Deposit Operations · Customer-Facing Staff",
+    doc:`
+      <div class="doc-header">
+        <div class="doc-meta-grid">
+          <span class="doc-meta-label">DATE</span><span class="doc-meta-val">February 9, 2017</span>
+          <span class="doc-meta-label">TO</span><span class="doc-meta-val">Branch Operations Managers; Deposit Operations Supervisor</span>
+          <span class="doc-meta-label">FROM</span><span class="doc-meta-val">Jack Johnson, Vendor Management &amp; BSA Compliance, Arvest Bank</span>
+          <span class="doc-meta-label">RE</span><span class="doc-meta-val">USA PATRIOT Act § 314(a) Request — Action Required by [DATE]</span>
+          <span class="doc-meta-label">HANDLING</span><span class="doc-meta-val">Confidential — Do Not Discuss With Customers or Third Parties</span>
+        </div>
+        <div class="doc-subject">§ 314(a) Name Search — Required Response by [DATE]</div>
+      </div>
+      <div class="doc-body-text">
+        <div class="doc-section-head">What This Is</div>
+        <p>FinCEN has issued a § 314(a) information sharing request as part of a federal law enforcement investigation. As a covered financial institution, Arvest Bank is legally required to search our records and respond within 14 days. <strong>This is mandatory.</strong> The response deadline is [DATE].</p>
+
+        <div class="doc-section-head">What You Need to Do</div>
+        <p>Please search all account and transaction records under your area of responsibility for any accounts, transactions, or other activity associated with the name(s) listed in the attached FinCEN request. This includes:</p>
+        <ul>
+          <li>Current and closed accounts opened in the subject's name or bearing the subject's SSN or EIN</li>
+          <li>Transactions where the subject appears as an originator, beneficiary, or authorized party — within the preceding 12 months</li>
+          <li>Safe deposit boxes, wire transfer records, cashier's checks, or money orders associated with the subject</li>
+          <li>Accounts where the subject is listed as a beneficiary, POA holder, or authorized signer</li>
+        </ul>
+
+        <div class="doc-highlight">Do not discuss this request — or the fact that you received it — with the subject, any customer, or anyone outside the BSA compliance team and your immediate supervisor. Federal law prohibits tipping off individuals or entities that they are the subject of a § 314(a) inquiry. Violation of this restriction can result in criminal penalties for the institution and for individuals.</div>
+
+        <div class="doc-section-head">How to Respond</div>
+        <p>If you find a match: Contact the BSA compliance team immediately at [ext.] — do not take any action on the account without guidance.</p>
+        <p>If you find no match: Reply to this memo confirming no match found and retain a copy of this request and your search for the BSA compliance file.</p>
+        <p>All responses — match or no match — must be received by [DATE]. If you have any questions about what to search or how to interpret the request, contact me directly. Do not interpret this request broadly to include customers who are not the named subject.</p>
+
+        <div class="doc-sig">
+          <div class="doc-sig-name">Jack Johnson</div>
+          Vendor Management Compliance · BSA Support<br>
+          Arvest Bank · [Extension] · [Email]
+        </div>
+      </div>`,
+    annotations:[
+      { label:"The Translation Challenge", text:"§ 314(a) requests go to compliance departments — but the actual search has to happen at branches and in operations systems. <strong>The audience for this memo is front-line and operational staff who have no legal background.</strong> The language is deliberate: plain, directive, and devoid of regulatory citation except where the citation itself carries weight ('mandatory')." },
+      { label:"Confidence Without Condescension", text:"The 'What This Is' opener treats the reader as an intelligent adult who simply needs context. Compare that to opening with the statutory citation or a paragraph of background — that approach signals the writer is writing for themselves, not for the reader. The goal is rapid comprehension and correct action, not demonstration of knowledge." },
+      { label:"The Confidentiality Warning", text:"The tipping-off restriction block is formatted as a highlighted callout — not buried in the body — because it's the most consequential piece of information in the memo. If a branch employee tips off a subject, the consequences fall on the institution. This formatting choice is about <strong>risk management</strong>, not aesthetics." },
+      { label:"Skills Demonstrated", text:"", pills:["BSA / § 314(a) Process","Operational Communication","Risk Framing","Plain Language Drafting","Cross-departmental Coordination"] }
+    ]
+  },
+
+  // 3 — QA FINDINGS BRIEF
+  {
+    type:"Brief · QA / Compliance Testing",
+    format:"Operations Corrective Brief — QA Review Findings",
+    audience:"Operations Manager · Team Leads · Compliance",
+    doc:`
+      <div class="doc-header">
+        <div class="doc-meta-grid">
+          <span class="doc-meta-label">DATE</span><span class="doc-meta-val">September 22, 2025</span>
+          <span class="doc-meta-label">TO</span><span class="doc-meta-val">Operations Manager; Team Leads — Fraud &amp; Compliance Review</span>
+          <span class="doc-meta-label">FROM</span><span class="doc-meta-val">Jack Johnson, QA / Compliance Specialist</span>
+          <span class="doc-meta-label">RE</span><span class="doc-meta-val">Q3 2025 QA Review — Findings and Required Process Corrections</span>
+        </div>
+        <div class="doc-subject">Q3 QA Review — Three Findings Requiring Corrective Action</div>
+      </div>
+      <div class="doc-body-text">
+        <div class="doc-section-head">Overview</div>
+        <p>The Q3 compliance QA review covered 240 cases closed between July 1 and September 15, 2025. Overall case quality was consistent with Q2 — the team is doing well on documentation completeness and SAR triage accuracy. This brief addresses three process-level findings that require correction before Q4.</p>
+
+        <div class="doc-section-head">Finding 1 — Customer Contact Documentation (Moderate)</div>
+        <p><strong>Observed:</strong> 22 of 240 cases (9.2%) were closed without documentation of a customer contact attempt or a documented rationale for why contact was withheld. FinCEN SAR filing standards require that the decision to contact — or not contact — the subject be explicitly recorded in the case file.</p>
+        <p><strong>Required correction:</strong> Effective immediately, every case closure must include one of the following in the case notes: (a) date, method, and result of customer contact attempt; or (b) a brief statement explaining why contact was withheld (e.g., "contact withheld pending SAR filing — tipping-off risk"). A one-line note is sufficient. This is not a judgment call — it is a documentation requirement.</p>
+
+        <div class="doc-section-head">Finding 2 — CTR Aggregation Cross-Reference (Low)</div>
+        <p><strong>Observed:</strong> In 7 cases involving cash transactions near $10,000, the CTR aggregation analysis was not documented in the case file, though a CTR was filed. The absence of the aggregation analysis creates a gap in the case record that could be flagged during examination.</p>
+        <p><strong>Required correction:</strong> When a CTR is filed in connection with a case, include the aggregation analysis — even a brief notation of the dates and amounts reviewed — as a case file attachment. The CTR filing number should also be cross-referenced in the case notes.</p>
+
+        <div class="doc-section-head">Finding 3 — Prior SAR Cross-Reference (Low)</div>
+        <p><strong>Observed:</strong> 4 cases involved subjects with prior SAR history. In 2 of the 4, the prior SAR was not referenced in the case file or the SAR narrative. Examiners look specifically for evidence of ongoing pattern awareness in repeat-subject cases.</p>
+        <p><strong>Required correction:</strong> At case intake, run a prior SAR check and document the result in the case file — match or no match. If a match is found, the SAR narrative should reference the prior filing date and SAR number.</p>
+
+        <div class="doc-section-head">Next Steps</div>
+        <p>No individual performance review is being initiated based on these findings — all three are process-level issues, not individual errors. I will run a brief team refresher session on items 1 and 3 during the next team meeting. Item 2 can be addressed via a one-page job aid that I will distribute by October 1.</p>
+        <p>I will re-sample the same items in Q4 to confirm correction. Questions or pushback on any of these findings — please come to me directly.</p>
+
+        <div class="doc-sig">
+          <div class="doc-sig-name">Jack Johnson</div>
+          QA / Compliance Specialist<br>
+          [Contact]
+        </div>
+      </div>`,
+    annotations:[
+      { label:"Opening with the Good News", text:"The second sentence acknowledges what the team is doing well before listing problems. This is not softening — it's accurate. A QA memo that leads with deficiencies signals that the writer's goal is to find fault. A memo that leads with context signals that the writer's goal is to <strong>improve the process</strong>. That distinction determines whether people read the rest." },
+      { label:"Severity Labeling", text:"Each finding is labeled (Moderate / Low). This does two things: it calibrates urgency so team leads know what to prioritize, and it <strong>pre-empts defensiveness</strong> — a 'low' finding doesn't feel like an attack. Severity grading is also examination-ready language; OCC and FDIC examiners use the same framework." },
+      { label:"Closing — The Tone of Partnership", text:"'No individual performance review is being initiated' and 'come to me directly' are intentional. QA findings land as adversarial when they feel like surveillance. This closing reframes the relationship: <strong>compliance and operations are on the same team</strong>. That matters for long-term cooperation and for the quality of information the QA function receives going forward." },
+      { label:"Skills Demonstrated", text:"", pills:["QA Review Methodology","SAR Documentation Standards","Operations Communication","Process Improvement","Examination Readiness"] }
+    ]
+  }
+];
+
+function showSample(idx, clickedCard) {
+  document.querySelectorAll('.index-card').forEach(c => c.classList.remove('active'));
+  clickedCard.classList.add('active');
+  renderSample(SAMPLES[idx]);
+}
+
+function renderSample(s) {
+  const annHtml = s.annotations.map(a => {
+    if (a.label === "Skills Demonstrated") {
+      return `<div class="ann-card">
+        <div class="ann-card-label">${a.label}</div>
+        <div class="ann-pill-row">${a.pills.map(p => `<span class="skill-tag teal">${p}</span>`).join('')}</div>
+      </div>`;
+    }
+    return `<div class="ann-card">
+      <div class="ann-card-label">${a.label}</div>
+      <div class="ann-card-text">${a.text}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('sample-area').innerHTML = `
+    <div class="sample-wrap">
+      <div class="doc-pane">
+        <div class="doc-toolbar">
+          <span class="doc-toolbar-label">${s.type}</span>
+          <span class="doc-format-tag">${s.format}</span>
+        </div>
+        <div class="doc-body">${s.doc}</div>
+      </div>
+      <div class="ann-pane">
+        <div class="ann-header">Annotation — Writing Choices</div>
+        <div class="ann-card" style="background:var(--navy3);border-color:rgba(13,148,136,0.2);">
+          <div class="ann-card-label">Audience</div>
+          <div class="ann-card-text">${s.audience}</div>
+        </div>
+        ${annHtml}
+      </div>
+    </div>`;
+}
+
+// Init
+renderSample(SAMPLES[0]);
+</script>
+</body>
+</html>

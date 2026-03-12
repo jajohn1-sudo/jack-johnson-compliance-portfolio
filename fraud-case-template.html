@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fraud Case Documentation Template · Jack Johnson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a0f1e;
+    --navy2: #111827;
+    --navy3: #1a2332;
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --teal-dim: rgba(13,148,136,0.15);
+    --amber: #d97706;
+    --amber-dim: rgba(217,119,6,0.15);
+    --red: #dc2626;
+    --red-dim: rgba(220,38,38,0.12);
+    --green: #16a34a;
+    --green-dim: rgba(22,163,74,0.12);
+    --purple: #7c3aed;
+    --purple-dim: rgba(124,58,237,0.12);
+    --slate-dim: rgba(148,163,184,0.08);
+    --border: rgba(148,163,184,0.12);
+    --border2: rgba(148,163,184,0.2);
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --mono: 'IBM Plex Mono', monospace;
+    --serif: 'Libre Baskerville', serif;
+    --sans: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--navy); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.6; min-height: 100vh; }
+
+  nav { border-bottom: 1px solid var(--border); padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; background: rgba(10,15,30,0.95); backdrop-filter: blur(8px); z-index: 100; }
+  .nav-brand { font-family: var(--mono); font-size: 13px; color: var(--teal); letter-spacing: 0.08em; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { font-size: 13px; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal-light); }
+  .nav-back { font-family: var(--mono); font-size: 12px; color: var(--teal); text-decoration: none; border: 1px solid var(--teal); padding: 6px 14px; border-radius: 4px; transition: all 0.2s; }
+  .nav-back:hover { background: var(--teal-dim); }
+
+  .hero { padding: 56px 40px 40px; max-width: 1100px; margin: 0 auto; border-bottom: 1px solid var(--border); }
+  .badge { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--teal); background: var(--teal-dim); border: 1px solid rgba(13,148,136,0.3); padding: 4px 12px; border-radius: 2px; margin-bottom: 20px; text-transform: uppercase; }
+  .hero h1 { font-family: var(--serif); font-size: 38px; font-weight: 700; line-height: 1.2; margin-bottom: 16px; color: #f1f5f9; }
+  .hero h1 span { color: var(--teal-light); }
+  .hero p { font-size: 16px; color: var(--text2); max-width: 700px; line-height: 1.7; }
+  .meta-row { display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap; }
+  .meta-chip { font-family: var(--mono); font-size: 11px; color: var(--text3); border: 1px solid var(--border); padding: 4px 10px; border-radius: 2px; }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  /* PHASE PROGRESS */
+  .phase-strip {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 40px;
+  }
+  .phase-item {
+    flex: 1;
+    padding: 14px 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-right: 1px solid var(--border);
+    position: relative;
+    text-align: center;
+  }
+  .phase-item:last-child { border-right: none; }
+  .phase-item:hover { background: var(--slate-dim); }
+  .phase-item.active { background: var(--teal-dim); }
+  .phase-item.active::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--teal); }
+  .phase-item.completed { background: rgba(13,148,136,0.05); }
+  .phase-item.completed::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: rgba(13,148,136,0.4); }
+  .phase-num { font-family: var(--mono); font-size: 10px; color: var(--text3); margin-bottom: 3px; }
+  .phase-item.active .phase-num { color: var(--teal); }
+  .phase-item.completed .phase-num { color: var(--teal); }
+  .phase-name { font-size: 12px; font-weight: 500; color: var(--text3); }
+  .phase-item.active .phase-name { color: var(--teal-light); }
+  .phase-item.completed .phase-name { color: var(--text2); }
+
+  .section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--text3); text-transform: uppercase; margin-bottom: 20px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .section-title { font-family: var(--serif); font-size: 22px; color: #f1f5f9; margin-bottom: 8px; }
+  .section-desc { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 28px; max-width: 680px; }
+
+  .info-box { background: var(--teal-dim); border: 1px solid rgba(13,148,136,0.25); border-radius: 4px; padding: 14px 18px; font-size: 13px; color: var(--text2); margin-bottom: 24px; line-height: 1.6; }
+  .info-box strong { color: var(--teal-light); }
+  .warn-box { background: var(--amber-dim); border: 1px solid rgba(217,119,6,0.25); border-radius: 4px; padding: 14px 18px; font-size: 13px; color: #fbbf24; margin-bottom: 24px; line-height: 1.6; }
+
+  .phase-panel { display: none; }
+  .phase-panel.active { display: block; }
+
+  /* FORM */
+  .form-card { background: var(--navy2); border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-bottom: 20px; }
+  .form-card-title { font-weight: 600; font-size: 15px; color: var(--text); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .field-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .field-full { margin-bottom: 16px; }
+  @media (max-width: 680px) { .field-row, .field-row-3 { grid-template-columns: 1fr; } }
+  .field-group { display: flex; flex-direction: column; gap: 6px; }
+  .field-label { font-family: var(--mono); font-size: 11px; color: var(--text2); letter-spacing: 0.06em; }
+  .field-label .req { color: var(--teal); margin-left: 4px; }
+  input[type="text"], input[type="date"], input[type="time"], select, textarea {
+    background: var(--navy3); border: 1px solid var(--border2); border-radius: 4px; color: var(--text); font-family: var(--sans); font-size: 14px; padding: 10px 14px; width: 100%; transition: border-color 0.2s; appearance: none; -webkit-appearance: none;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--teal); }
+  select option { background: var(--navy2); }
+  textarea { resize: vertical; min-height: 80px; }
+
+  /* EVIDENCE LOG */
+  .evidence-table-wrap { overflow-x: auto; margin-bottom: 24px; }
+  .evidence-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 700px; }
+  .evidence-table th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: var(--text3); text-transform: uppercase; padding: 10px 12px; border-bottom: 1px solid var(--border2); background: var(--navy2); text-align: left; }
+  .evidence-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  .evidence-table tr:hover td { background: var(--slate-dim); }
+  .evidence-table input[type="text"], .evidence-table select { padding: 6px 10px; font-size: 13px; background: transparent; border: 1px solid transparent; }
+  .evidence-table input[type="text"]:focus, .evidence-table select:focus { border-color: var(--teal); background: var(--navy3); }
+  .del-btn { background: none; border: 1px solid var(--border); color: var(--text3); border-radius: 3px; padding: 4px 8px; cursor: pointer; font-size: 11px; transition: all 0.15s; }
+  .del-btn:hover { border-color: var(--red); color: #f87171; }
+
+  /* LINK ANALYSIS VIZ */
+  .link-canvas-wrap { background: var(--navy2); border: 1px solid var(--border); border-radius: 6px; padding: 20px; margin-bottom: 24px; }
+  .link-canvas-wrap h3 { font-family: var(--mono); font-size: 12px; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+  #link-canvas { width: 100%; border-radius: 4px; display: block; cursor: crosshair; }
+  .canvas-controls { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .canvas-btn { font-size: 12px; padding: 6px 14px; border: 1px solid var(--border2); border-radius: 4px; background: transparent; color: var(--text2); cursor: pointer; transition: all 0.15s; font-family: var(--sans); }
+  .canvas-btn:hover { border-color: var(--teal); color: var(--teal-light); }
+  .canvas-btn.active-mode { background: var(--teal-dim); border-color: var(--teal); color: var(--teal-light); }
+  .node-types { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+  .node-type-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); }
+  .nt-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+  /* DECISION TREE */
+  .tree-wrap { background: var(--navy2); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 24px; }
+  .tree-node {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tree-node:last-child { border-bottom: none; }
+  .tree-node.indent-1 { padding-left: 44px; }
+  .tree-node.indent-2 { padding-left: 68px; }
+  .tree-node.outcome-yes { background: var(--green-dim); border-left: 3px solid var(--green); }
+  .tree-node.outcome-no { background: var(--slate-dim); }
+  .tree-node.outcome-sar { background: var(--red-dim); border-left: 3px solid var(--red); }
+  .tree-node.outcome-monitor { background: var(--amber-dim); border-left: 3px solid var(--amber); }
+  .tree-question { font-weight: 500; font-size: 14px; color: var(--text); }
+  .tree-subtext { font-size: 12px; color: var(--text3); line-height: 1.5; }
+  .tree-actions { display: flex; gap: 10px; }
+  .tree-btn { font-size: 12px; padding: 6px 16px; border-radius: 3px; cursor: pointer; font-family: var(--sans); transition: all 0.15s; border: 1px solid; }
+  .tree-btn.yes { background: var(--green-dim); border-color: rgba(22,163,74,0.4); color: #4ade80; }
+  .tree-btn.yes:hover { background: rgba(22,163,74,0.2); }
+  .tree-btn.no { background: var(--slate-dim); border-color: var(--border2); color: var(--text2); }
+  .tree-btn.no:hover { border-color: var(--text2); }
+  .outcome-badge { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 4px; font-weight: 600; font-size: 14px; }
+  .ob-sar { background: var(--red-dim); color: #f87171; border: 1px solid rgba(220,38,38,0.3); }
+  .ob-no { background: var(--green-dim); color: #4ade80; border: 1px solid rgba(22,163,74,0.3); }
+  .ob-monitor { background: var(--amber-dim); color: #fbbf24; border: 1px solid rgba(217,119,6,0.3); }
+  .ob-le { background: var(--purple-dim); color: #a78bfa; border: 1px solid rgba(124,58,237,0.3); }
+
+  /* DISPOSITION */
+  .dispo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; margin-bottom: 28px; }
+  .dispo-card { border: 1px solid var(--border); border-radius: 6px; padding: 16px; cursor: pointer; transition: all 0.2s; }
+  .dispo-card:hover { border-color: var(--border2); }
+  .dispo-card.selected { border-color: var(--teal); background: var(--teal-dim); }
+  .dispo-title { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  .dispo-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
+
+  /* CHECKLIST */
+  .checklist { display: flex; flex-direction: column; gap: 0; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; margin-bottom: 24px; }
+  .check-row { display: flex; align-items: flex-start; gap: 14px; padding: 14px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.15s; }
+  .check-row:last-child { border-bottom: none; }
+  .check-row:hover { background: var(--slate-dim); }
+  .check-row.done { background: rgba(13,148,136,0.06); }
+  .check-box-sq { width: 18px; height: 18px; min-width: 18px; border: 1px solid var(--border2); border-radius: 3px; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.15s; flex-shrink: 0; }
+  .check-row.done .check-box-sq { background: var(--teal); border-color: var(--teal); }
+  .check-row.done .check-box-sq::after { content: '✓'; font-size: 11px; color: white; font-weight: 700; }
+  .check-content { flex: 1; }
+  .check-title { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .check-row.done .check-title { color: var(--text3); text-decoration: line-through; }
+  .check-sub { font-size: 12px; color: var(--text3); line-height: 1.4; }
+
+  .pill { display: inline-block; font-family: var(--mono); font-size: 10px; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.06em; }
+  .pill-green { background: var(--green-dim); color: #4ade80; border: 1px solid rgba(22,163,74,0.3); }
+  .pill-amber { background: var(--amber-dim); color: #fbbf24; border: 1px solid rgba(217,119,6,0.3); }
+  .pill-red { background: var(--red-dim); color: #f87171; border: 1px solid rgba(220,38,38,0.3); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal-light); border: 1px solid rgba(13,148,136,0.3); }
+
+  .btn-primary { background: var(--teal); color: white; border: none; border-radius: 4px; padding: 12px 24px; font-family: var(--sans); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+  .btn-primary:hover { background: var(--teal-light); }
+  .btn-secondary { background: transparent; color: var(--text2); border: 1px solid var(--border2); border-radius: 4px; padding: 10px 20px; font-family: var(--sans); font-size: 13px; cursor: pointer; transition: all 0.2s; }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal-light); }
+  .btn-small { background: transparent; color: var(--teal); border: 1px solid rgba(13,148,136,0.4); border-radius: 3px; padding: 6px 14px; font-family: var(--sans); font-size: 12px; cursor: pointer; transition: all 0.15s; }
+  .btn-small:hover { background: var(--teal-dim); }
+  .btn-row { display: flex; gap: 12px; align-items: center; margin-top: 20px; }
+
+  /* CASE HEADER STATUS */
+  .case-header-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px; }
+  @media (max-width: 600px) { .case-header-strip { grid-template-columns: 1fr 1fr; } }
+  .case-stat { background: var(--navy2); border: 1px solid var(--border); border-radius: 6px; padding: 14px 16px; }
+  .case-stat-label { font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 0.08em; margin-bottom: 6px; text-transform: uppercase; }
+  .case-stat-val { font-size: 15px; font-weight: 500; color: var(--text); }
+  .status-open { color: #fbbf24; }
+  .status-closed { color: #4ade80; }
+  .status-escalated { color: #f87171; }
+
+  footer { border-top: 1px solid var(--border); padding: 32px 40px; max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  footer p { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+  footer a { color: var(--teal); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">JJ · FC&amp;C</span>
+  <div class="nav-links">
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects">Work Samples</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#expertise">Expertise</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#contact">Contact</a>
+  </div>
+  <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects" class="nav-back">← Portfolio</a>
+</nav>
+
+<div class="hero">
+  <div class="badge">Fraud Investigation · Case Management · FIU Methodology</div>
+  <h1>Fraud Case <span>Documentation Template</span></h1>
+  <p>End-to-end fraud case framework: alert intake, evidence logging, link analysis worksheet, SAR and law enforcement referral decision tree, and case disposition. Built from investigation methodology developed across Amazon FIU and Walmart Home Office.</p>
+  <div class="meta-row">
+    <span class="meta-chip">FinCEN SAR Filing Standards</span>
+    <span class="meta-chip">31 CFR § 1020.320</span>
+    <span class="meta-chip">Reg E / FCRA Investigation Obligations</span>
+    <span class="meta-chip">Developed: Amazon + Walmart FIU Practice</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- PHASE NAVIGATOR -->
+  <div class="phase-strip">
+    <div class="phase-item active" onclick="showPhase(0, this)">
+      <div class="phase-num">Phase 01</div>
+      <div class="phase-name">Case Intake</div>
+    </div>
+    <div class="phase-item" onclick="showPhase(1, this)">
+      <div class="phase-num">Phase 02</div>
+      <div class="phase-name">Evidence Log</div>
+    </div>
+    <div class="phase-item" onclick="showPhase(2, this)">
+      <div class="phase-num">Phase 03</div>
+      <div class="phase-name">Link Analysis</div>
+    </div>
+    <div class="phase-item" onclick="showPhase(3, this)">
+      <div class="phase-num">Phase 04</div>
+      <div class="phase-name">SAR Referral Tree</div>
+    </div>
+    <div class="phase-item" onclick="showPhase(4, this)">
+      <div class="phase-num">Phase 05</div>
+      <div class="phase-name">Disposition</div>
+    </div>
+  </div>
+
+  <!-- PHASE 0: INTAKE -->
+  <div class="phase-panel active" id="phase-0">
+    <div class="section-label">Case Intake & Initial Documentation</div>
+    <div class="section-title">Alert Intake &amp; Case Opening</div>
+    <div class="section-desc">Complete at case opening. All fields marked required must be populated before the case advances to investigation. Alert-to-case assignment triggers the investigation clock — OCC consumer complaint resolution standards and FinCEN filing windows begin from this date.</div>
+
+    <div class="case-header-strip">
+      <div class="case-stat"><div class="case-stat-label">Case Number</div><div class="case-stat-val" id="cs-num" style="font-family:var(--mono);">—</div></div>
+      <div class="case-stat"><div class="case-stat-label">Status</div><div class="case-stat-val status-open">Open</div></div>
+      <div class="case-stat"><div class="case-stat-label">Days Open</div><div class="case-stat-val" id="cs-days">0</div></div>
+      <div class="case-stat"><div class="case-stat-label">Assigned Analyst</div><div class="case-stat-val">Unassigned</div></div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-title">Alert Identification</div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Alert / Ticket Number <span class="req">*</span></label><input type="text" id="alert-num" placeholder="e.g. ALERT-2026-04821" oninput="updateCaseNum()"></div>
+        <div class="field-group"><label class="field-label">Alert Source <span class="req">*</span></label>
+          <select id="alert-source">
+            <option value="">— Select —</option>
+            <option>Transaction Monitoring System</option>
+            <option>Customer Dispute / Reg E Claim</option>
+            <option>Internal Report / Employee Referral</option>
+            <option>Law Enforcement Referral</option>
+            <option>FinCEN § 314(a) Request</option>
+            <option>Adverse Media / External Intelligence</option>
+            <option>Proactive Detection — Analytics</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Date Alert Generated <span class="req">*</span></label><input type="date" id="alert-date" oninput="calcDays()"></div>
+        <div class="field-group"><label class="field-label">Date Assigned to Analyst <span class="req">*</span></label><input type="date" id="assign-date" oninput="calcDays()"></div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Fraud Type / Category <span class="req">*</span></label>
+          <select id="fraud-type">
+            <option value="">— Select —</option>
+            <option>Account Takeover (ATO)</option>
+            <option>Unauthorized ACH / Wire</option>
+            <option>Check Fraud / Kiting</option>
+            <option>Card Present Fraud</option>
+            <option>Card Not Present / CNP Fraud</option>
+            <option>First-Party Fraud</option>
+            <option>Synthetic Identity Fraud</option>
+            <option>Loan / Mortgage Fraud</option>
+            <option>Elder Financial Exploitation</option>
+            <option>Business Email Compromise (BEC)</option>
+            <option>Structuring / BSA Violation</option>
+            <option>Money Laundering — Suspected</option>
+            <option>OFAC / Sanctions Issue</option>
+            <option>Other — Specify in Notes</option>
+          </select>
+        </div>
+        <div class="field-group"><label class="field-label">Estimated Loss Amount</label><input type="text" placeholder="e.g. $4,200.00 or Unknown"></div>
+      </div>
+      <div class="field-group field-full"><label class="field-label">Alert Summary / Initial Observations <span class="req">*</span></label><textarea placeholder="Describe the triggering event, anomalous behavior, or reason for referral. Include relevant transaction details, dates, and amounts observed at intake."></textarea></div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-title">Subject Information</div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Subject Name (Primary) <span class="req">*</span></label><input type="text" placeholder="Last, First MI"></div>
+        <div class="field-group"><label class="field-label">Account Number(s)</label><input type="text" placeholder="Comma-separated if multiple"></div>
+      </div>
+      <div class="field-row-3">
+        <div class="field-group"><label class="field-label">Account Type</label>
+          <select>
+            <option value="">— Select —</option>
+            <option>Checking</option><option>Savings</option><option>Business Checking</option>
+            <option>Credit / Debit Card</option><option>Loan</option><option>Multiple</option>
+          </select>
+        </div>
+        <div class="field-group"><label class="field-label">Account Open Date</label><input type="date"></div>
+        <div class="field-group"><label class="field-label">CDD Risk Rating</label>
+          <select>
+            <option value="">— Select —</option>
+            <option>Standard</option><option>Elevated</option><option>High / EDD Subject</option><option>PEP</option><option>MSB</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Occupation / Business Type</label><input type="text" placeholder="As stated in KYC / account opening"></div>
+        <div class="field-group"><label class="field-label">Prior SAR Filed?</label>
+          <select>
+            <option value="">— Select —</option>
+            <option>No prior SAR on record</option>
+            <option>Prior SAR — same subject (see notes)</option>
+            <option>Prior SAR — related party</option>
+            <option>Unknown — pending review</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-group field-full"><label class="field-label">OFAC Screening Result</label>
+        <select>
+          <option value="">— Select —</option>
+          <option>Clear — no match</option><option>Potential match — under review</option><option>Confirmed match — escalate immediately</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-title">Investigation Parameters</div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Review Period — Start Date</label><input type="date"></div>
+        <div class="field-group"><label class="field-label">Review Period — End Date</label><input type="date"></div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Applicable Filing Deadline</label>
+          <select>
+            <option value="">— Select —</option>
+            <option>30-day SAR filing window (FinCEN)</option>
+            <option>60-day SAR filing with extension (FinCEN)</option>
+            <option>10-day Reg E provisional credit deadline</option>
+            <option>45-day Reg E investigation deadline</option>
+            <option>No immediate filing deadline</option>
+          </select>
+        </div>
+        <div class="field-group"><label class="field-label">Filing Deadline Date</label><input type="date"></div>
+      </div>
+      <div class="field-group field-full"><label class="field-label">Initial Risk Assessment / Investigative Hypothesis</label><textarea placeholder="Based on the alert, what is the investigator's initial hypothesis about the nature and mechanism of the suspected fraud or suspicious activity?"></textarea></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="showPhase(1, document.querySelectorAll('.phase-item')[1])">Proceed to Evidence Log →</button>
+    </div>
+  </div>
+
+  <!-- PHASE 1: EVIDENCE -->
+  <div class="phase-panel" id="phase-1">
+    <div class="section-label">Evidence Collection &amp; Documentation</div>
+    <div class="section-title">Evidence Log</div>
+    <div class="section-desc">Log all evidence collected during investigation. Each piece of evidence requires a source, retrieval date, and analyst signature. Evidence log is the chain-of-custody record — critical for SAR narrative support and any law enforcement referral.</div>
+
+    <div class="info-box"><strong>Chain of custody note:</strong> Evidence should be retrieved and logged contemporaneously. Do not rely on memory. Document the exact source, date/time retrieved, and any limitations (e.g., "data limited to 90-day retention window").</div>
+
+    <div class="evidence-table-wrap">
+      <table class="evidence-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Evidence Type</th>
+            <th>Description / Source</th>
+            <th>Date Retrieved</th>
+            <th>Retrieved By</th>
+            <th>Relevance</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="evidence-body">
+          <tr id="ev-row-1">
+            <td style="font-family:var(--mono);font-size:11px;color:var(--text3);">001</td>
+            <td><select onchange="" style="width:150px">
+              <option>Transaction Records</option>
+              <option>Account Statements</option>
+              <option>Wire/ACH Records</option>
+              <option>Login/IP Logs</option>
+              <option>Device Fingerprint</option>
+              <option>Customer Correspondence</option>
+              <option>Phone Call Notes</option>
+              <option>ID Documents</option>
+              <option>Third-Party Subpoena</option>
+              <option>Internal Alert Report</option>
+              <option>SAR Cross-Reference</option>
+              <option>CTR Records</option>
+              <option>Other</option>
+            </select></td>
+            <td><input type="text" placeholder="Source / description" style="width:200px"></td>
+            <td><input type="date" style="width:140px"></td>
+            <td><input type="text" placeholder="Analyst name" style="width:120px"></td>
+            <td><select style="width:100px">
+              <option>High</option><option>Medium</option><option>Low</option>
+            </select></td>
+            <td><button class="del-btn" onclick="delEvidenceRow(this)">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="btn-small" onclick="addEvidenceRow()">+ Add Evidence Item</button>
+
+    <div class="form-card" style="margin-top: 24px;">
+      <div class="form-card-title">Customer Contact Attempt Log</div>
+      <div class="info-box" style="margin-top: 0;"><strong>Required for SAR narrative:</strong> FinCEN guidance requires documentation of whether the subject was contacted and their response (or non-response). Do not tip off the subject that a SAR is being considered.</div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Contact Attempted?</label>
+          <select id="contact-attempt">
+            <option value="">— Select —</option>
+            <option>Yes — successful</option>
+            <option>Yes — no response</option>
+            <option>Yes — refused to explain</option>
+            <option>No — tipping-off risk assessed; contact withheld</option>
+            <option>No — law enforcement requested no contact</option>
+          </select>
+        </div>
+        <div class="field-group"><label class="field-label">Contact Date(s)</label><input type="date"></div>
+      </div>
+      <div class="field-group field-full"><label class="field-label">Customer Explanation (if provided)</label><textarea placeholder="Document the subject's explanation verbatim or as close to verbatim as possible. Note whether explanation was satisfactory, partially satisfactory, or not credible, and the basis for that assessment."></textarea></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="showPhase(0, document.querySelectorAll('.phase-item')[0])">← Back to Intake</button>
+      <button class="btn-primary" onclick="showPhase(2, document.querySelectorAll('.phase-item')[2])">Proceed to Link Analysis →</button>
+    </div>
+  </div>
+
+  <!-- PHASE 2: LINK ANALYSIS -->
+  <div class="phase-panel" id="phase-2">
+    <div class="section-label">Subject Relationship Mapping</div>
+    <div class="section-title">Link Analysis Worksheet</div>
+    <div class="section-desc">Map relationships between subjects, accounts, entities, devices, and transactions. Link analysis is critical for multi-subject cases and demonstrates network awareness in SAR narrative. Click to add nodes; drag to connect.</div>
+
+    <div class="info-box"><strong>How to use:</strong> Select a node type, then click the canvas to place it. Add a label in the prompt. Use "Connect Mode" to draw relationship lines between nodes. Download the diagram to attach to the case file.</div>
+
+    <div class="link-canvas-wrap">
+      <h3>Relationship Map</h3>
+      <canvas id="link-canvas" height="400"></canvas>
+      <div class="canvas-controls">
+        <button class="canvas-btn active-mode" id="btn-add" onclick="setMode('add')">+ Add Node</button>
+        <button class="canvas-btn" id="btn-connect" onclick="setMode('connect')">↔ Connect</button>
+        <button class="canvas-btn" id="btn-move" onclick="setMode('move')">✥ Move</button>
+        <button class="canvas-btn" id="btn-label" onclick="setMode('label')">✎ Label Edge</button>
+        <button class="canvas-btn" onclick="clearCanvas()">✕ Clear</button>
+        <select id="node-type-select" style="font-size:12px;padding:6px 10px;background:var(--navy3);border:1px solid var(--border2);border-radius:4px;color:var(--text2);">
+          <option value="subject">Subject</option>
+          <option value="account">Account</option>
+          <option value="entity">Entity / Business</option>
+          <option value="phone">Phone / Device</option>
+          <option value="address">Address</option>
+          <option value="transaction">Transaction</option>
+        </select>
+      </div>
+      <div class="node-types">
+        <div class="node-type-item"><div class="nt-dot" style="background:#f87171"></div>Subject</div>
+        <div class="node-type-item"><div class="nt-dot" style="background:#14b8a6"></div>Account</div>
+        <div class="node-type-item"><div class="nt-dot" style="background:#fbbf24"></div>Entity</div>
+        <div class="node-type-item"><div class="nt-dot" style="background:#a78bfa"></div>Phone / Device</div>
+        <div class="node-type-item"><div class="nt-dot" style="background:#94a3b8"></div>Address</div>
+        <div class="node-type-item"><div class="nt-dot" style="background:#4ade80"></div>Transaction</div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-title">Link Analysis Narrative</div>
+      <div class="field-group field-full"><label class="field-label">Relationship Summary — Key Connections Identified</label><textarea placeholder="Describe the key relationships identified through link analysis. For each connection, note the nature of the relationship (shared device, shared address, transaction flow, common phone number, etc.) and its significance to the investigation hypothesis." style="min-height: 120px;"></textarea></div>
+      <div class="field-row" style="margin-top: 16px;">
+        <div class="field-group"><label class="field-label">Number of Subjects Identified</label><input type="text" placeholder="e.g. 3 subjects, 2 unknown"></div>
+        <div class="field-group"><label class="field-label">Number of Accounts / Entities Involved</label><input type="text" placeholder="e.g. 5 accounts across 2 institutions"></div>
+      </div>
+      <div class="field-group field-full"><label class="field-label">Multi-Institution / External Coordination Required?</label>
+        <select>
+          <option>No — all activity within this institution</option>
+          <option>Yes — § 314(b) voluntary information sharing applicable</option>
+          <option>Yes — subpoena / law enforcement coordination required</option>
+          <option>Unknown — pending further analysis</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="showPhase(1, document.querySelectorAll('.phase-item')[1])">← Back to Evidence</button>
+      <button class="btn-primary" onclick="showPhase(3, document.querySelectorAll('.phase-item')[3])">Proceed to SAR Decision →</button>
+    </div>
+  </div>
+
+  <!-- PHASE 3: SAR REFERRAL TREE -->
+  <div class="phase-panel" id="phase-3">
+    <div class="section-label">Referral Decision Framework</div>
+    <div class="section-title">SAR &amp; Law Enforcement Referral Decision Tree</div>
+    <div class="section-desc">Walk through the decision tree to determine SAR filing obligation and law enforcement referral. Each decision is logged for case file documentation. Reset at any time to revise.</div>
+
+    <div class="warn-box">Reminder: SAR tipping-off prohibition applies (31 U.S.C. § 5318(g)(2)). Do not disclose to the subject or any person that a SAR has been or may be filed. Refer all subject inquiries to Legal and BSA Officer.</div>
+
+    <div id="tree-container">
+      <div class="tree-wrap" id="tree-step-0">
+        <div class="tree-node">
+          <div class="tree-question">Q1. Does the transaction(s) or activity involve a known or suspected violation of federal law?</div>
+          <div class="tree-subtext">Includes money laundering, structuring, fraud, terrorist financing, OFAC violations, and other predicate offenses under the BSA and Bank Fraud Act.</div>
+          <div class="tree-actions">
+            <button class="tree-btn yes" onclick="treeNext(1)">Yes</button>
+            <button class="tree-btn no" onclick="treeNext('1b')">No / Uncertain</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="tree-step-1" style="display:none;">
+        <div class="tree-node indent-1">
+          <div class="tree-question">Q2. Does the transaction involve $5,000 or more (or $2,000 or more for money laundering)?</div>
+          <div class="tree-subtext">FinCEN SAR filing thresholds: $5,000 for most fraud; $2,000 when money laundering is suspected or $25,000 for computer intrusion.</div>
+          <div class="tree-actions">
+            <button class="tree-btn yes" onclick="treeNext(2)">Yes — at or above threshold</button>
+            <button class="tree-btn no" onclick="treeNext('2b')">Below threshold</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="tree-step-1b" style="display:none;">
+        <div class="tree-node indent-1">
+          <div class="tree-question">Q2-alt. Does the activity, while not a known law violation, involve unusual or suspicious activity inconsistent with the customer's profile?</div>
+          <div class="tree-subtext">SAR may still be required for activity that raises suspicion even without confirmed law violation — "no known explanation" standard.</div>
+          <div class="tree-actions">
+            <button class="tree-btn yes" onclick="treeNext('1b-yes')">Yes — activity is anomalous and unexplained</button>
+            <button class="tree-btn no" onclick="treeNext('close')">No — activity explained and consistent with profile</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="tree-step-2" style="display:none;">
+        <div class="tree-node indent-2">
+          <div class="tree-question">Q3. Has the investigation been completed and does the evidence support the suspicion?</div>
+          <div class="tree-subtext">Evidence must be sufficient to support a SAR narrative. File within 30 days of detection; 60 days if identity of subject is unknown.</div>
+          <div class="tree-actions">
+            <button class="tree-btn yes" onclick="treeNext('sar-req')">Yes — SAR required</button>
+            <button class="tree-btn no" onclick="treeNext('monitor')">Inconclusive — continue monitoring</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="tree-step-2b" style="display:none;">
+        <div class="tree-node indent-2 outcome-monitor">
+          <div class="tree-question">Below filing threshold — enhanced monitoring recommended</div>
+          <div class="tree-subtext">Document the activity in case file. Place on 90-day enhanced monitoring. Aggregate with any future activity — filing threshold may be reached cumulatively.</div>
+          <div style="margin-top: 8px;"><span class="outcome-badge ob-monitor">Enhanced Monitoring — No SAR at this time</span></div>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="tree-step-1b-yes" style="display:none;">
+        <div class="tree-node indent-2">
+          <div class="tree-question">Q3-alt. Does the activity meet SAR filing thresholds and does the anomalous pattern lack any credible explanation?</div>
+          <div class="tree-actions">
+            <button class="tree-btn yes" onclick="treeNext('sar-req')">Yes</button>
+            <button class="tree-btn no" onclick="treeNext('monitor')">No — document and monitor</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="tree-step-sar-req" style="display:none;">
+        <div class="tree-node outcome-sar">
+          <div class="tree-question">SAR Filing Required</div>
+          <div class="tree-subtext">Complete SAR package and submit to BSA Officer for review. File via FinCEN BSA E-Filing System within 30 days of detection (60 days if subject unknown). Do not disclose to subject.</div>
+          <div style="margin-top: 12px;"><span class="outcome-badge ob-sar">SAR Required — File within 30 days</span></div>
+          <div style="margin-top: 14px;">
+            <div class="tree-question" style="font-size: 13px; margin-bottom: 10px;">Q4. Does the activity involve imminent risk or is there evidence of ongoing fraud requiring immediate law enforcement notification?</div>
+            <div class="tree-actions">
+              <button class="tree-btn yes" onclick="treeNext('le-ref')">Yes — law enforcement referral warranted</button>
+              <button class="tree-btn no" onclick="treeNext('sar-only')">No — SAR only at this time</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="tree-step-le-ref" style="display:none;">
+        <div class="tree-node outcome-sar">
+          <span class="outcome-badge ob-sar" style="margin-bottom: 12px; display:inline-flex;">SAR Required</span>
+          <span class="outcome-badge ob-le" style="margin-bottom: 12px; margin-left: 10px; display:inline-flex;">Law Enforcement Referral</span>
+          <div class="tree-subtext" style="margin-top: 8px;">Coordinate with BSA Officer and Legal on law enforcement notification. Document referral in case file. Continue SAR filing — law enforcement referral does not substitute for SAR.</div>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="tree-step-sar-only" style="display:none;">
+        <div class="tree-node outcome-sar">
+          <span class="outcome-badge ob-sar">SAR Required — No Immediate LE Referral</span>
+          <div class="tree-subtext" style="margin-top: 10px;">File SAR within required window. Continue monitoring. Reassess law enforcement referral if additional activity is detected post-filing.</div>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="tree-step-monitor" style="display:none;">
+        <div class="tree-node outcome-monitor">
+          <span class="outcome-badge ob-monitor">Continue Monitoring — No SAR at This Time</span>
+          <div class="tree-subtext" style="margin-top: 10px;">Document findings, rationale for no SAR, and monitoring parameters. Set 90-day review trigger. If new activity emerges, reopen decision tree from Q1.</div>
+        </div>
+      </div>
+
+      <div class="tree-wrap" id="tree-step-close" style="display:none;">
+        <div class="tree-node outcome-yes">
+          <span class="outcome-badge ob-no">No SAR — Activity Explained and Consistent</span>
+          <div class="tree-subtext" style="margin-top: 10px;">Document customer explanation, supporting evidence, and basis for closure. BSA Officer sign-off required for case closure. Maintain case file per retention policy.</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-secondary" style="margin-top: 20px;" onclick="resetTree()">Reset Decision Tree</button>
+
+    <div class="btn-row" style="margin-top: 24px;">
+      <button class="btn-secondary" onclick="showPhase(2, document.querySelectorAll('.phase-item')[2])">← Back to Link Analysis</button>
+      <button class="btn-primary" onclick="showPhase(4, document.querySelectorAll('.phase-item')[4])">Proceed to Disposition →</button>
+    </div>
+  </div>
+
+  <!-- PHASE 4: DISPOSITION -->
+  <div class="phase-panel" id="phase-4">
+    <div class="section-label">Case Closure &amp; Final Documentation</div>
+    <div class="section-title">Case Disposition</div>
+    <div class="section-desc">Select the case disposition outcome and complete the closure checklist. All cases require BSA Officer or supervisor sign-off. Case files must be retained per BSA record retention requirements (5 years minimum).</div>
+
+    <div class="section-label" style="margin-bottom: 12px;">Disposition Outcome</div>
+    <div class="dispo-grid">
+      <div class="dispo-card" onclick="selectDispo(this)">
+        <div class="dispo-title" style="color:#4ade80;">SAR Filed — Closed</div>
+        <div class="dispo-desc">SAR submitted to FinCEN. No ongoing monitoring required unless new activity emerges. Case file retained.</div>
+      </div>
+      <div class="dispo-card" onclick="selectDispo(this)">
+        <div class="dispo-title" style="color:#fbbf24;">SAR Filed — Continued Monitoring</div>
+        <div class="dispo-desc">SAR filed; case remains open for ongoing monitoring. Review trigger set per risk tier schedule.</div>
+      </div>
+      <div class="dispo-card" onclick="selectDispo(this)">
+        <div class="dispo-title" style="color:#f87171;">SAR Filed — Law Enforcement Referral</div>
+        <div class="dispo-desc">SAR filed; formal LE referral coordinated through BSA Officer and Legal. Cooperative relationship maintained.</div>
+      </div>
+      <div class="dispo-card" onclick="selectDispo(this)">
+        <div class="dispo-title" style="color:#93c5fd;">No SAR — Enhanced Monitoring</div>
+        <div class="dispo-desc">Activity did not meet SAR threshold. 90-day enhanced monitoring initiated. Case re-evaluates on trigger.</div>
+      </div>
+      <div class="dispo-card" onclick="selectDispo(this)">
+        <div class="dispo-title" style="color:#4ade80;">No SAR — Activity Explained</div>
+        <div class="dispo-desc">Customer explanation reviewed and accepted as credible. Activity consistent with profile. Case closed.</div>
+      </div>
+      <div class="dispo-card" onclick="selectDispo(this)">
+        <div class="dispo-title" style="color:#a78bfa;">Account Action — Closure / Restriction</div>
+        <div class="dispo-desc">Account closed or access restricted based on investigation findings. Document basis thoroughly.</div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-title">Closure Documentation</div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Case Closed Date</label><input type="date"></div>
+        <div class="field-group"><label class="field-label">Total Loss / Recovery Amount</label><input type="text" placeholder="e.g. $4,200 loss; $2,100 recovered"></div>
+      </div>
+      <div class="field-group field-full" style="margin-bottom: 16px;"><label class="field-label">Case Summary — Final Narrative <span class="req">*</span></label><textarea placeholder="Provide a concise summary of the investigation findings, key evidence, investigative steps taken, and basis for the disposition decision. This summary becomes the permanent record." style="min-height:120px;"></textarea></div>
+      <div class="field-row">
+        <div class="field-group"><label class="field-label">Investigating Analyst</label><input type="text" placeholder="Name / employee ID"></div>
+        <div class="field-group"><label class="field-label">Supervisor / BSA Officer Review</label><input type="text" placeholder="Name + date of sign-off"></div>
+      </div>
+    </div>
+
+    <div class="section-label">Closure Checklist</div>
+    <div class="checklist">
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">All evidence documented and referenced in case file</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Customer contact attempt(s) documented</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">SAR decision documented and rationale stated (file or no-file)</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">SAR filed within 30-day window (if applicable)</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Law enforcement referral documented (if applicable)</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Link analysis diagram saved and attached</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Prior SAR cross-reference noted (if applicable)</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">BSA Officer / supervisor sign-off obtained</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Case file logged in case management system with all documents</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Retention label applied — 5-year minimum BSA requirement</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">CDD/EDD refresh initiated if case reveals new risk information</div></div></div>
+      <div class="check-row" onclick="this.classList.toggle('done')"><div class="check-box-sq"></div><div class="check-content"><div class="check-title">Reg E provisional credit status resolved (if consumer dispute case)</div></div></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="showPhase(3, document.querySelectorAll('.phase-item')[3])">← Back to SAR Decision</button>
+      <button class="btn-primary">Mark Case Complete</button>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Jack Johnson · Financial Crimes &amp; Compliance · <a href="mailto:jajohnson2@cox.net">jajohnson2@cox.net</a></p>
+  <p>Fraud Investigation Methodology · Developed from Amazon FIU + Walmart Home Office practice</p>
+</footer>
+
+<script>
+// PHASE NAVIGATION
+function showPhase(idx, el) {
+  document.querySelectorAll('.phase-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('phase-' + idx).classList.add('active');
+  document.querySelectorAll('.phase-item').forEach((item, i) => {
+    item.classList.remove('active');
+    if (i < idx) item.classList.add('completed');
+    else item.classList.remove('completed');
+  });
+  if (el) el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// CASE NUMBER
+function updateCaseNum() {
+  const v = document.getElementById('alert-num').value;
+  document.getElementById('cs-num').textContent = v || '—';
+}
+
+function calcDays() {
+  const a = document.getElementById('alert-date').value;
+  const b = document.getElementById('assign-date').value;
+  if (a && b) {
+    const diff = Math.max(0, Math.round((new Date(b) - new Date(a)) / 86400000));
+    document.getElementById('cs-days').textContent = diff;
+  }
+}
+
+// EVIDENCE LOG
+let evidenceCount = 1;
+function addEvidenceRow() {
+  evidenceCount++;
+  const tbody = document.getElementById('evidence-body');
+  const row = document.createElement('tr');
+  const num = String(evidenceCount).padStart(3, '0');
+  row.innerHTML = `
+    <td style="font-family:var(--mono);font-size:11px;color:var(--text3);">${num}</td>
+    <td><select style="width:150px">
+      <option>Transaction Records</option><option>Account Statements</option><option>Wire/ACH Records</option>
+      <option>Login/IP Logs</option><option>Device Fingerprint</option><option>Customer Correspondence</option>
+      <option>Phone Call Notes</option><option>ID Documents</option><option>Third-Party Subpoena</option>
+      <option>Internal Alert Report</option><option>SAR Cross-Reference</option><option>CTR Records</option><option>Other</option>
+    </select></td>
+    <td><input type="text" placeholder="Source / description" style="width:200px"></td>
+    <td><input type="date" style="width:140px"></td>
+    <td><input type="text" placeholder="Analyst name" style="width:120px"></td>
+    <td><select style="width:100px"><option>High</option><option>Medium</option><option>Low</option></select></td>
+    <td><button class="del-btn" onclick="delEvidenceRow(this)">Remove</button></td>`;
+  tbody.appendChild(row);
+}
+function delEvidenceRow(btn) {
+  const row = btn.closest('tr');
+  if (document.querySelectorAll('#evidence-body tr').length > 1) row.remove();
+}
+
+// LINK ANALYSIS CANVAS
+const canvas = document.getElementById('link-canvas');
+const ctx = canvas.getContext('2d');
+let nodes = [], edges = [], mode = 'add';
+let dragNode = null, connectStart = null, dragOffX = 0, dragOffY = 0;
+let tempEdgeEnd = null;
+
+const nodeColors = {
+  subject: '#f87171', account: '#14b8a6', entity: '#fbbf24',
+  phone: '#a78bfa', address: '#94a3b8', transaction: '#4ade80'
+};
+
+function resizeCanvas() {
+  const w = canvas.parentElement.clientWidth - 40;
+  canvas.width = w;
+  drawAll();
+}
+
+function drawAll() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#111827';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = 'rgba(148,163,184,0.06)';
+  ctx.lineWidth = 1;
+  for (let x = 0; x < canvas.width; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
+  for (let y = 0; y < canvas.height; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+
+  edges.forEach(e => {
+    const a = nodes[e.from], b = nodes[e.to];
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+    ctx.strokeStyle = 'rgba(148,163,184,0.5)'; ctx.lineWidth = 1.5; ctx.stroke();
+    if (e.label) {
+      ctx.font = '11px IBM Plex Mono, monospace'; ctx.fillStyle = '#94a3b8';
+      ctx.textAlign = 'center';
+      ctx.fillText(e.label, (a.x + b.x) / 2, (a.y + b.y) / 2 - 6);
+    }
+  });
+
+  if (mode === 'connect' && connectStart !== null && tempEdgeEnd) {
+    const a = nodes[connectStart];
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(tempEdgeEnd.x, tempEdgeEnd.y);
+    ctx.strokeStyle = 'rgba(13,148,136,0.6)'; ctx.lineWidth = 1.5; ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
+  }
+
+  nodes.forEach((n, i) => {
+    ctx.beginPath(); ctx.arc(n.x, n.y, 22, 0, Math.PI * 2);
+    ctx.fillStyle = nodeColors[n.type] || '#888'; ctx.fill();
+    ctx.strokeStyle = '#0a0f1e'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.font = '500 11px Inter, sans-serif'; ctx.fillStyle = '#0a0f1e';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const short = n.label.length > 8 ? n.label.substring(0, 7) + '…' : n.label;
+    ctx.fillText(short, n.x, n.y);
+    ctx.font = '11px Inter, sans-serif'; ctx.fillStyle = '#94a3b8';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(n.label.length > 12 ? n.label.substring(0,11)+'…' : n.label, n.x, n.y + 36);
+  });
+}
+
+function getNodeAt(x, y) {
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    const n = nodes[i];
+    if (Math.hypot(x - n.x, y - n.y) < 24) return i;
+  }
+  return -1;
+}
+
+canvas.addEventListener('click', function(e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left, y = e.clientY - rect.top;
+  if (mode === 'add') {
+    const label = prompt('Node label (name, account #, etc.):');
+    if (!label) return;
+    const type = document.getElementById('node-type-select').value;
+    nodes.push({ x, y, label, type });
+    drawAll();
+  } else if (mode === 'connect') {
+    const idx = getNodeAt(x, y);
+    if (idx === -1) { connectStart = null; return; }
+    if (connectStart === null) { connectStart = idx; return; }
+    if (connectStart !== idx) {
+      const rel = prompt('Relationship label (optional):') || '';
+      edges.push({ from: connectStart, to: idx, label: rel });
+      connectStart = null; tempEdgeEnd = null;
+      drawAll();
+    }
+  }
+});
+
+canvas.addEventListener('mousemove', function(e) {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left, y = e.clientY - rect.top;
+  if (mode === 'connect' && connectStart !== null) { tempEdgeEnd = { x, y }; drawAll(); }
+  if (mode === 'move' && dragNode !== null) {
+    nodes[dragNode].x = x - dragOffX; nodes[dragNode].y = y - dragOffY; drawAll();
+  }
+});
+
+canvas.addEventListener('mousedown', function(e) {
+  if (mode !== 'move') return;
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left, y = e.clientY - rect.top;
+  const idx = getNodeAt(x, y);
+  if (idx !== -1) { dragNode = idx; dragOffX = x - nodes[idx].x; dragOffY = y - nodes[idx].y; }
+});
+
+canvas.addEventListener('mouseup', () => { dragNode = null; });
+
+function setMode(m) {
+  mode = m; connectStart = null; tempEdgeEnd = null;
+  document.querySelectorAll('.canvas-btn').forEach(b => b.classList.remove('active-mode'));
+  document.getElementById('btn-' + m).classList.add('active-mode');
+  canvas.style.cursor = m === 'add' ? 'crosshair' : m === 'move' ? 'grab' : 'default';
+}
+
+function clearCanvas() {
+  if (confirm('Clear all nodes and connections?')) { nodes = []; edges = []; drawAll(); }
+}
+
+// TREE NAVIGATION
+const treeSteps = ['0','1','1b','2','2b','1b-yes','sar-req','le-ref','sar-only','monitor','close'];
+function treeNext(step) {
+  document.getElementById('tree-step-' + step).style.display = 'block';
+  document.getElementById('tree-step-' + step).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+function resetTree() {
+  treeSteps.forEach(s => {
+    const el = document.getElementById('tree-step-' + s);
+    if (s !== '0') el.style.display = 'none';
+  });
+}
+
+// DISPOSITION
+function selectDispo(card) {
+  document.querySelectorAll('.dispo-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+}
+
+// INIT
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+</script>
+
+</body>
+</html>

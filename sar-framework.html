@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAR Decision Framework · Jack Johnson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a0f1e;
+    --navy2: #111827;
+    --navy3: #1a2332;
+    --teal: #0d9488;
+    --teal-light: #14b8a6;
+    --teal-dim: rgba(13,148,136,0.15);
+    --amber: #d97706;
+    --amber-dim: rgba(217,119,6,0.15);
+    --red: #dc2626;
+    --red-dim: rgba(220,38,38,0.12);
+    --green: #16a34a;
+    --green-dim: rgba(22,163,74,0.12);
+    --slate: #94a3b8;
+    --slate-dim: rgba(148,163,184,0.08);
+    --border: rgba(148,163,184,0.12);
+    --border2: rgba(148,163,184,0.2);
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --mono: 'IBM Plex Mono', monospace;
+    --serif: 'Libre Baskerville', serif;
+    --sans: 'Inter', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: rgba(10,15,30,0.95);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+  }
+  .nav-brand { font-family: var(--mono); font-size: 13px; color: var(--teal); letter-spacing: 0.08em; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { font-size: 13px; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--teal-light); }
+  .nav-back { font-family: var(--mono); font-size: 12px; color: var(--teal); text-decoration: none; border: 1px solid var(--teal); padding: 6px 14px; border-radius: 4px; transition: all 0.2s; }
+  .nav-back:hover { background: var(--teal-dim); }
+
+  /* HERO */
+  .hero {
+    padding: 56px 40px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--teal);
+    background: var(--teal-dim);
+    border: 1px solid rgba(13,148,136,0.3);
+    padding: 4px 12px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 38px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: #f1f5f9;
+  }
+  .hero h1 span { color: var(--teal-light); }
+  .hero p {
+    font-size: 16px;
+    color: var(--text2);
+    max-width: 700px;
+    line-height: 1.7;
+  }
+  .meta-row {
+    display: flex;
+    gap: 24px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+  .meta-chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+  }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text3);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* STEP INDICATOR */
+  .steps-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 40px;
+    background: var(--navy2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .step-item {
+    flex: 1;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-right: 1px solid var(--border);
+    position: relative;
+  }
+  .step-item:last-child { border-right: none; }
+  .step-item:hover { background: var(--slate-dim); }
+  .step-item.active { background: var(--teal-dim); }
+  .step-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--teal);
+  }
+  .step-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    margin-bottom: 3px;
+  }
+  .step-item.active .step-num { color: var(--teal); }
+  .step-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text2);
+  }
+  .step-item.active .step-name { color: var(--teal-light); }
+
+  /* TRIAGE TOOL */
+  .triage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 700px) { .triage-grid { grid-template-columns: 1fr; } }
+
+  .field-group { display: flex; flex-direction: column; gap: 8px; }
+  .field-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 0.06em;
+  }
+  .field-label span {
+    color: var(--teal);
+    margin-left: 4px;
+  }
+  select, input[type="text"], textarea {
+    background: var(--navy2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14px;
+    padding: 10px 14px;
+    width: 100%;
+    transition: border-color 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  select:focus, input[type="text"]:focus, textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+  }
+  select option { background: var(--navy2); }
+  textarea { resize: vertical; min-height: 80px; }
+
+  /* CHECKBOX GROUP */
+  .checkbox-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  @media (max-width: 600px) { .checkbox-grid { grid-template-columns: 1fr; } }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--navy2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .check-item:hover { border-color: var(--border2); background: var(--navy3); }
+  .check-item.selected { border-color: rgba(13,148,136,0.4); background: var(--teal-dim); }
+  .check-item input[type="checkbox"] { display: none; }
+  .check-box {
+    width: 16px; height: 16px; min-width: 16px;
+    border: 1px solid var(--border2);
+    border-radius: 2px;
+    margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .check-item.selected .check-box {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+  .check-item.selected .check-box::after {
+    content: '✓';
+    font-size: 10px;
+    color: white;
+    font-weight: 700;
+  }
+  .check-text {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.4;
+  }
+  .check-item.selected .check-text { color: var(--text); }
+
+  /* SCORE METER */
+  .score-panel {
+    background: var(--navy2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .score-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .score-label { font-family: var(--mono); font-size: 12px; color: var(--text2); }
+  .score-value {
+    font-family: var(--mono);
+    font-size: 32px;
+    font-weight: 500;
+  }
+  .score-value.low { color: var(--green); }
+  .score-value.medium { color: var(--amber); }
+  .score-value.high { color: var(--red); }
+  .score-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .score-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.4s ease, background 0.4s ease;
+  }
+  .score-fill.low { background: var(--green); }
+  .score-fill.medium { background: var(--amber); }
+  .score-fill.high { background: var(--red); }
+  .score-verdict {
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 14px;
+    border-radius: 4px;
+    border-left: 3px solid;
+  }
+  .verdict-low { background: var(--green-dim); border-color: var(--green); color: #4ade80; }
+  .verdict-medium { background: var(--amber-dim); border-color: var(--amber); color: #fbbf24; }
+  .verdict-high { background: var(--red-dim); border-color: var(--red); color: #f87171; }
+  .verdict-none { background: var(--slate-dim); border-color: var(--border2); color: var(--text2); }
+
+  /* NARRATIVE OUTPUT */
+  .narrative-box {
+    background: var(--navy3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .narrative-box h3 {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .narrative-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text2);
+    white-space: pre-wrap;
+    font-family: var(--sans);
+  }
+  .narrative-text em {
+    color: var(--teal-light);
+    font-style: normal;
+    background: var(--teal-dim);
+    padding: 0 4px;
+    border-radius: 2px;
+  }
+
+  /* DECISION MATRIX TABLE */
+  .matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 32px;
+  }
+  .matrix-table th {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--text3);
+    text-transform: uppercase;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border2);
+    background: var(--navy2);
+  }
+  .matrix-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    color: var(--text2);
+    line-height: 1.5;
+  }
+  .matrix-table tr:hover td { background: var(--slate-dim); }
+  .matrix-table tr:last-child td { border-bottom: none; }
+  .pill {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    letter-spacing: 0.06em;
+  }
+  .pill-green { background: var(--green-dim); color: #4ade80; border: 1px solid rgba(22,163,74,0.3); }
+  .pill-amber { background: var(--amber-dim); color: #fbbf24; border: 1px solid rgba(217,119,6,0.3); }
+  .pill-red { background: var(--red-dim); color: #f87171; border: 1px solid rgba(220,38,38,0.3); }
+  .pill-teal { background: var(--teal-dim); color: var(--teal-light); border: 1px solid rgba(13,148,136,0.3); }
+
+  /* TYPOLOGY CARDS */
+  .typology-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .typo-card {
+    background: var(--navy2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 20px;
+    transition: border-color 0.2s;
+  }
+  .typo-card:hover { border-color: var(--border2); }
+  .typo-card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .typo-card-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .typo-card p {
+    font-size: 13px;
+    color: var(--text2);
+    line-height: 1.6;
+    margin-bottom: 12px;
+  }
+  .red-flags-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .red-flags-list li {
+    font-size: 12px;
+    color: var(--text3);
+    padding-left: 14px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .red-flags-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--teal);
+    font-size: 11px;
+  }
+  .citation {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text3);
+    margin-top: 12px;
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 12px 24px;
+    font-family: var(--sans);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+  }
+  .btn-primary:hover { background: var(--teal-light); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text2);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-family: var(--sans);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--teal); color: var(--teal-light); }
+  .btn-row { display: flex; gap: 12px; align-items: center; margin-top: 20px; }
+
+  /* SECTION SPACING */
+  .section { margin-bottom: 52px; }
+
+  /* INFO BOX */
+  .info-box {
+    background: var(--teal-dim);
+    border: 1px solid rgba(13,148,136,0.25);
+    border-radius: 4px;
+    padding: 14px 18px;
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .info-box strong { color: var(--teal-light); }
+
+  /* FOOTNOTE */
+  .footnote {
+    font-size: 12px;
+    color: var(--text3);
+    font-style: italic;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+
+  /* TABS */
+  .tab-bar {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 28px;
+    gap: 0;
+  }
+  .tab {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+    padding: 10px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+  .tab:hover { color: var(--text2); }
+  .tab.active { color: var(--teal-light); border-bottom-color: var(--teal); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer p { font-size: 12px; color: var(--text3); font-family: var(--mono); }
+  footer a { color: var(--teal); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">JJ · FC&amp;C</span>
+  <div class="nav-links">
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects">Work Samples</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#expertise">Expertise</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#contact">Contact</a>
+  </div>
+  <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects" class="nav-back">← Portfolio</a>
+</nav>
+
+<div class="hero">
+  <div class="badge">BSA/AML · SAR Triage · FinCEN Guidance</div>
+  <h1>SAR <span>Decision Framework</span></h1>
+  <p>A structured methodology for suspicious activity report triage — mapping transaction typologies and red flag indicators to risk scores, documentation requirements, and escalation thresholds. Built from 15 years of BSA/AML practice across OCC/FDIC-regulated environments.</p>
+  <div class="meta-row">
+    <span class="meta-chip">FinCEN 31 CFR Part 1020</span>
+    <span class="meta-chip">OCC BSA Examination Guidelines</span>
+    <span class="meta-chip">USA PATRIOT Act § 314(a)/(b)</span>
+    <span class="meta-chip">Developed: Arvest Bank + Amazon FIU</span>
+  </div>
+</div>
+
+<main>
+
+  <!-- TAB NAV -->
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('triage')">Interactive Triage Tool</div>
+    <div class="tab" onclick="switchTab('matrix')">Decision Matrix</div>
+    <div class="tab" onclick="switchTab('typologies')">Typology Reference</div>
+    <div class="tab" onclick="switchTab('narrative')">Narrative Standards</div>
+  </div>
+
+  <!-- TAB: TRIAGE TOOL -->
+  <div id="tab-triage" class="tab-panel active">
+    <div class="info-box">
+      <strong>How to use:</strong> Select the transaction type and customer profile below, then check all applicable red flag indicators. The tool scores risk in real time and generates SAR narrative guidance aligned with FinCEN filing requirements.
+    </div>
+
+    <div class="triage-grid">
+      <div class="field-group">
+        <label class="field-label">Transaction Type <span>*</span></label>
+        <select id="txn-type" onchange="updateScore()">
+          <option value="">— Select —</option>
+          <option value="cash">Cash Transaction(s)</option>
+          <option value="wire">Wire Transfer(s)</option>
+          <option value="crypto">Cryptocurrency / Virtual Asset</option>
+          <option value="check">Check Kiting / Negotiable Instruments</option>
+          <option value="acct">Account Activity Pattern</option>
+          <option value="loan">Loan / Mortgage Fraud</option>
+          <option value="trade">Trade-Based Transaction</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Customer Risk Profile <span>*</span></label>
+        <select id="cust-risk" onchange="updateScore()">
+          <option value="">— Select —</option>
+          <option value="standard">Standard CDD — No EDD</option>
+          <option value="edd">EDD Subject (High-Risk Category)</option>
+          <option value="pep">Politically Exposed Person (PEP)</option>
+          <option value="msb">Money Services Business (MSB)</option>
+          <option value="cash-biz">Cash-Intensive Business</option>
+          <option value="new">New Customer (&lt; 90 days)</option>
+          <option value="no-kyc">Incomplete / Deficient KYC</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Amount Range</label>
+        <select id="amount" onchange="updateScore()">
+          <option value="">— Select —</option>
+          <option value="under5">Under $5,000</option>
+          <option value="5to10">$5,000 – $10,000</option>
+          <option value="near10">$9,000 – $10,000 (structuring range)</option>
+          <option value="over10">Over $10,000</option>
+          <option value="over25">Over $25,000</option>
+          <option value="over100">Over $100,000</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Frequency / Pattern</label>
+        <select id="pattern" onchange="updateScore()">
+          <option value="">— Select —</option>
+          <option value="single">Single transaction</option>
+          <option value="repeat">Repeated transactions (same type)</option>
+          <option value="structured">Multiple transactions just below reporting threshold</option>
+          <option value="layered">Complex layered / multi-account pattern</option>
+          <option value="velocity">Rapid velocity — unusual for profile</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-label" style="margin-bottom: 16px;">Red Flag Indicators — Select All That Apply</div>
+    <div class="checkbox-grid" id="flag-grid">
+      <!-- populated by JS -->
+    </div>
+
+    <div class="btn-row" style="margin-bottom: 32px;">
+      <button class="btn-primary" onclick="runTriage()">Run Triage Assessment</button>
+      <button class="btn-secondary" onclick="resetTriage()">Reset</button>
+    </div>
+
+    <!-- SCORE PANEL -->
+    <div class="score-panel" id="score-panel" style="display:none;">
+      <div class="score-header">
+        <div>
+          <div class="score-label">SAR RISK SCORE</div>
+          <div style="font-size: 12px; color: var(--text3); margin-top: 4px;" id="score-basis"></div>
+        </div>
+        <div class="score-value" id="score-value">0</div>
+      </div>
+      <div class="score-bar"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
+      <div class="score-verdict" id="score-verdict"></div>
+    </div>
+
+    <!-- NARRATIVE OUTPUT -->
+    <div class="narrative-box" id="narrative-panel" style="display:none;">
+      <h3>SAR Narrative Guidance</h3>
+      <div class="narrative-text" id="narrative-output"></div>
+      <div class="footnote" style="margin-top:16px;">* Narrative guidance generated from FinCEN SAR filing standards. All SAR decisions require analyst review and BSA Officer authorization. Guidance does not constitute legal advice.</div>
+    </div>
+  </div>
+
+  <!-- TAB: DECISION MATRIX -->
+  <div id="tab-matrix" class="tab-panel">
+    <div class="info-box">
+      A structured escalation matrix mapping risk score thresholds to documentation requirements, review timelines, and SAR filing obligations under 31 CFR § 1020.320. Used as the operational backbone of Arvest Bank's BSA/AML program.
+    </div>
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Risk Tier</th>
+          <th>Score Range</th>
+          <th>SAR Decision</th>
+          <th>Documentation Required</th>
+          <th>Review Timeline</th>
+          <th>Escalation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Tier 1 — Low</strong></td>
+          <td><span class="pill pill-green">0 – 29</span></td>
+          <td>No SAR — close case</td>
+          <td>Alert disposition memo, supporting transaction records</td>
+          <td>5 business days</td>
+          <td>Team lead review optional</td>
+        </tr>
+        <tr>
+          <td><strong>Tier 2 — Moderate</strong></td>
+          <td><span class="pill pill-amber">30 – 54</span></td>
+          <td>Continue monitoring / 90-day review</td>
+          <td>Enhanced case file, narrative draft, CDD refresh if applicable</td>
+          <td>10 business days</td>
+          <td>Supervisor sign-off required</td>
+        </tr>
+        <tr>
+          <td><strong>Tier 3 — High</strong></td>
+          <td><span class="pill pill-red">55 – 74</span></td>
+          <td>SAR recommended — BSA Officer review</td>
+          <td>Complete case package, all supporting docs, SAR narrative draft</td>
+          <td>15 business days (30-day filing clock applies)</td>
+          <td>BSA Officer review and authorization</td>
+        </tr>
+        <tr>
+          <td><strong>Tier 4 — Critical</strong></td>
+          <td><span class="pill pill-red">75+</span></td>
+          <td>SAR required — immediate escalation</td>
+          <td>Expedited case file, potential law enforcement coordination</td>
+          <td>72 hours to BSA Officer; file within 30 days</td>
+          <td>BSA Officer + Legal; § 314(a) search if applicable</td>
+        </tr>
+        <tr>
+          <td><strong>Structuring Flag</strong></td>
+          <td><span class="pill pill-teal">Any score</span></td>
+          <td>Mandatory SAR regardless of score</td>
+          <td>Full transaction history, CTR cross-reference, account review</td>
+          <td>Immediate — 30-day clock from detection</td>
+          <td>BSA Officer; potential § 314(a) query</td>
+        </tr>
+        <tr>
+          <td><strong>Law Enforcement Request</strong></td>
+          <td><span class="pill pill-teal">N/A</span></td>
+          <td>SAR required</td>
+          <td>Responsive to § 314(a) / subpoena documentation protocol</td>
+          <td>Per law enforcement directive</td>
+          <td>Legal, BSA Officer, Executive leadership</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="section-label">CTR — Currency Transaction Report Thresholds</div>
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Trigger</th>
+          <th>Threshold</th>
+          <th>Filing Requirement</th>
+          <th>Key Considerations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Single cash transaction</td>
+          <td><span class="pill pill-amber">Over $10,000</span></td>
+          <td>FinCEN CTR (Form 112) — mandatory, 15-day filing window</td>
+          <td>Aggregation rules apply; multiple transactions same day / same person</td>
+        </tr>
+        <tr>
+          <td>Structured transactions</td>
+          <td><span class="pill pill-red">Any amount</span></td>
+          <td>SAR required — structuring is a federal crime (31 U.S.C. § 5324)</td>
+          <td>No minimum; pattern of sub-$10K transactions to avoid CTR triggers structuring SAR</td>
+        </tr>
+        <tr>
+          <td>CTR exemptions</td>
+          <td>N/A</td>
+          <td>Phase I / Phase II exemption — documented in BSA program</td>
+          <td>Eligible entities: banks, exchange companies, listed businesses; annual review required</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- TAB: TYPOLOGIES -->
+  <div id="tab-typologies" class="tab-panel">
+    <div class="info-box">
+      Key money laundering, fraud, and terrorist financing typologies with detection red flags and FinCEN regulatory citations. Content informed by JM FSU Financial Regulation coursework and applied across Amazon FIU and Arvest Bank BSA program.
+    </div>
+    <div class="typology-grid">
+      <div class="typo-card">
+        <div class="typo-card-header">
+          <div class="typo-card-title">Structuring / Smurfing</div>
+          <span class="pill pill-red">High</span>
+        </div>
+        <p>Breaking up cash transactions to stay below the $10,000 CTR reporting threshold. Federal crime under 31 U.S.C. § 5324 regardless of source of funds.</p>
+        <ul class="red-flags-list">
+          <li>Multiple transactions just under $10,000 same day or consecutive days</li>
+          <li>Customer expresses awareness of CTR thresholds</li>
+          <li>Transactions at multiple branches or ATMs same day</li>
+          <li>Third parties depositing for same beneficial owner</li>
+        </ul>
+        <div class="citation">FinCEN SAR Activity Review — Issue 25 · 31 U.S.C. § 5324</div>
+      </div>
+
+      <div class="typo-card">
+        <div class="typo-card-header">
+          <div class="typo-card-title">Layering — Wire Transfers</div>
+          <span class="pill pill-red">High</span>
+        </div>
+        <p>Rapid movement of funds through multiple accounts or jurisdictions to obscure origin, typically the second stage of the placement-layering-integration cycle.</p>
+        <ul class="red-flags-list">
+          <li>Funds received and immediately wired out — no commercial purpose</li>
+          <li>Wire activity inconsistent with account purpose / business type</li>
+          <li>Multiple intermediate jurisdictions with no apparent business nexus</li>
+          <li>Round-dollar wire amounts; no invoice or business documentation</li>
+          <li>High-risk jurisdictions: FATF non-cooperative countries</li>
+        </ul>
+        <div class="citation">FinCEN Advisory FIN-2014-A005 · FATF Guidance on ML Typologies</div>
+      </div>
+
+      <div class="typo-card">
+        <div class="typo-card-header">
+          <div class="typo-card-title">Trade-Based Money Laundering</div>
+          <span class="pill pill-amber">Elevated</span>
+        </div>
+        <p>Using international trade transactions to transfer value across borders, typically through over/under-invoicing of goods or services.</p>
+        <ul class="red-flags-list">
+          <li>Invoice prices inconsistent with market value (over/under)</li>
+          <li>Multiple alterations to shipping documents</li>
+          <li>Payments from unrelated third parties</li>
+          <li>Transactions involving high-risk trade goods (luxury items, electronics)</li>
+        </ul>
+        <div class="citation">FinCEN Advisory FIN-2010-A001 · FATF TBML Typologies</div>
+      </div>
+
+      <div class="typo-card">
+        <div class="typo-card-header">
+          <div class="typo-card-title">Account Takeover Fraud</div>
+          <span class="pill pill-red">High</span>
+        </div>
+        <p>Unauthorized access to customer accounts to redirect funds, change contact information, or establish fraudulent transfers — common vector at Amazon and retail financial institutions.</p>
+        <ul class="red-flags-list">
+          <li>Contact info changed shortly before large transaction</li>
+          <li>Login from new device / geolocation followed by immediate transfer</li>
+          <li>Customer disputes transaction they did not authorize</li>
+          <li>Multiple failed login attempts preceding successful access</li>
+          <li>Velocity spike in account activity inconsistent with history</li>
+        </ul>
+        <div class="citation">FinCEN Advisory FIN-2016-A005 · FFIEC Cybersecurity Assessment Tool</div>
+      </div>
+
+      <div class="typo-card">
+        <div class="typo-card-header">
+          <div class="typo-card-title">Elder Financial Exploitation</div>
+          <span class="pill pill-amber">Elevated</span>
+        </div>
+        <p>Unauthorized or improper use of an elder's funds, property, or assets — reportable under FinCEN SAR guidance for financial institutions. High-priority at community banking level.</p>
+        <ul class="red-flags-list">
+          <li>Sudden changes to account beneficiaries or signatories</li>
+          <li>Third party controlling access / speaking on behalf of elder</li>
+          <li>Large cash withdrawals inconsistent with prior behavior</li>
+          <li>Customer appears confused, fearful, or under undue influence</li>
+        </ul>
+        <div class="citation">FinCEN Advisory FIN-2022-A002 · Elder Justice Act</div>
+      </div>
+
+      <div class="typo-card">
+        <div class="typo-card-header">
+          <div class="typo-card-title">Cryptocurrency / Virtual Asset</div>
+          <span class="pill pill-amber">Elevated</span>
+        </div>
+        <p>Use of virtual currency exchanges, peer-to-peer platforms, or mixing services to layer or integrate proceeds. Rapidly evolving typology per FinCEN guidance.</p>
+        <ul class="red-flags-list">
+          <li>Large cash-to-crypto conversions with no business purpose</li>
+          <li>Use of mixing/tumbling services to obscure transaction trails</li>
+          <li>Transactions to/from high-risk exchanges or OFAC-designated addresses</li>
+          <li>Customer unable to explain source of virtual asset holdings</li>
+        </ul>
+        <div class="citation">FinCEN Guidance FIN-2019-G001 · FinCEN Virtual Currency Advisory</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: NARRATIVE STANDARDS -->
+  <div id="tab-narrative" class="tab-panel">
+    <div class="info-box">
+      SAR narrative quality standards aligned with FinCEN guidance. A well-drafted SAR narrative answers the five W's (who, what, when, where, why suspected) with specificity, avoids conclusions, and provides law enforcement with actionable intelligence.
+    </div>
+
+    <div class="section-label">Narrative Component Framework — The Five W's</div>
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>What to Include</th>
+          <th>Common Errors to Avoid</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Who</strong></td>
+          <td>Subject's full name, account number, address, occupation, and any related parties (joint holders, beneficiaries, third-party actors). Include entity name and EIN for businesses.</td>
+          <td>Omitting related parties; failing to identify beneficial owners of business accounts</td>
+        </tr>
+        <tr>
+          <td><strong>What</strong></td>
+          <td>Specific transaction details: amounts, dates, account types, originating/receiving institutions, and instruments used. Reference CTR filings if applicable.</td>
+          <td>Vague descriptions ("large transactions"); omitting dollar amounts; failing to cross-reference prior SARs</td>
+        </tr>
+        <tr>
+          <td><strong>When</strong></td>
+          <td>Transaction dates, detection date, and any relevant timeline (account opening date, EDD review date, prior SAR activity).</td>
+          <td>Date ranges without specifics; failing to note when suspicious activity began vs. when detected</td>
+        </tr>
+        <tr>
+          <td><strong>Where</strong></td>
+          <td>Branch location(s), originating country/jurisdiction for wires, ATM locations for cash. For online activity: platform, IP location if available.</td>
+          <td>Omitting location data for multi-branch or multi-jurisdiction activity</td>
+        </tr>
+        <tr>
+          <td><strong>Why Suspected</strong></td>
+          <td>Specific red flags observed; departure from established account pattern; customer's explanation (if provided) and why it was or was not satisfactory.</td>
+          <td>Conclusory statements ("activity appears suspicious"); missing customer explanation attempt documentation</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="section-label">Narrative Template — Structuring</div>
+    <div class="narrative-box">
+      <h3>Sample SAR Narrative — Structuring</h3>
+      <div class="narrative-text">On [DATE(S)], [SUBJECT NAME] ([ACCOUNT TYPE], account #[XXXX], opened [DATE]) conducted [NUMBER] cash transactions totaling $[AMOUNT] over [TIME PERIOD]. Individual transactions ranged from $[LOW] to $[HIGH], consistently falling below the $10,000 CTR reporting threshold.
+
+Transaction detail: [LIST DATES AND AMOUNTS — e.g., "01/05/2026: $9,800 cash deposit; 01/06/2026: $9,500 cash deposit; 01/07/2026: $9,200 cash deposit"].
+
+The subject's account profile indicates [OCCUPATION / BUSINESS TYPE]. This level of cash activity is inconsistent with the customer's stated business purpose and prior account history, which averaged [PRIOR PATTERN — e.g., "$2,000–$4,000 per month"].
+
+When contacted regarding the transactions, the subject [stated / was unable to provide / did not respond with] a satisfactory explanation for the activity.
+
+No CTR exemption on file. [Prior SAR filed: Yes/No — reference SAR # if applicable.] This activity appears consistent with structuring as defined under 31 U.S.C. § 5324.</div>
+    </div>
+
+    <div class="section-label">Quality Checklist Before Filing</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="check-item" onclick="toggleStatic(this)"><div class="check-box"></div><div class="check-text">All five W's addressed in narrative</div></div>
+      <div class="check-item" onclick="toggleStatic(this)"><div class="check-box"></div><div class="check-text">Transaction dates and amounts are specific</div></div>
+      <div class="check-item" onclick="toggleStatic(this)"><div class="check-box"></div><div class="check-text">Customer explanation attempt documented</div></div>
+      <div class="check-item" onclick="toggleStatic(this)"><div class="check-box"></div><div class="check-text">Prior SAR activity cross-referenced</div></div>
+      <div class="check-item" onclick="toggleStatic(this)"><div class="check-box"></div><div class="check-text">No conclusory language (e.g., "money laundering")</div></div>
+      <div class="check-item" onclick="toggleStatic(this)"><div class="check-box"></div><div class="check-text">Suspicious Activity Type field matches narrative</div></div>
+      <div class="check-item" onclick="toggleStatic(this)"><div class="check-box"></div><div class="check-text">Supporting documents attached / referenced</div></div>
+      <div class="check-item" onclick="toggleStatic(this)"><div class="check-box"></div><div class="check-text">BSA Officer review and signature obtained</div></div>
+      <div class="check-item" onclick="toggleStatic(this)"><div class="check-box"></div><div class="check-text">Filing within 30-day window confirmed</div></div>
+      <div class="check-item" onclick="toggleStatic(this)"><div class="check-box"></div><div class="check-text">SAR tipping-off prohibition acknowledged</div></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>Jack Johnson · Financial Crimes &amp; Compliance · <a href="mailto:jajohnson2@cox.net">jajohnson2@cox.net</a></p>
+  <p>BSA/AML · SAR Triage Methodology · Developed from Arvest Bank + Amazon FIU practice</p>
+</footer>
+
+<script>
+const redFlagSets = {
+  cash: [
+    { text: "Transactions just below $10,000 reporting threshold", weight: 20 },
+    { text: "Multiple transactions same day at different branches", weight: 18 },
+    { text: "Customer expresses awareness of CTR filing requirements", weight: 25 },
+    { text: "Cash amount inconsistent with stated occupation / business", weight: 15 },
+    { text: "Third party conducting transactions on behalf of subject", weight: 15 },
+    { text: "Customer becomes nervous or evasive when asked about purpose", weight: 10 },
+    { text: "No apparent business purpose for cash-intensive activity", weight: 12 },
+    { text: "Pattern repeats over multiple days or weeks", weight: 18 }
+  ],
+  wire: [
+    { text: "Funds received and immediately transferred — no business purpose", weight: 20 },
+    { text: "Originating or receiving country is FATF high-risk jurisdiction", weight: 20 },
+    { text: "Round-dollar amounts with no supporting invoice", weight: 15 },
+    { text: "Multiple intermediate accounts / institutions used", weight: 20 },
+    { text: "Customer cannot explain relationship to receiving party", weight: 15 },
+    { text: "Wire activity inconsistent with account profile or business type", weight: 18 },
+    { text: "Receiving party is newly established company or unknown entity", weight: 15 },
+    { text: "OFAC name screening match flagged during processing", weight: 35 }
+  ],
+  crypto: [
+    { text: "Large cash-to-crypto conversion with no stated business purpose", weight: 18 },
+    { text: "Transaction to/from known high-risk exchange or darknet wallet", weight: 30 },
+    { text: "Use of mixing or tumbling service detected", weight: 35 },
+    { text: "Customer unable to explain source of virtual asset holdings", weight: 20 },
+    { text: "Rapid conversion pattern — crypto in, fiat out", weight: 18 },
+    { text: "OFAC-designated wallet address involved", weight: 40 }
+  ],
+  check: [
+    { text: "Account balance insufficient for check amounts drawn", weight: 20 },
+    { text: "Rapid deposit / withdrawal cycle (float exploitation)", weight: 22 },
+    { text: "Multiple returned items followed by account continuation", weight: 15 },
+    { text: "Payee / endorsement alterations on instruments", weight: 25 },
+    { text: "Third-party checks deposited inconsistent with business type", weight: 15 }
+  ],
+  acct: [
+    { text: "Sudden spike in transaction volume inconsistent with account history", weight: 18 },
+    { text: "Multiple small debits to unfamiliar payees in rapid sequence", weight: 15 },
+    { text: "Contact information changed shortly before large transaction", weight: 22 },
+    { text: "Login from new device / geographic location — velocity spike", weight: 20 },
+    { text: "Customer disputes multiple transactions they do not recognize", weight: 20 },
+    { text: "Dormant account suddenly reactivated with large transaction", weight: 18 }
+  ],
+  loan: [
+    { text: "Collateral value significantly inconsistent with loan amount", weight: 20 },
+    { text: "Borrower's income documentation appears altered or inconsistent", weight: 25 },
+    { text: "Rapid payoff of loan using source inconsistent with income profile", weight: 18 },
+    { text: "Proceeds disbursed to unrelated third party", weight: 20 },
+    { text: "Multiple loan applications with inconsistent information", weight: 15 }
+  ],
+  trade: [
+    { text: "Invoice pricing significantly over or under market value", weight: 22 },
+    { text: "Multiple alterations or corrections to shipping documents", weight: 18 },
+    { text: "Payment received from unrelated third party", weight: 20 },
+    { text: "Trading partner in high-risk or FATF non-cooperative jurisdiction", weight: 20 },
+    { text: "Goods are commonly cited trade-based ML commodities", weight: 15 }
+  ],
+  "": []
+};
+
+const custWeights = { standard: 0, edd: 10, pep: 25, msb: 15, "cash-biz": 10, new: 8, "no-kyc": 20 };
+const amtWeights = { under5: 0, "5to10": 5, near10: 30, over10: 8, over25: 12, over100: 15 };
+const patWeights = { single: 0, repeat: 8, structured: 30, layered: 25, velocity: 18 };
+
+function updateScore() { renderFlags(); }
+
+function renderFlags() {
+  const txn = document.getElementById('txn-type').value;
+  const grid = document.getElementById('flag-grid');
+  const flags = redFlagSets[txn] || [];
+  grid.innerHTML = '';
+  flags.forEach((f, i) => {
+    const div = document.createElement('div');
+    div.className = 'check-item';
+    div.dataset.weight = f.weight;
+    div.dataset.index = i;
+    div.innerHTML = `<input type="checkbox" id="flag${i}"><div class="check-box"></div><div class="check-text">${f.text}</div>`;
+    div.onclick = function() { this.classList.toggle('selected'); };
+    grid.appendChild(div);
+  });
+}
+
+function runTriage() {
+  const txn = document.getElementById('txn-type').value;
+  const cust = document.getElementById('cust-risk').value;
+  const amt = document.getElementById('amount').value;
+  const pat = document.getElementById('pattern').value;
+
+  if (!txn || !cust) {
+    alert('Please select at least Transaction Type and Customer Risk Profile.');
+    return;
+  }
+
+  let score = 0;
+  score += (custWeights[cust] || 0);
+  score += (amtWeights[amt] || 0);
+  score += (patWeights[pat] || 0);
+
+  const selected = document.querySelectorAll('#flag-grid .check-item.selected');
+  selected.forEach(el => { score += parseInt(el.dataset.weight || 0); });
+
+  score = Math.min(score, 100);
+
+  const panel = document.getElementById('score-panel');
+  const val = document.getElementById('score-value');
+  const fill = document.getElementById('score-fill');
+  const verdict = document.getElementById('score-verdict');
+  const basis = document.getElementById('score-basis');
+
+  panel.style.display = 'block';
+
+  let tier, cls, vclass, vtext;
+  if (score < 30) {
+    tier = 'Tier 1 — Low Risk'; cls = 'low'; vclass = 'verdict-low';
+    vtext = 'No SAR recommended at this time. Document alert disposition and close. Continue standard monitoring cycle.';
+  } else if (score < 55) {
+    tier = 'Tier 2 — Moderate Risk'; cls = 'medium'; vclass = 'verdict-medium';
+    vtext = 'SAR not required at this time. Recommend 90-day enhanced monitoring. Complete CDD refresh if overdue. Supervisor review required for case closure.';
+  } else if (score < 75) {
+    tier = 'Tier 3 — High Risk'; cls = 'high'; vclass = 'verdict-high';
+    vtext = 'SAR recommended. Prepare complete case package for BSA Officer review. 30-day filing clock applies from date of detection. Consider § 314(a) search.';
+  } else {
+    tier = 'Tier 4 — Critical Risk'; cls = 'high'; vclass = 'verdict-high';
+    vtext = 'SAR required — immediate escalation to BSA Officer and Legal. 72-hour internal escalation deadline. 30-day FinCEN filing deadline applies. Evaluate law enforcement coordination. Do NOT tip off subject.';
+  }
+
+  val.textContent = score;
+  val.className = 'score-value ' + cls;
+  fill.style.width = score + '%';
+  fill.className = 'score-fill ' + cls;
+  verdict.className = 'score-verdict ' + vclass;
+  verdict.innerHTML = `<strong>${tier}</strong> — ${vtext}`;
+  basis.textContent = `${selected.length} indicator(s) selected · Customer risk: ${cust || 'unspecified'} · Pattern: ${pat || 'unspecified'}`;
+
+  generateNarrative(txn, cust, amt, pat, selected, score, tier);
+}
+
+function generateNarrative(txn, cust, amt, pat, selected, score, tier) {
+  const txnLabels = {
+    cash: 'cash transactions', wire: 'wire transfers', crypto: 'virtual asset transactions',
+    check: 'negotiable instrument activity', acct: 'account activity patterns',
+    loan: 'loan-related transactions', trade: 'trade-based transactions'
+  };
+  const custLabels = {
+    standard: 'standard CDD customer', edd: 'EDD-designated high-risk customer',
+    pep: 'Politically Exposed Person (PEP)', msb: 'Money Services Business',
+    'cash-biz': 'cash-intensive business', new: 'new customer (< 90 days)',
+    'no-kyc': 'customer with incomplete KYC documentation'
+  };
+  const patLabels = {
+    single: 'a single transaction', repeat: 'a repeated transaction pattern',
+    structured: 'transactions structured below the CTR reporting threshold',
+    layered: 'a complex layered transaction pattern involving multiple accounts',
+    velocity: 'an unusual velocity spike in account activity'
+  };
+
+  const flagTexts = Array.from(selected).map(el => el.querySelector('.check-text').textContent);
+
+  let narrative = `[SUBJECT / ENTITY NAME] ([ACCOUNT TYPE], Acct #[XXXX]) — ${custLabels[cust] || ''} — was flagged for review based on ${txnLabels[txn] || 'transaction activity'} involving ${patLabels[pat] || 'unusual patterns'}.\n\n`;
+
+  narrative += `TRANSACTION SUMMARY:\nDuring the review period [START DATE] through [END DATE], the subject conducted [NUMBER] ${txnLabels[txn]}, totaling approximately $[AMOUNT]. `;
+
+  if (amt === 'near10') {
+    narrative += `Transaction amounts ranged from $[LOW] to $[HIGH], consistently falling below the $10,000 CTR reporting threshold, which is consistent with structuring activity as defined under 31 U.S.C. § 5324.\n\n`;
+  } else {
+    narrative += `[Additional transaction detail to be inserted from case file.]\n\n`;
+  }
+
+  if (flagTexts.length > 0) {
+    narrative += `RED FLAGS IDENTIFIED:\n`;
+    flagTexts.forEach(f => { narrative += `• ${f}\n`; });
+    narrative += '\n';
+  }
+
+  narrative += `CUSTOMER PROFILE:\nThis level and type of activity is [inconsistent with / significantly elevated from] the subject's established account profile and stated [occupation / business purpose of: INSERT]. `;
+
+  if (cust === 'pep') {
+    narrative += `Subject is a Politically Exposed Person — enhanced due diligence on file as of [DATE]. `;
+  } else if (cust === 'msb') {
+    narrative += `Subject is a licensed/registered Money Services Business — FinCEN registration reviewed [DATE]. `;
+  }
+
+  narrative += `\n\nCUSTOMER INQUIRY:\nOn [DATE], subject was [contacted / not contacted] regarding the activity. Subject [provided the following explanation: INSERT / was unable to provide a satisfactory explanation / did not respond to inquiry].\n\n`;
+
+  narrative += `DETERMINATION:\nBased on the totality of circumstances, this activity ${score >= 55 ? 'warrants SAR filing' : 'does not currently warrant SAR filing but requires continued monitoring'}. ${score >= 55 ? `Filing recommended per FinCEN 31 CFR § 1020.320. BSA Officer review requested. Risk score: ${score}/100 (${tier}).` : `Case to be placed on 90-day enhanced monitoring schedule. Supervisor review completed.`}`;
+
+  const narPanel = document.getElementById('narrative-panel');
+  const narOut = document.getElementById('narrative-output');
+  narPanel.style.display = 'block';
+
+  // Highlight key sections
+  let display = narrative
+    .replace(/\[.*?\]/g, match => `<em>${match}</em>`)
+    .replace(/\n/g, '<br>');
+  narOut.innerHTML = display;
+}
+
+function resetTriage() {
+  ['txn-type','cust-risk','amount','pattern'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('flag-grid').innerHTML = '';
+  document.getElementById('score-panel').style.display = 'none';
+  document.getElementById('narrative-panel').style.display = 'none';
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    const names = ['triage','matrix','typologies','narrative'];
+    t.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+function toggleStatic(el) {
+  el.classList.toggle('selected');
+}
+
+renderFlags();
+</script>
+
+</body>
+</html>

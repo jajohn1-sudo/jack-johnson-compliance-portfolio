@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financial Crimes Typology Reference · Jack Johnson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0a0f1e;--navy2:#111827;--navy3:#1a2332;
+    --teal:#0d9488;--teal-light:#14b8a6;--teal-dim:rgba(13,148,136,0.15);
+    --amber:#d97706;--amber-dim:rgba(217,119,6,0.15);
+    --red:#dc2626;--red-dim:rgba(220,38,38,0.12);
+    --green:#16a34a;--green-dim:rgba(22,163,74,0.12);
+    --purple:#7c3aed;--purple-dim:rgba(124,58,237,0.12);
+    --blue:#2563eb;--blue-dim:rgba(37,99,235,0.12);
+    --slate-dim:rgba(148,163,184,0.08);
+    --border:rgba(148,163,184,0.12);--border2:rgba(148,163,184,0.2);
+    --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+    --mono:'IBM Plex Mono',monospace;--serif:'Libre Baskerville',serif;--sans:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--navy);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.6;min-height:100vh;}
+
+  nav{border-bottom:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(10,15,30,0.95);backdrop-filter:blur(8px);z-index:100;}
+  .nav-brand{font-family:var(--mono);font-size:13px;color:var(--teal);letter-spacing:0.08em;}
+  .nav-links{display:flex;gap:24px;}
+  .nav-links a{font-size:13px;color:var(--text2);text-decoration:none;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--teal-light);}
+  .nav-back{font-family:var(--mono);font-size:12px;color:var(--teal);text-decoration:none;border:1px solid var(--teal);padding:6px 14px;border-radius:4px;transition:all 0.2s;}
+  .nav-back:hover{background:var(--teal-dim);}
+
+  .hero{padding:56px 40px 40px;max-width:1100px;margin:0 auto;border-bottom:1px solid var(--border);}
+  .badge{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--teal);background:var(--teal-dim);border:1px solid rgba(13,148,136,0.3);padding:4px 12px;border-radius:2px;margin-bottom:20px;text-transform:uppercase;}
+  .hero h1{font-family:var(--serif);font-size:38px;font-weight:700;line-height:1.2;margin-bottom:16px;color:#f1f5f9;}
+  .hero h1 span{color:var(--teal-light);}
+  .hero p{font-size:16px;color:var(--text2);max-width:700px;line-height:1.7;}
+  .meta-row{display:flex;gap:24px;margin-top:24px;flex-wrap:wrap;}
+  .meta-chip{font-family:var(--mono);font-size:11px;color:var(--text3);border:1px solid var(--border);padding:4px 10px;border-radius:2px;}
+
+  main{max-width:1100px;margin:0 auto;padding:40px 40px 80px;}
+
+  /* SEARCH + FILTER BAR */
+  .control-bar{display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;align-items:center;}
+  .search-wrap{position:relative;flex:1;min-width:220px;}
+  .search-wrap input{width:100%;background:var(--navy2);border:1px solid var(--border2);border-radius:4px;color:var(--text);font-family:var(--sans);font-size:14px;padding:10px 14px 10px 38px;}
+  .search-wrap input:focus{outline:none;border-color:var(--teal);}
+  .search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:14px;height:14px;opacity:0.4;}
+  .filter-group{display:flex;gap:8px;flex-wrap:wrap;}
+  .filter-btn{font-family:var(--mono);font-size:11px;padding:6px 14px;border-radius:3px;border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;transition:all 0.15s;letter-spacing:0.04em;white-space:nowrap;}
+  .filter-btn:hover{border-color:var(--teal);color:var(--teal-light);}
+  .filter-btn.active{background:var(--teal-dim);border-color:var(--teal);color:var(--teal-light);}
+  .result-count{font-family:var(--mono);font-size:11px;color:var(--text3);white-space:nowrap;align-self:center;}
+
+  /* STATS ROW */
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px;}
+  @media(max-width:600px){.stats-row{grid-template-columns:1fr 1fr;}}
+  .stat-card{background:var(--navy2);border:1px solid var(--border);border-radius:6px;padding:14px 16px;}
+  .stat-label{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;}
+  .stat-val{font-size:22px;font-weight:600;font-family:var(--mono);}
+
+  /* TYPOLOGY CARDS */
+  .typo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+  .typo-card{background:var(--navy2);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color 0.2s,transform 0.15s;cursor:pointer;}
+  .typo-card:hover{border-color:var(--border2);transform:translateY(-1px);}
+  .typo-card.expanded{border-color:var(--teal);}
+  .typo-card-top{padding:18px 20px 14px;}
+  .typo-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:10px;}
+  .typo-title{font-weight:600;font-size:15px;color:var(--text);line-height:1.3;}
+  .typo-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+  .typo-summary{font-size:13px;color:var(--text2);line-height:1.6;}
+  .typo-expand-hint{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:10px;letter-spacing:0.06em;}
+  .typo-card.expanded .typo-expand-hint{display:none;}
+
+  .typo-detail{display:none;border-top:1px solid var(--border);padding:18px 20px;}
+  .typo-card.expanded .typo-detail{display:block;}
+
+  .detail-section{margin-bottom:18px;}
+  .detail-section:last-child{margin-bottom:0;}
+  .detail-label{font-family:var(--mono);font-size:10px;color:var(--teal);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;}
+  .red-flags-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+  .red-flags-list li{font-size:13px;color:var(--text2);padding-left:16px;position:relative;line-height:1.5;}
+  .red-flags-list li::before{content:'→';position:absolute;left:0;color:var(--teal);font-size:11px;top:1px;}
+  .detection-list{list-style:none;display:flex;flex-direction:column;gap:5px;}
+  .detection-list li{font-size:13px;color:var(--text2);padding-left:16px;position:relative;line-height:1.5;}
+  .detection-list li::before{content:'◆';position:absolute;left:0;color:var(--amber);font-size:9px;top:4px;}
+  .citation-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px;}
+  .cite-chip{font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--navy3);border:1px solid var(--border);padding:3px 8px;border-radius:2px;}
+
+  .pill{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:10px;letter-spacing:0.04em;white-space:nowrap;}
+  .pill-red{background:var(--red-dim);color:#f87171;border:1px solid rgba(220,38,38,0.3);}
+  .pill-amber{background:var(--amber-dim);color:#fbbf24;border:1px solid rgba(217,119,6,0.3);}
+  .pill-green{background:var(--green-dim);color:#4ade80;border:1px solid rgba(22,163,74,0.3);}
+  .pill-teal{background:var(--teal-dim);color:var(--teal-light);border:1px solid rgba(13,148,136,0.3);}
+  .pill-purple{background:var(--purple-dim);color:#a78bfa;border:1px solid rgba(124,58,237,0.3);}
+  .pill-blue{background:var(--blue-dim);color:#93c5fd;border:1px solid rgba(37,99,235,0.3);}
+
+  /* ML STAGES VISUAL */
+  .ml-stages{display:flex;gap:0;margin-bottom:16px;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .ml-stage{flex:1;padding:12px 10px;text-align:center;border-right:1px solid var(--border);}
+  .ml-stage:last-child{border-right:none;}
+  .ml-stage-num{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:4px;}
+  .ml-stage-name{font-size:12px;font-weight:600;}
+  .ml-stage-desc{font-size:11px;color:var(--text3);margin-top:4px;line-height:1.3;}
+  .s-place .ml-stage-name{color:#f87171;}
+  .s-layer .ml-stage-name{color:#fbbf24;}
+  .s-integrate .ml-stage-name{color:#4ade80;}
+
+  /* EMPTY STATE */
+  .empty-state{text-align:center;padding:60px 20px;color:var(--text3);}
+  .empty-state p{font-size:14px;margin-top:8px;}
+
+  footer{border-top:1px solid var(--border);padding:32px 40px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  footer p{font-size:12px;color:var(--text3);font-family:var(--mono);}
+  footer a{color:var(--teal);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">JJ · FC&amp;C</span>
+  <div class="nav-links">
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects">Work Samples</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#expertise">Expertise</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#contact">Contact</a>
+  </div>
+  <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects" class="nav-back">← Portfolio</a>
+</nav>
+
+<div class="hero">
+  <div class="badge">AML · Fraud · Terrorist Financing · FinCEN Guidance</div>
+  <h1>Financial Crimes <span>Typology Reference</span></h1>
+  <p>Practitioner guide to money laundering, terrorist financing, and fraud typologies — red flag indicators, transaction patterns, detection approaches, and FinCEN regulatory citations. Content drawn from JM FSU Financial Regulation coursework and applied across 15 years of BSA/AML practice.</p>
+  <div class="meta-row">
+    <span class="meta-chip">FinCEN SAR Activity Reviews</span>
+    <span class="meta-chip">FATF Typologies Reports</span>
+    <span class="meta-chip">31 CFR Part 1020</span>
+    <span class="meta-chip">JM FSU Financial Regulation</span>
+  </div>
+</div>
+
+<main>
+
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Typologies</div><div class="stat-val" id="total-count" style="color:var(--teal-light);">20</div></div>
+    <div class="stat-card"><div class="stat-label">Showing</div><div class="stat-val" id="showing-count" style="color:var(--text);">20</div></div>
+    <div class="stat-card"><div class="stat-label">High Risk</div><div class="stat-val" style="color:#f87171;">12</div></div>
+    <div class="stat-card"><div class="stat-label">Categories</div><div class="stat-val" style="color:#fbbf24;">6</div></div>
+  </div>
+
+  <div class="control-bar">
+    <div class="search-wrap">
+      <svg class="search-icon" viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <input type="text" id="search-input" placeholder="Search typologies, red flags, citations…" oninput="filterCards()">
+    </div>
+    <div class="filter-group">
+      <button class="filter-btn active" data-cat="all" onclick="setFilter('all',this)">All</button>
+      <button class="filter-btn" data-cat="ml" onclick="setFilter('ml',this)">ML / AML</button>
+      <button class="filter-btn" data-cat="fraud" onclick="setFilter('fraud',this)">Fraud</button>
+      <button class="filter-btn" data-cat="tf" onclick="setFilter('tf',this)">Terrorist Financing</button>
+      <button class="filter-btn" data-cat="sanctions" onclick="setFilter('sanctions',this)">Sanctions</button>
+      <button class="filter-btn" data-cat="cyber" onclick="setFilter('cyber',this)">Cyber / Tech</button>
+      <button class="filter-btn" data-cat="elder" onclick="setFilter('elder',this)">Elder / Consumer</button>
+    </div>
+  </div>
+
+  <div class="typo-grid" id="typo-grid"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <div style="font-size:32px;opacity:0.3;">⊘</div>
+    <p>No typologies match your search. Try a different term or clear the filter.</p>
+  </div>
+
+</main>
+
+<footer>
+  <p>Jack Johnson · Financial Crimes &amp; Compliance · <a href="mailto:jajohnson2@cox.net">jajohnson2@cox.net</a></p>
+  <p>Typology content: FinCEN SAR Activity Reviews · FATF Reports · JM FSU Financial Regulation</p>
+</footer>
+
+<script>
+const TYPOLOGIES = [
+  {
+    id:1, title:"Structuring / Smurfing", cat:"ml", risk:"high",
+    tags:["BSA","Cash","31 U.S.C. § 5324"],
+    summary:"Breaking large cash transactions into multiple sub-$10,000 amounts to evade CTR reporting. A federal crime regardless of the legitimate or illegitimate origin of funds.",
+    stages:["Placement"],
+    redFlags:[
+      "Multiple cash transactions just under $10,000 on same or consecutive days",
+      "Customer expresses awareness of CTR thresholds or asks about reporting limits",
+      "Transactions at multiple branches or ATMs same day",
+      "Third parties depositing on behalf of the same beneficial owner",
+      "Deposits followed immediately by transfers — no intervening balance period",
+      "Pattern repeats weekly or monthly with similar amounts"
+    ],
+    detection:[
+      "Transaction monitoring rules: multiple cash deposits < $10K within rolling 10-day window",
+      "Aggregation logic: same customer / same day across multiple branches",
+      "Teller observations: customers counting cash carefully before deposit",
+      "Pattern analysis: consistent sub-threshold amounts over 60–90 day lookback"
+    ],
+    citations:["31 U.S.C. § 5324","FinCEN SAR Activity Review Issue 25","FinCEN Advisory FIN-2010-A003"]
+  },
+  {
+    id:2, title:"Layering via Wire Transfers", cat:"ml", risk:"high",
+    tags:["Wires","FATF","International"],
+    summary:"Rapid movement of funds through multiple domestic or international accounts to obscure origin — the second stage of placement-layering-integration. Often crosses jurisdictions to complicate tracing.",
+    stages:["Layering"],
+    redFlags:[
+      "Funds received and immediately wired out with no intervening business purpose",
+      "Multiple intermediate jurisdictions with no apparent commercial nexus",
+      "Round-dollar wire amounts; no supporting invoice or contract",
+      "Wire activity fundamentally inconsistent with stated account purpose",
+      "Receiving or originating country is FATF high-risk or non-cooperative jurisdiction",
+      "Rapid sequential wires — A→B→C→D within hours"
+    ],
+    detection:[
+      "Velocity rules: wire out within X hours of wire in",
+      "Jurisdiction screening: FATF grey/black list country involvement",
+      "Round-amount detection: $50,000; $100,000; $500,000 exact",
+      "Profile deviation: wire volume vs. stated business type"
+    ],
+    citations:["FinCEN Advisory FIN-2014-A005","FATF Guidance on ML Typologies 2020","31 CFR § 1020.320"]
+  },
+  {
+    id:3, title:"Trade-Based Money Laundering (TBML)", cat:"ml", risk:"high",
+    tags:["Trade","International","FATF"],
+    summary:"Using international trade transactions to transfer value across borders by manipulating invoice prices, misrepresenting goods, or falsifying trade documents. One of the largest ML channels globally.",
+    stages:["Layering","Integration"],
+    redFlags:[
+      "Invoice pricing significantly inconsistent with market or commodity value",
+      "Over- or under-invoicing of goods compared to customs / trade databases",
+      "Multiple alterations or corrections to bills of lading or shipping documents",
+      "Payment from unrelated third party not party to the trade contract",
+      "Trading partner in FATF high-risk jurisdiction",
+      "Goods are commonly cited TBML commodities (electronics, luxury goods, gold, textiles)"
+    ],
+    detection:[
+      "Trade finance document review: invoice vs. market price comparison",
+      "Customs data cross-reference where available",
+      "Correspondent banking: review of trade finance instruments",
+      "High-risk commodity lists screening"
+    ],
+    citations:["FinCEN Advisory FIN-2010-A001","FATF TBML Typologies Report 2006/2020","FinCEN Geographic Targeting Orders"]
+  },
+  {
+    id:4, title:"Shell Company / Nominee Layering", cat:"ml", risk:"high",
+    tags:["Shell Companies","Beneficial Ownership","CDD"],
+    summary:"Using legal entities with obscured ownership structures — shell companies, nominees, trusts — to disguise the true beneficial owner of funds. Common integration mechanism.",
+    stages:["Layering","Integration"],
+    redFlags:[
+      "Legal entity with no apparent business operations or employees",
+      "Beneficial owner identity unclear or unverifiable",
+      "Rapid account opening followed by large immediate transactions",
+      "Registered agent is the only identifiable contact — no real address",
+      "Multiple entities sharing same address, phone, or beneficial owner",
+      "Jurisdiction of incorporation known for opacity (Delaware, Nevada, offshore jurisdictions)"
+    ],
+    detection:[
+      "FinCEN CDD Final Rule: collect and verify beneficial ownership ≥ 25%",
+      "Open source / EDGAR / state corporate registry verification",
+      "Negative news and adverse media screening",
+      "Cross-account link analysis: shared registration info"
+    ],
+    citations:["FinCEN CDD Final Rule 2016 (31 CFR § 1010.230)","FinCEN Advisory FIN-2019-A002 (Real Estate)","Corporate Transparency Act 2021"]
+  },
+  {
+    id:5, title:"Real Estate Money Laundering", cat:"ml", risk:"high",
+    tags:["Real Estate","GTO","Integration"],
+    summary:"Using real estate purchases — often all-cash or through shell companies — to place and integrate illicit funds. Subject to FinCEN Geographic Targeting Orders in major metro markets.",
+    stages:["Placement","Integration"],
+    redFlags:[
+      "All-cash purchase — no mortgage financing",
+      "Purchase through LLC with no apparent business history",
+      "Price significantly above or below market value",
+      "Rapid buy-and-sell ('flip') with no renovation or business rationale",
+      "Third-party payors not party to the transaction",
+      "Property located in a FinCEN GTO-covered market"
+    ],
+    detection:[
+      "FinCEN GTO compliance: identify all-cash buyers in covered markets",
+      "Beneficial ownership of purchasing entity",
+      "Title company SAR reporting obligations",
+      "Price vs. tax assessment comparison"
+    ],
+    citations:["FinCEN Advisory FIN-2019-A002","FinCEN Geographic Targeting Orders (multiple)","FinCEN SAR Activity Review Issue 29"]
+  },
+  {
+    id:6, title:"Cryptocurrency / Virtual Asset ML", cat:"ml", risk:"high",
+    tags:["Crypto","Virtual Assets","FinCEN 2019"],
+    summary:"Using virtual currencies, peer-to-peer platforms, unhosted wallets, or mixing services to layer or integrate illicit proceeds. Rapidly evolving typology with growing regulatory attention.",
+    stages:["Placement","Layering"],
+    redFlags:[
+      "Large cash-to-crypto conversion with no stated business purpose",
+      "Transactions to/from high-risk exchanges or darknet-associated wallets",
+      "Use of mixing or tumbling services to obscure transaction trails",
+      "Customer unable to explain source of virtual asset holdings",
+      "Rapid conversion: crypto in → fiat out within same session",
+      "OFAC-designated wallet address involved in transaction"
+    ],
+    detection:[
+      "Blockchain analytics tools: Chainalysis, Elliptic, TRM Labs",
+      "OFAC screening: sanctioned wallet address databases",
+      "Velocity and conversion pattern rules in TMS",
+      "Customer KYC: source of virtual asset funds documentation"
+    ],
+    citations:["FinCEN Guidance FIN-2019-G001","FinCEN Advisory FIN-2020-A001 (Ransomware)","FATF Updated Guidance on VASPs 2021"]
+  },
+  {
+    id:7, title:"Account Takeover (ATO) Fraud", cat:"fraud", risk:"high",
+    tags:["ATO","Cyber","Reg E"],
+    summary:"Unauthorized access to legitimate customer accounts to initiate fraudulent transactions, redirect funds, or harvest data. Primary fraud vector at digital and retail financial institutions.",
+    stages:["N/A — Fraud"],
+    redFlags:[
+      "Contact information changed shortly before large outbound transaction",
+      "Login from new device or geolocation followed by immediate funds transfer",
+      "Multiple failed login attempts preceding successful access",
+      "Velocity spike: sudden burst of transactions inconsistent with account history",
+      "Customer reports transactions they did not authorize",
+      "SIM swap or phone port indicator on account"
+    ],
+    detection:[
+      "Device fingerprinting: new device + immediate large transfer = high risk flag",
+      "Geo-velocity: login from location A followed by login from location B within impossible timeframe",
+      "Contact change + transaction velocity rule",
+      "Behavioral biometrics baseline deviation",
+      "Real-time fraud scoring at transaction initiation"
+    ],
+    citations:["FinCEN Advisory FIN-2016-A005","FFIEC Cybersecurity Assessment Tool","Reg E — 12 CFR § 1005 (consumer fraud obligations)"]
+  },
+  {
+    id:8, title:"Business Email Compromise (BEC)", cat:"fraud", risk:"high",
+    tags:["BEC","Wire Fraud","FBI IC3"],
+    summary:"Social engineering attack targeting businesses and financial institutions — fraudulent wire transfer instructions sent via compromised or spoofed email. One of the highest-dollar fraud typologies per FBI IC3 data.",
+    stages:["N/A — Fraud"],
+    redFlags:[
+      "Urgent wire request from executive or vendor via email — change to payment instructions",
+      "Email domain slightly different from known vendor domain (typosquatting)",
+      "Request to change ACH / wire details for existing vendor",
+      "Wire destination is a newly added, unverified account",
+      "Pressure to bypass normal approval procedures",
+      "Wire request timing: end of business day, Friday afternoon, holiday eve"
+    ],
+    detection:[
+      "Callback verification protocol: call known number to verify wire change requests",
+      "Dual-control procedures for new payee addition and wire origination",
+      "Email authentication monitoring: SPF, DKIM, DMARC",
+      "Payee change + immediate wire initiation = automatic hold flag"
+    ],
+    citations:["FBI IC3 BEC Alert 2021","FinCEN Advisory FIN-2016-A003","FinCEN Advisory FIN-2022-A004"]
+  },
+  {
+    id:9, title:"Check Fraud / Kiting", cat:"fraud", risk:"high",
+    tags:["Check","Float","Negotiable Instruments"],
+    summary:"Exploiting float timing in the check clearing system to obtain unauthorized funds. Modern variants include counterfeit checks deposited via mobile and immediate withdrawal before return.",
+    stages:["N/A — Fraud"],
+    redFlags:[
+      "Repeated deposit-and-immediate-withdrawal pattern on fresh deposits",
+      "Account balance insufficient for checks drawn but float not yet settled",
+      "Multiple returned items with account continuation",
+      "Third-party checks endorsed to account holder inconsistent with business type",
+      "Alterations to payee or amount fields on instruments",
+      "Mobile deposit of high-dollar checks followed by immediate ATM withdrawal"
+    ],
+    detection:[
+      "Float analysis: debit-before-credit patterns on the same account",
+      "Return item rate monitoring: high return rate = kiting indicator",
+      "Check image review: signature consistency, alterations",
+      "Large mobile deposit + immediate large ATM withdrawal rule"
+    ],
+    citations:["FinCEN SAR Activity Review Issue 18","31 CFR § 1020.320 (SAR obligation)","Reg CC — 12 CFR § 229 (funds availability)"]
+  },
+  {
+    id:10, title:"Synthetic Identity Fraud", cat:"fraud", risk:"high",
+    tags:["Synthetic ID","CIP","KYC"],
+    summary:"Combining real and fabricated personal information to create a fictitious identity that passes initial KYC. The synthetic identity builds credit over time before a 'bust out' — maxing all available credit and disappearing.",
+    stages:["N/A — Fraud"],
+    redFlags:[
+      "SSN issued recently for an individual with claimed age suggesting earlier SSN issuance",
+      "No prior credit file or 'thin file' inconsistent with stated age/history",
+      "Authorized user pattern: SSN added to existing accounts to build credit history",
+      "Address and phone inconsistencies across identity documents",
+      "Multiple identities sharing same SSN (SSN 'piggybacking')",
+      "Rapid account utilization after slow build period — 'bust out' precursor"
+    ],
+    detection:[
+      "SSN issuance date vs. date of birth analysis",
+      "Credit header data anomaly: address history, phone consistency",
+      "Device and identity correlation: same device, multiple applications",
+      "Authorized user network analysis: bust-out pattern detection"
+    ],
+    citations:["FinCEN SAR Activity Review Issue 32","CFPB Supervisory Highlights (synthetic ID)","Federal Reserve Synthetic Identity Fraud Paper 2019"]
+  },
+  {
+    id:11, title:"Elder Financial Exploitation (EFE)", cat:"elder", risk:"elevated",
+    tags:["Elder Abuse","EFE","FinCEN 2022"],
+    summary:"Unauthorized or improper use of an elder's funds, property, or assets by family members, caregivers, or strangers. FinCEN 2022 advisory identifies this as a priority SAR category.",
+    stages:["N/A — Elder Abuse"],
+    redFlags:[
+      "Third party controlling access to accounts or speaking on behalf of elder",
+      "Sudden changes to account beneficiaries, signatories, or POA",
+      "Large cash withdrawals inconsistent with prior behavior or stated needs",
+      "Customer appears confused, fearful, or under undue influence during branch visits",
+      "Unexplained large transactions to new payees",
+      "Account access by new person presenting POA documents of uncertain validity"
+    ],
+    detection:[
+      "Teller training: front-line identification of undue influence indicators",
+      "POA document review protocol: date, scope, and grantor capacity",
+      "Transaction monitoring: unusual withdrawal pattern for elderly account holder",
+      "Mandatory reporting obligations: state elder abuse laws vary"
+    ],
+    citations:["FinCEN Advisory FIN-2022-A002","Elder Justice Act","FinCEN SAR Activity Review Issue 34 (EFE)","CFPB Protecting Older Americans Report"]
+  },
+  {
+    id:12, title:"Loan / Mortgage Fraud", cat:"fraud", risk:"elevated",
+    tags:["Mortgage","Loan Fraud","FCRA"],
+    summary:"Material misrepresentation on loan applications to obtain credit on more favorable terms or to use loan proceeds for illegitimate purposes. Includes income fraud, appraisal fraud, and occupancy fraud.",
+    stages:["N/A — Fraud"],
+    redFlags:[
+      "Income documentation inconsistent across application and supporting docs",
+      "Collateral value significantly inconsistent with purchase price or appraisal",
+      "Rapid payoff of loan using funds inconsistent with borrower income profile",
+      "Proceeds disbursed to unrelated third party",
+      "Multiple loan applications at different institutions with inconsistent information",
+      "Straw buyer indicators: investor purchasing as 'owner-occupied'"
+    ],
+    detection:[
+      "Income verification: IRS Form 4506-C tax transcript comparison",
+      "Appraisal review: comparable sales analysis, appraiser relationships",
+      "Disbursement monitoring: payoff source vs. income profile",
+      "Cross-institution check: § 314(b) information sharing"
+    ],
+    citations:["FinCEN SAR Activity Review Issue 22 (Mortgage Fraud)","FBI Mortgage Fraud Report","12 U.S.C. § 1833a (Financial Institutions Reform)"]
+  },
+  {
+    id:13, title:"Terrorist Financing (TF)", cat:"tf", risk:"critical",
+    tags:["Terrorist Financing","OFAC","§ 314(a)"],
+    summary:"Providing funds or financial services to designated terrorist organizations or individuals. Unlike ML, funds may originate from legitimate sources. Small transactions and broad networks are characteristic.",
+    stages:["Distinct from ML — small amounts, broad network"],
+    redFlags:[
+      "Transaction to/from OFAC-designated individual or organization",
+      "FinCEN § 314(a) inquiry active on subject",
+      "Small, frequent transactions to high-risk jurisdictions — incongruent with profile",
+      "Transactions tied to charities or NPOs in high-risk regions without clear legitimate purpose",
+      "Customer relationship network includes known or suspected extremist affiliations",
+      "One-way money flows to foreign recipients with no business or family explanation"
+    ],
+    detection:[
+      "OFAC SDN list screening at account opening and on every transaction",
+      "§ 314(a) periodic list matching — mandatory for all covered institutions",
+      "Negative news: extremist organization affiliations",
+      "Network analysis: funds flowing to same foreign recipient across multiple customers"
+    ],
+    citations:["Executive Order 13224","31 CFR § 595 (SDGT Regulations)","USA PATRIOT Act § 314(a)","FATF Guidance on Terrorist Financing 2019"]
+  },
+  {
+    id:14, title:"Proliferation Financing", cat:"tf", risk:"critical",
+    tags:["Proliferation","WMD","OFAC"],
+    summary:"Financing weapons of mass destruction programs — nuclear, chemical, biological, radiological — or their delivery systems. FATF 2020 guidance formalized proliferation financing as a distinct ML/TF risk category.",
+    stages:["Distinct category — per FATF 2020"],
+    redFlags:[
+      "Transactions to entities in DPRK, Iran, or other WMD-program-linked jurisdictions",
+      "Dual-use goods procurement: electronics, metals, materials with WMD application",
+      "Complex trade finance structures concealing end-user",
+      "Front companies in third-country jurisdictions routing to high-risk states",
+      "OFAC WMD proliferator list match"
+    ],
+    detection:[
+      "OFAC WMD proliferator screening: NPWMD, IRAN SDN designations",
+      "Export control cross-reference: ECCN-controlled goods",
+      "Trade finance: end-user certificate review",
+      "Correspondent banking: country risk overlay for DPRK/Iran exposure"
+    ],
+    citations:["FATF Proliferation Financing Guidance 2020","OFAC NPWMD Regulations","Executive Order 13382"]
+  },
+  {
+    id:15, title:"OFAC Sanctions Evasion", cat:"sanctions", risk:"critical",
+    tags:["OFAC","SDN","Sanctions"],
+    summary:"Deliberate circumvention of U.S. or international sanctions programs — through use of front companies, third-country routing, deceptive practices, or nominee arrangements to access the U.S. financial system.",
+    stages:["All stages — parallel to ML"],
+    redFlags:[
+      "Transaction involves a country subject to comprehensive U.S. sanctions (Cuba, Iran, DPRK, Syria, Crimea)",
+      "Beneficiary or originator name closely resembles SDN list entry",
+      "Routing through third countries to obscure connection to sanctioned jurisdiction",
+      "Customer provides inconsistent information about transaction beneficiary",
+      "Payments described only as 'business' or 'goods' without specificity",
+      "Entity recently incorporated with name change from sanctioned entity"
+    ],
+    detection:[
+      "SDN list screening at transaction and account opening — mandatory",
+      "Fuzzy matching: phonetic, spelling variant, name permutation screening",
+      "IP address and geolocation screening",
+      "Nested correspondent banking: identify ultimate originator/beneficiary jurisdiction",
+      "SWIFT MT message field screening: all free-text fields"
+    ],
+    citations:["50 U.S.C. § 1701 (IEEPA)","31 CFR Part 500-599 (OFAC regulations by program)","OFAC Framework for Compliance Commitments 2019"]
+  },
+  {
+    id:16, title:"Cyber-Enabled Fraud / Ransomware", cat:"cyber", risk:"high",
+    tags:["Ransomware","Cyber","FinCEN 2020"],
+    summary:"Fraudulent activity facilitated by cyberattacks — ransomware, malware, or data breaches used to steal funds or extort payments. Ransomware payments frequently involve virtual currency.",
+    stages:["N/A — Cyber-Enabled"],
+    redFlags:[
+      "Customer making unusual crypto purchases citing 'business emergency'",
+      "Wire transfer to unfamiliar domestic or foreign account citing IT 'incident'",
+      "Customer reports inability to access systems / encrypted files",
+      "Crypto wallet associated with known ransomware group (Chainalysis alert)",
+      "Payment made to a sanctioned ransomware operator (OFAC risk)"
+    ],
+    detection:[
+      "Crypto wallet screening: ransomware-associated address databases",
+      "OFAC advisory: paying ransomware groups may violate sanctions",
+      "Unusual crypto purchase pattern: large, urgent, first-time",
+      "FinCEN SAR filing required for ransomware-related transactions"
+    ],
+    citations:["FinCEN Advisory FIN-2020-A001","OFAC Advisory on Ransomware Sanctions Risk 2020","FinCEN Advisory FIN-2021-A004 (Ransomware Trends)"]
+  },
+  {
+    id:17, title:"Darknet / Illicit Marketplace", cat:"cyber", risk:"high",
+    tags:["Darknet","Crypto","Narcotics"],
+    summary:"Use of darknet marketplaces and peer-to-peer platforms to buy or sell illicit goods (narcotics, stolen data, weapons) — with cryptocurrency as the primary settlement mechanism.",
+    stages:["Placement","Layering"],
+    redFlags:[
+      "Crypto wallet address associated with known darknet marketplace",
+      "Customer purchasing crypto at unusual frequency and volume — cash-funded",
+      "Transactions traced to mixing services used commonly by darknet operators",
+      "Addresses flagged by blockchain analytics as high-risk category"
+    ],
+    detection:[
+      "Blockchain analytics: darknet market cluster attribution",
+      "Peer-to-peer exchange monitoring: LocalBitcoins, Paxful patterns",
+      "Large cash-to-crypto velocity rules",
+      "Adverse media: customer name + darknet forum references"
+    ],
+    citations:["FinCEN Advisory FIN-2019-A003","DOJ Darknet Marketplace Takedowns","FATF Virtual Assets Updated Guidance 2021"]
+  },
+  {
+    id:18, title:"Human Trafficking Financial Flows", cat:"fraud", risk:"critical",
+    tags:["Human Trafficking","FinCEN 2014","Labor"],
+    summary:"Financial indicators associated with labor and sex trafficking — typically cash-intensive, involves multiple persons, and may intersect with commercial sex businesses or agricultural / domestic service fronts.",
+    stages:["Placement","Integration"],
+    redFlags:[
+      "Multiple individuals sharing a single account or address — non-family pattern",
+      "Frequent cash deposits from multiple depositors into one account",
+      "Cash-intensive business inconsistent with stated revenue or employees",
+      "Hotel, motel, or classified ad platform-linked transactions",
+      "Individual appears controlled — third party speaks for them in all interactions"
+    ],
+    detection:[
+      "Account pattern: multiple depositors, one withdrawer",
+      "Hotel / motel credit card or ACH patterns",
+      "FinCEN human trafficking red flag analysis",
+      "Front-line teller training: physical indicators of control or coercion"
+    ],
+    citations:["FinCEN Advisory FIN-2014-A008","Trafficking Victims Protection Act","FinCEN SAR Activity Review Issue 31"]
+  },
+  {
+    id:19, title:"First-Party Fraud / Bust-Out", cat:"fraud", risk:"elevated",
+    tags:["First-Party","Credit Fraud","Bust-Out"],
+    summary:"Account holder intentionally defaults on credit obligations after maximizing available credit — no intent to repay from inception. Often involves synthetic or real identity with manufactured credit history.",
+    stages:["N/A — Fraud"],
+    redFlags:[
+      "Rapid utilization of all available credit lines across multiple products simultaneously",
+      "Cash advance activity immediately preceding account delinquency",
+      "Multiple balance transfer requests to newly opened cards",
+      "Authorized user additions followed by rapid credit utilization",
+      "Address or employment changes shortly before delinquency",
+      "Inquiries at multiple institutions in short period"
+    ],
+    detection:[
+      "Velocity: credit utilization rate change over 30/60/90 days",
+      "Cash advance monitoring: large cash advances on new accounts",
+      "Cross-product bust-out rule: simultaneous delinquency across all products",
+      "Application fraud consortium: cross-institution inquiry pattern"
+    ],
+    citations:["FinCEN SAR Activity Review Issue 16","FCRA — 15 U.S.C. § 1681 (credit reporting obligations)","Federal Reserve Payments Fraud Study"]
+  },
+  {
+    id:20, title:"Funnel Account / Mule Network", cat:"ml", risk:"high",
+    tags:["Mule","Funnel Account","Network"],
+    summary:"Using recruited or unwitting account holders to receive, aggregate, and forward illicit funds — often across multiple institutions. Mules may be paid a commission or deceived about the purpose.",
+    stages:["Placement","Layering"],
+    redFlags:[
+      "Account receives multiple small deposits from unrelated parties, immediately wired out",
+      "Customer received online job offer involving receiving and forwarding payments",
+      "Activity inconsistent with stated employment or income level",
+      "Multiple incoming transactions from unknown originators followed by single outbound wire",
+      "Customer asks about wire capabilities before account is established",
+      "Peer-to-peer payments (Zelle, Venmo) received in volume, immediately withdrawn as cash"
+    ],
+    detection:[
+      "Funnel account rule: N incoming transactions → single outbound within X hours",
+      "Peer-to-peer volume monitoring: unusual P2P receipt volume",
+      "Network link analysis: shared originators across multiple accounts",
+      "Onboarding flag: wire capability inquiry before first deposit"
+    ],
+    citations:["FinCEN Advisory FIN-2012-A010 (Money Mules)","FinCEN Advisory FIN-2019-A005","FBI Money Mule Initiative"]
+  }
+];
+
+let currentFilter = 'all';
+let currentSearch = '';
+
+function riskPillHtml(risk) {
+  const map = { critical:'pill-red', high:'pill-red', elevated:'pill-amber', moderate:'pill-green' };
+  const label = { critical:'Critical', high:'High Risk', elevated:'Elevated', moderate:'Moderate' };
+  return `<span class="pill ${map[risk]||'pill-teal'}">${label[risk]||risk}</span>`;
+}
+
+function catPillHtml(cat) {
+  const map = { ml:'pill-teal', fraud:'pill-amber', tf:'pill-red', sanctions:'pill-purple', cyber:'pill-blue', elder:'pill-green' };
+  const label = { ml:'ML/AML', fraud:'Fraud', tf:'Terrorist Financing', sanctions:'Sanctions', cyber:'Cyber', elder:'Elder/Consumer' };
+  return `<span class="pill ${map[cat]||'pill-teal'}">${label[cat]||cat}</span>`;
+}
+
+function renderCards(data) {
+  const grid = document.getElementById('typo-grid');
+  const empty = document.getElementById('empty-state');
+  document.getElementById('showing-count').textContent = data.length;
+  if (data.length === 0) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  grid.innerHTML = data.map(t => `
+    <div class="typo-card" id="card-${t.id}" onclick="toggleCard(${t.id})">
+      <div class="typo-card-top">
+        <div class="typo-card-header">
+          <div class="typo-title">${t.title}</div>
+          ${riskPillHtml(t.risk)}
+        </div>
+        <div class="typo-pills">
+          ${catPillHtml(t.cat)}
+          ${t.tags.map(tag => `<span class="pill pill-teal" style="opacity:0.7">${tag}</span>`).join('')}
+        </div>
+        <div class="typo-summary">${t.summary}</div>
+        <div class="typo-expand-hint">▸ Click to expand — red flags, detection, citations</div>
+      </div>
+      <div class="typo-detail">
+        <div class="detail-section">
+          <div class="detail-label">Stage in ML/Fraud Cycle</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">${t.stages.map(s => `<span class="pill pill-teal">${s}</span>`).join('')}</div>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Red Flag Indicators</div>
+          <ul class="red-flags-list">${t.redFlags.map(f => `<li>${f}</li>`).join('')}</ul>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Detection Approaches</div>
+          <ul class="detection-list">${t.detection.map(d => `<li>${d}</li>`).join('')}</ul>
+        </div>
+        <div class="detail-section">
+          <div class="detail-label">Regulatory Citations</div>
+          <div class="citation-row">${t.citations.map(c => `<span class="cite-chip">${c}</span>`).join('')}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCard(id) {
+  const card = document.getElementById('card-' + id);
+  card.classList.toggle('expanded');
+}
+
+function setFilter(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterCards();
+}
+
+function filterCards() {
+  currentSearch = document.getElementById('search-input').value.toLowerCase();
+  let data = TYPOLOGIES;
+  if (currentFilter !== 'all') data = data.filter(t => t.cat === currentFilter);
+  if (currentSearch) {
+    data = data.filter(t => {
+      const blob = [t.title, t.summary, ...t.redFlags, ...t.detection, ...t.citations, ...t.tags].join(' ').toLowerCase();
+      return blob.includes(currentSearch);
+    });
+  }
+  renderCards(data);
+}
+
+renderCards(TYPOLOGIES);
+</script>
+</body>
+</html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Communication Samples · Jack Johnson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:#0a0f1e;--navy2:#111827;--navy3:#1a2332;--navy4:#0d1424;
+    --teal:#0d9488;--teal-light:#14b8a6;--teal-dim:rgba(13,148,136,0.15);
+    --amber:#d97706;--amber-dim:rgba(217,119,6,0.15);
+    --red:#dc2626;--red-dim:rgba(220,38,38,0.12);
+    --green:#16a34a;--green-dim:rgba(22,163,74,0.12);
+    --purple:#7c3aed;--purple-dim:rgba(124,58,237,0.12);
+    --blue:#2563eb;--blue-dim:rgba(37,99,235,0.12);
+    --slate-dim:rgba(148,163,184,0.06);
+    --border:rgba(148,163,184,0.12);--border2:rgba(148,163,184,0.2);
+    --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+    --mono:'IBM Plex Mono',monospace;
+    --serif:'Libre Baskerville',serif;
+    --sans:'Inter',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--navy);color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.6;min-height:100vh;}
+
+  nav{border-bottom:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(10,15,30,0.96);backdrop-filter:blur(8px);z-index:100;}
+  .nav-brand{font-family:var(--mono);font-size:13px;color:var(--teal);letter-spacing:0.08em;}
+  .nav-links{display:flex;gap:24px;}
+  .nav-links a{font-size:13px;color:var(--text2);text-decoration:none;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--teal-light);}
+  .nav-back{font-family:var(--mono);font-size:12px;color:var(--teal);text-decoration:none;border:1px solid var(--teal);padding:6px 14px;border-radius:4px;transition:all 0.2s;}
+  .nav-back:hover{background:var(--teal-dim);}
+
+  .hero{padding:56px 40px 44px;max-width:1100px;margin:0 auto;border-bottom:1px solid var(--border);}
+  .badge{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:0.1em;color:var(--teal);background:var(--teal-dim);border:1px solid rgba(13,148,136,0.3);padding:4px 12px;border-radius:2px;margin-bottom:20px;text-transform:uppercase;}
+  .hero h1{font-family:var(--serif);font-size:38px;font-weight:700;line-height:1.2;margin-bottom:16px;color:#f1f5f9;}
+  .hero h1 span{color:var(--teal-light);}
+  .hero p{font-size:16px;color:var(--text2);max-width:700px;line-height:1.7;}
+  .meta-row{display:flex;gap:20px;margin-top:24px;flex-wrap:wrap;}
+  .meta-chip{font-family:var(--mono);font-size:11px;color:var(--text3);border:1px solid var(--border);padding:4px 10px;border-radius:2px;}
+
+  main{max-width:1100px;margin:0 auto;padding:48px 40px 96px;}
+
+  /* SAMPLE INDEX */
+  .sample-index{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;margin-bottom:52px;}
+  .index-card{background:var(--navy2);border:1px solid var(--border);border-radius:6px;padding:16px 18px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;}
+  .index-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--border2);transition:background 0.2s;}
+  .index-card:hover{border-color:var(--border2);transform:translateY(-1px);}
+  .index-card:hover::before{background:var(--teal);}
+  .index-card.active{border-color:var(--teal);background:var(--teal-dim);}
+  .index-card.active::before{background:var(--teal);}
+  .ic-type{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;}
+  .index-card.active .ic-type{color:var(--teal);}
+  .ic-title{font-size:13px;font-weight:500;color:var(--text2);line-height:1.4;}
+  .index-card.active .ic-title{color:var(--text);}
+  .ic-audience{font-size:11px;color:var(--text3);margin-top:6px;}
+
+  /* SAMPLE DISPLAY */
+  .sample-wrap{display:grid;grid-template-columns:1fr 380px;gap:28px;align-items:start;}
+  @media(max-width:900px){.sample-wrap{grid-template-columns:1fr;}}
+
+  /* DOCUMENT PANE */
+  .doc-pane{background:var(--navy2);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+  .doc-toolbar{padding:12px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--navy3);}
+  .doc-toolbar-label{font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:0.08em;}
+  .doc-format-tag{font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--navy);border:1px solid var(--border);padding:2px 8px;border-radius:2px;}
+  .doc-body{padding:36px 40px;font-family:var(--sans);}
+  .doc-header{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+  .doc-meta-grid{display:grid;grid-template-columns:80px 1fr;gap:4px 16px;font-size:13px;margin-bottom:16px;}
+  .doc-meta-label{color:var(--text3);font-weight:500;}
+  .doc-meta-val{color:var(--text2);}
+  .doc-subject{font-size:16px;font-weight:600;color:var(--text);margin-top:12px;line-height:1.4;}
+  .doc-body-text{font-size:14px;color:var(--text2);line-height:1.85;}
+  .doc-body-text p{margin-bottom:16px;}
+  .doc-body-text p:last-child{margin-bottom:0;}
+  .doc-section-head{font-weight:600;color:var(--text);font-size:12px;margin-bottom:8px;margin-top:22px;text-transform:uppercase;letter-spacing:0.08em;font-family:var(--mono);color:var(--teal-light);}
+  .doc-body-text ul{padding-left:20px;margin-bottom:16px;display:flex;flex-direction:column;gap:6px;}
+  .doc-body-text li{font-size:14px;color:var(--text2);line-height:1.7;}
+  .doc-sig{margin-top:28px;padding-top:20px;border-top:1px solid var(--border);font-size:13px;color:var(--text2);}
+  .doc-sig-name{font-weight:600;color:var(--text);font-size:14px;}
+  .doc-highlight{background:rgba(13,148,136,0.1);border-left:2px solid var(--teal);padding:10px 14px;border-radius:0 4px 4px 0;margin:14px 0;font-size:13px;color:var(--text2);font-style:italic;}
+  .doc-warn{background:var(--amber-dim);border-left:2px solid var(--amber);padding:10px 14px;border-radius:0 4px 4px 0;margin:14px 0;font-size:13px;color:#fbbf24;}
+  .doc-action-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;}
+  .doc-action-table th{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;padding:8px 12px;border-bottom:1px solid var(--border2);text-align:left;}
+  .doc-action-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;line-height:1.5;}
+  .doc-action-table tr:last-child td{border-bottom:none;}
+
+  /* KPI STRIP */
+  .kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin:16px 0;}
+  .kpi-cell{padding:14px 16px;border-right:1px solid var(--border);text-align:center;}
+  .kpi-cell:last-child{border-right:none;}
+  .kpi-label{font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:6px;}
+  .kpi-val{font-family:var(--mono);font-size:20px;font-weight:500;}
+  .kpi-delta{font-size:11px;margin-top:4px;}
+
+  /* ANNOTATION PANE */
+  .ann-pane{display:flex;flex-direction:column;gap:14px;}
+  .ann-header{font-family:var(--mono);font-size:11px;color:var(--teal);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
+  .ann-card{background:var(--navy2);border:1px solid var(--border);border-radius:6px;padding:16px 18px;}
+  .ann-card-label{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;}
+  .ann-card-text{font-size:13px;color:var(--text2);line-height:1.65;}
+  .ann-card-text strong{color:var(--teal-light);}
+  .ann-pill-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
+  .skill-tag{display:inline-block;font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:3px;background:var(--navy3);border:1px solid var(--border);color:var(--text3);}
+  .skill-tag.teal{border-color:rgba(13,148,136,0.4);color:var(--teal-light);background:var(--teal-dim);}
+
+  .pill{display:inline-block;font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:10px;letter-spacing:0.04em;}
+  .pill-red{background:var(--red-dim);color:#f87171;border:1px solid rgba(220,38,38,0.3);}
+  .pill-amber{background:var(--amber-dim);color:#fbbf24;border:1px solid rgba(217,119,6,0.3);}
+  .pill-green{background:var(--green-dim);color:#4ade80;border:1px solid rgba(22,163,74,0.3);}
+  .pill-teal{background:var(--teal-dim);color:var(--teal-light);border:1px solid rgba(13,148,136,0.3);}
+
+  footer{border-top:1px solid var(--border);padding:32px 40px;max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  footer p{font-size:12px;color:var(--text3);font-family:var(--mono);}
+  footer a{color:var(--teal);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">JJ · FC&amp;C</span>
+  <div class="nav-links">
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects">Work Samples</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#expertise">Expertise</a>
+    <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#contact">Contact</a>
+  </div>
+  <a href="https://jajohn1-sudo.github.io/jack-johnson-compliance-portfolio/#projects" class="nav-back">← Portfolio</a>
+</nav>
+
+<div class="hero">
+  <div class="badge">Communication Samples · Executive · Annotated</div>
+  <h1>Executive <span>Communication</span></h1>
+  <p>Senior leaders and board members need compliance intelligence, not compliance detail. These samples demonstrate how I translate program risk, investigative findings, and regulatory exposure into the language executives actually act on — concise, prioritized, and decision-ready.</p>
+  <div class="meta-row">
+    <span class="meta-chip">BSA Officer Briefing</span>
+    <span class="meta-chip">Board Risk Reporting</span>
+    <span class="meta-chip">Program Gap Escalation</span>
+    <span class="meta-chip">Examination Readiness</span>
+  </div>
+</div>
+
+<main>
+
+  <div class="sample-index">
+    <div class="index-card active" onclick="showSample(0,this)">
+      <div class="ic-type">Memo · BSA / FIU</div>
+      <div class="ic-title">Monthly BSA Officer Intelligence Briefing</div>
+      <div class="ic-audience">To: BSA Compliance Officer</div>
+    </div>
+    <div class="index-card" onclick="showSample(1,this)">
+      <div class="ic-type">Report · Board / Audit Committee</div>
+      <div class="ic-title">Quarterly BSA/AML Program Risk Summary</div>
+      <div class="ic-audience">To: Board Audit Committee</div>
+    </div>
+    <div class="index-card" onclick="showSample(2,this)">
+      <div class="ic-type">Memo · Examination Readiness</div>
+      <div class="ic-title">Program Gap Escalation — Pre-Exam</div>
+      <div class="ic-audience">To: BSA Officer · Chief Risk Officer</div>
+    </div>
+    <div class="index-card" onclick="showSample(3,this)">
+      <div class="ic-type">Brief · Regulatory Response</div>
+      <div class="ic-title">Post-Examination Findings Response Brief</div>
+      <div class="ic-audience">To: CEO · BSA Officer · Legal</div>
+    </div>
+  </div>
+
+  <div id="sample-area"></div>
+
+</main>
+
+<footer>
+  <p>Jack Johnson · Financial Crimes &amp; Compliance · <a href="mailto:jajohnson2@cox.net">jajohnson2@cox.net</a></p>
+  <p>Executive communication samples are composites — names, institutions, and specific figures are illustrative.</p>
+</footer>
+
+<script>
+const SAMPLES = [
+
+  // 0 — MONTHLY BSA OFFICER BRIEFING
+  {
+    type:"Memo · BSA / Financial Intelligence Unit",
+    format:"Monthly BSA Officer Intelligence Briefing",
+    audience:"BSA Compliance Officer",
+    doc:`
+      <div class="doc-header">
+        <div class="doc-meta-grid">
+          <span class="doc-meta-label">DATE</span><span class="doc-meta-val">October 3, 2023</span>
+          <span class="doc-meta-label">TO</span><span class="doc-meta-val">BSA Compliance Officer</span>
+          <span class="doc-meta-label">FROM</span><span class="doc-meta-val">Jack Johnson, Investigation Specialist, FIU</span>
+          <span class="doc-meta-label">RE</span><span class="doc-meta-val">September 2023 — FIU Activity Summary &amp; Emerging Risk Items</span>
+        </div>
+        <div class="doc-subject">September 2023 FIU Monthly Intelligence Brief</div>
+      </div>
+      <div class="doc-body-text">
+        <div class="kpi-strip">
+          <div class="kpi-cell">
+            <div class="kpi-label">Alerts Reviewed</div>
+            <div class="kpi-val" style="color:var(--teal-light);">312</div>
+            <div class="kpi-delta" style="color:#4ade80;">↑ 18 vs. Aug</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">SARs Filed</div>
+            <div class="kpi-val" style="color:#fbbf24;">14</div>
+            <div class="kpi-delta" style="color:var(--text3);">— same as Aug</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">CTRs Filed</div>
+            <div class="kpi-val" style="color:var(--teal-light);">28</div>
+            <div class="kpi-delta" style="color:#f87171;">↑ 9 vs. Aug</div>
+          </div>
+          <div class="kpi-cell">
+            <div class="kpi-label">Cases Open</div>
+            <div class="kpi-val" style="color:#f87171;">7</div>
+            <div class="kpi-delta" style="color:var(--text3);">3 escalated</div>
+          </div>
+        </div>
+
+        <div class="doc-section-head">Items Requiring Your Attention</div>
+        <p><strong>1. Active multi-subject funnel account investigation (Case No. XXXX):</strong> Three related accounts displaying coordinated inbound aggregation / single outbound wire pattern. SAR draft complete. Total exposure ~$214K over 90 days. One subject has an active § 314(a) match. Requesting your authorization to file and to discuss law enforcement coordination — see attached case summary.</p>
+        <p><strong>2. CTR volume spike — two branch locations:</strong> CTR filings at the [Location A] and [Location B] branches are running 40% above the institution average for Q3. Both branches serve cash-intensive business corridors. I recommend a targeted transaction monitoring rule review for those locations before year-end examination. Not urgent, but flagging now while there's time to act proactively.</p>
+        <p><strong>3. FinCEN regulatory update — October effective:</strong> FinCEN's revised SAR filing instructions for cyber-enabled fraud (FIN-2023-XXXX) take effect October 15. Our current SAR narrative template does not include the new required field for "cyber event type." I have drafted a template update — attached for your review and approval.</p>
+
+        <div class="doc-section-head">Program Status — No Issues</div>
+        <p>Alert queue is current. No SARs are approaching the 30-day filing deadline without a disposition. All September CTRs filed within required window. No open FinCEN or regulatory requests outstanding beyond items above.</p>
+
+        <div class="doc-highlight">One item for your awareness only — not requiring action: the [Correspondent Bank] relationship generated an unusual volume of nested originator queries in September. I am monitoring and will escalate if a pattern develops. No SAR-level findings at this time.</div>
+
+        <div class="doc-sig">
+          <div class="doc-sig-name">Jack Johnson</div>
+          Investigation Specialist · Financial Intelligence Unit<br>
+          Attachments: Case XXXX Summary · SAR Template Draft · CTR Branch Analysis
+        </div>
+      </div>`,
+    annotations:[
+      { label:"The KPI Strip", text:"Senior leaders scan before they read. The four-cell KPI strip at the top answers <strong>'is anything on fire?'</strong> in under three seconds. If the numbers are in range, the reader relaxes and reads the detail. If they're not, they go straight to the flagged items. That's the intended behavior." },
+      { label:"Tiering Requests vs. FYI", text:"'Items Requiring Your Attention' vs. 'Program Status — No Issues' vs. 'awareness only — not requiring action' are three distinct tiers of information. <strong>Executives who receive undifferentiated information learn to ignore all of it.</strong> Tiering teaches the reader what kind of attention each item needs." },
+      { label:"The Proactive Flag", text:"The CTR branch spike item is flagged well before it becomes a problem. This is the operating principle of upward communication in a compliance function: <strong>executives should never learn about a problem from an examiner that their compliance staff already knew about.</strong> The cost of the proactive flag is one sentence. The cost of the surprise is much higher." },
+      { label:"Skills Demonstrated", text:"", pills:["FIU Program Management","SAR/CTR Reporting","Executive Briefing","Regulatory Update Monitoring","Proactive Risk Communication"] }
+    ]
+  },
+
+  // 1 — BOARD AUDIT COMMITTEE REPORT
+  {
+    type:"Report · Board of Directors / Audit Committee",
+    format:"Quarterly BSA/AML Program Risk Summary",
+    audience:"Board Audit Committee · Non-Compliance Executives",
+    doc:`
+      <div class="doc-header">
+        <div class="doc-meta-grid">
+          <span class="doc-meta-label">DATE</span><span class="doc-meta-val">October 15, 2022</span>
+          <span class="doc-meta-label">TO</span><span class="doc-meta-val">Board Audit Committee</span>
+          <span class="doc-meta-label">FROM</span><span class="doc-meta-val">BSA Compliance Officer (Prepared by: Jack Johnson, Compliance Specialist)</span>
+          <span class="doc-meta-label">RE</span><span class="doc-meta-val">Q3 2022 BSA/AML Program Summary — Board Reporting</span>
+          <span class="doc-meta-label">PERIOD</span><span class="doc-meta-val">July 1 – September 30, 2022</span>
+        </div>
+        <div class="doc-subject">Q3 2022 BSA/AML Program Risk Summary — Board Level</div>
+      </div>
+      <div class="doc-body-text">
+        <div class="doc-section-head">Program Status</div>
+        <p><span class="pill pill-green">Satisfactory</span> &nbsp; The BSA/AML compliance program is operating within established risk appetite. No regulatory actions, MRAs, or consent orders are outstanding. The program is on track for the scheduled Q4 OCC examination.</p>
+
+        <div class="doc-section-head">Q3 Activity — Key Figures</div>
+        <table class="doc-action-table">
+          <thead><tr><th>Metric</th><th>Q3 2022</th><th>Q2 2022</th><th>Trend</th></tr></thead>
+          <tbody>
+            <tr><td>Suspicious Activity Reports filed</td><td>42</td><td>38</td><td><span class="pill pill-amber">↑ 10.5%</span></td></tr>
+            <tr><td>Currency Transaction Reports filed</td><td>87</td><td>91</td><td><span class="pill pill-green">↓ 4.4%</span></td></tr>
+            <tr><td>TMS alerts reviewed to disposition</td><td>941</td><td>903</td><td><span class="pill pill-teal">Stable</span></td></tr>
+            <tr><td>Average days to SAR filing (from alert)</td><td>22 days</td><td>24 days</td><td><span class="pill pill-green">Improving</span></td></tr>
+            <tr><td>New high-risk accounts opened (EDD required)</td><td>14</td><td>11</td><td><span class="pill pill-amber">↑ Monitor</span></td></tr>
+            <tr><td>EDD reviews completed on schedule</td><td>100%</td><td>96%</td><td><span class="pill pill-green">Improving</span></td></tr>
+          </tbody>
+        </table>
+
+        <div class="doc-section-head">Material Risk Items — Board Awareness</div>
+        <p><strong>SAR volume increase:</strong> The 10.5% quarter-over-quarter increase in SAR filings is primarily attributable to a new transaction monitoring rule implemented in July targeting funnel account patterns — a category of money laundering activity that was previously under-detected. The increase reflects improved detection, not increased institutional risk. We consider this a positive program development.</p>
+        <p><strong>High-risk account growth:</strong> The modest increase in EDD-required accounts reflects normal business growth in the commercial banking segment. All 14 accounts were approved through the required senior management review process and EDD files are complete. This is within acceptable program parameters and will continue to be monitored.</p>
+
+        <div class="doc-section-head">Upcoming — Q4 OCC Examination</div>
+        <p>The OCC's scheduled BSA/AML examination is expected to commence in late November. Examination readiness preparations are underway. No material program gaps are anticipated. The BSA Officer will brief the Audit Committee on examination findings within 30 days of the exit conference.</p>
+
+        <div class="doc-section-head">No Action Required</div>
+        <p>This report is submitted for board awareness. No board action is required at this time. The BSA Officer is available for questions at the October board meeting.</p>
+
+        <div class="doc-sig">
+          <div class="doc-sig-name">[BSA Compliance Officer Name]</div>
+          BSA Compliance Officer<br>
+          Prepared by: Jack Johnson, Compliance Specialist
+        </div>
+      </div>`,
+    annotations:[
+      { label:"Board Audience Requires Reframing", text:"Board members are not compliance professionals. The SAR volume increase in isolation looks alarming. <strong>Without the context — new detection rule, improved coverage — the board draws the wrong conclusion.</strong> Every trend in a board report needs an interpretation, not just a number. The number is the data; the interpretation is the intelligence." },
+      { label:"The 'No Action Required' Closing", text:"Board members are busy. A report that ends without telling the reader what (if anything) they need to do creates unnecessary anxiety and follow-up questions. 'No action required' is not a throwaway line — it's a <strong>decision signal</strong> that closes the loop and respects the reader's time." },
+      { label:"Status Badge Discipline", text:"The 'Satisfactory' green badge at the top of program status sets the read frame for the entire document. Boards use these reports to fulfill their oversight obligation — they need to know the bottom line immediately. If the status were anything other than satisfactory, the badge would be amber or red, and the structure of the memo would change accordingly." },
+      { label:"Skills Demonstrated", text:"", pills:["Board Reporting","BSA Program Management","OCC Examination Readiness","Metric Framing & Context","Governance Communication"] }
+    ]
+  },
+
+  // 2 — PROGRAM GAP ESCALATION
+  {
+    type:"Memo · Examination Readiness / Risk Escalation",
+    format:"Program Gap Escalation — Pre-Examination",
+    audience:"BSA Compliance Officer · Chief Risk Officer",
+    doc:`
+      <div class="doc-header">
+        <div class="doc-meta-grid">
+          <span class="doc-meta-label">DATE</span><span class="doc-meta-val">August 19, 2019</span>
+          <span class="doc-meta-label">TO</span><span class="doc-meta-val">BSA Compliance Officer; Chief Risk Officer</span>
+          <span class="doc-meta-label">FROM</span><span class="doc-meta-val">Jack Johnson, BSA/AML Compliance Specialist</span>
+          <span class="doc-meta-label">RE</span><span class="doc-meta-val">Pre-Examination Gap Identification — Recommended Corrective Action Before Q4 Exam</span>
+          <span class="doc-meta-label">PRIORITY</span><span class="doc-meta-val">Action Required Before October 1</span>
+        </div>
+        <div class="doc-subject">Three Program Gaps Requiring Resolution Before Q4 OCC Examination</div>
+      </div>
+      <div class="doc-body-text">
+        <div class="doc-section-head">Purpose</div>
+        <p>In connection with our Q4 examination readiness review, I have identified three program areas where our documentation or process does not fully meet OCC examination expectations as set out in the BSA/AML Examination Manual. I am escalating these now — ten weeks before the scheduled examination — because each gap is correctable in that window if we act promptly.</p>
+        <p>None of these items represents a program failure. All three relate to documentation and process consistency, not to fundamental compliance failures. However, OCC examiners will look for each of these specifically, and undocumented gaps carry examination risk disproportionate to the underlying operational reality.</p>
+
+        <div class="doc-section-head">Gap 1 — EDD File Completeness (High Examination Risk)</div>
+        <p>A review of 22 EDD files for high-risk customers found that 6 files (27%) do not contain a documented source of funds analysis. The accounts in question are operating within expected parameters and there is no underlying suspicious activity. The gap is documentation-only. OCC examination guidance explicitly references source of funds documentation as a required EDD element.</p>
+        <div class="doc-warn">Recommended action: Assign analyst time to complete and document source of funds reviews for all 6 accounts before October 1. Estimated effort: 12–16 analyst hours. I can lead this review if capacity is assigned.</div>
+
+        <div class="doc-section-head">Gap 2 — TMS Rule Change Documentation (Moderate Examination Risk)</div>
+        <p>Three transaction monitoring rule changes were implemented between January and June 2019. The rationale for each change — threshold adjustment, new rule logic, decommission of a legacy rule — is not documented in the TMS governance file. OCC examiners will ask for written justification for rule changes as part of the TMS validation review.</p>
+        <div class="doc-warn">Recommended action: Prepare a brief written rationale (one paragraph per rule change) and add to the TMS governance binder. The FIU team has the operational context; this is a documentation exercise only. Estimated effort: 4 hours.</div>
+
+        <div class="doc-section-head">Gap 3 — Annual BSA Training Completion Tracking (Low Examination Risk)</div>
+        <p>Our BSA training completion report shows 94% completion for the required annual training cycle. The outstanding 6% (approximately 14 employees) includes individuals on leave and two recent hires in onboarding. The completion rate is not a concern — but we do not have a written policy that addresses how incomplete training is tracked and remediated for employees returning from leave or new hires mid-cycle.</p>
+        <div class="doc-warn">Recommended action: Add a one-paragraph addendum to the BSA Training Policy covering mid-cycle hire and leave-return protocols. I have drafted this addendum — attached for BSA Officer review and approval.</div>
+
+        <div class="doc-section-head">Requested Decisions</div>
+        <p>I am requesting confirmation from the BSA Officer and CRO that: (1) the EDD file review will be resourced, (2) the TMS documentation effort is approved, and (3) the training policy addendum is approved for adoption. All three corrections are within my ability to execute or coordinate — I only need the authorization and capacity allocation.</p>
+
+        <div class="doc-sig">
+          <div class="doc-sig-name">Jack Johnson</div>
+          BSA/AML Compliance Specialist<br>
+          Attachment: Draft Training Policy Addendum
+        </div>
+      </div>`,
+    annotations:[
+      { label:"The Pre-Emption Strategy", text:"This memo exists because <strong>the worst time to find a gap is during an examination.</strong> Writing this memo ten weeks out signals to senior leadership that the compliance function is self-aware, forward-looking, and in control. The same gaps found by an examiner become findings in the report of examination; found internally and corrected, they don't exist." },
+      { label:"'Documentation Gap' vs. 'Compliance Failure'", text:"The explicit framing — 'documentation-only,' 'not a program failure,' 'undocumented gaps carry examination risk disproportionate to the underlying operational reality' — is critical. If the writer doesn't make this distinction, the senior leader reading this memo will assess the risk incorrectly and either over-react or dismiss it. <strong>Precision in framing is a risk management function, not just a communication preference.</strong>" },
+      { label:"Asking for Resources, Not Sympathy", text:"Each gap closes with a concrete effort estimate and an offer to lead the remediation. This is the difference between an escalation memo and a complaint memo. The writer is not surfacing problems — the writer is <strong>presenting a plan and requesting the authority and resources to execute it.</strong> Senior leaders respond to that structure." },
+      { label:"Skills Demonstrated", text:"", pills:["OCC Examination Readiness","Gap Analysis","EDD Program Management","TMS Governance","Proactive Escalation","Upward Influence"] }
+    ]
+  },
+
+  // 3 — POST-EXAM RESPONSE BRIEF
+  {
+    type:"Brief · Regulatory Response / Post-Examination",
+    format:"Post-Examination Findings Response Brief",
+    audience:"CEO · BSA Officer · Legal · Senior Management",
+    doc:`
+      <div class="doc-header">
+        <div class="doc-meta-grid">
+          <span class="doc-meta-label">DATE</span><span class="doc-meta-val">February 14, 2020</span>
+          <span class="doc-meta-label">TO</span><span class="doc-meta-val">Chief Executive Officer; BSA Compliance Officer; General Counsel</span>
+          <span class="doc-meta-label">FROM</span><span class="doc-meta-val">Jack Johnson, BSA/AML Compliance</span>
+          <span class="doc-meta-label">RE</span><span class="doc-meta-val">OCC BSA/AML Examination — Exit Conference Summary &amp; Response Plan</span>
+        </div>
+        <div class="doc-subject">OCC Exit Conference Summary — Findings Overview and Proposed Response Timeline</div>
+      </div>
+      <div class="doc-body-text">
+        <div class="doc-section-head">Bottom Line</div>
+        <p>The OCC's examination of our BSA/AML program concluded with an overall rating of <strong>Satisfactory</strong>. There are no Matters Requiring Immediate Attention (MRIAs). Two Matters Requiring Attention (MRAs) were issued. Both are correctable within 90 days and do not signal a systemic program deficiency. No enforcement action or formal agreement is anticipated.</p>
+
+        <div class="doc-section-head">MRA 1 — Customer Risk Rating Methodology (90-day remediation)</div>
+        <p><strong>Finding:</strong> The OCC noted that our customer risk rating model does not explicitly weight geographic risk for international wire transfer counterparty countries. Current methodology rates customer geography at account opening but does not re-score based on transaction-level counterparty country exposure.</p>
+        <p><strong>Our response:</strong> We do not contest this finding. The examiner's characterization is accurate. Our proposed remediation is a model enhancement that adds a transaction-level geographic overlay to the risk rating recalculation cycle, effective at the next quarterly re-score. BSA Officer and model validation team have been briefed. Draft remediation plan submitted to OCC within 30 days; implementation within 90 days.</p>
+
+        <div class="doc-section-head">MRA 2 — Independent Testing Documentation (60-day remediation)</div>
+        <p><strong>Finding:</strong> The OCC found that the scope of the 2019 independent BSA/AML audit did not include a review of the new transaction monitoring rules implemented in Q1 2019. Under OCC guidance, independent testing should cover significant rule changes within the testing cycle.</p>
+        <p><strong>Our response:</strong> We do not contest this finding. The gap arose because the independent testing scope was finalized before the Q1 rule changes were implemented, and the scope was not updated. We will conduct a targeted supplemental independent review of the Q1 2019 rule changes within 60 days, and will update our testing scoping process to require a mid-year scope review when material rule changes occur after scope finalization.</p>
+
+        <div class="doc-section-head">Timeline</div>
+        <table class="doc-action-table">
+          <thead><tr><th>Action</th><th>Owner</th><th>Deadline</th></tr></thead>
+          <tbody>
+            <tr><td>Written response to OCC — both MRAs</td><td>BSA Officer + Legal</td><td>March 15, 2020</td></tr>
+            <tr><td>Supplemental independent testing (MRA 2)</td><td>Internal Audit + BSA</td><td>April 14, 2020</td></tr>
+            <tr><td>Risk model enhancement — draft (MRA 1)</td><td>Model Validation + BSA</td><td>March 15, 2020</td></tr>
+            <tr><td>Risk model enhancement — implementation (MRA 1)</td><td>Model Validation + BSA</td><td>May 14, 2020</td></tr>
+            <tr><td>Board Audit Committee notification</td><td>BSA Officer</td><td>February Board Meeting</td></tr>
+          </tbody>
+        </table>
+
+        <div class="doc-highlight">Both MRAs are documentation and process gaps — they do not reflect that we missed suspicious activity, failed to file SARs, or have deficiencies in our core detection capabilities. The program's fundamental integrity is intact. The OCC's Satisfactory overall rating reflects that assessment.</div>
+
+        <div class="doc-sig">
+          <div class="doc-sig-name">Jack Johnson</div>
+          BSA/AML Compliance<br>
+          Available for questions at any time prior to the March 15 OCC response deadline.
+        </div>
+      </div>`,
+    annotations:[
+      { label:"'Bottom Line Up Front' Structure", text:"CEOs and General Counsel reading an examination results brief need the headline in the first sentence: <strong>Satisfactory, no MRIAs, no enforcement action.</strong> Everything after that is context for a controlled situation, not a crisis. Leading with that allows the rest of the document to be read in the right frame — corrective, not defensive." },
+      { label:"'We Do Not Contest This Finding'", text:"This phrase is deliberate and consequential. <strong>Regulators respect institutions that accept valid findings without deflection.</strong> Contesting findings that are accurate damages the examiner relationship and signals cultural resistance to oversight. Accepting findings cleanly, paired with a credible remediation plan, is the fastest path to a positive ongoing regulatory relationship." },
+      { label:"Separating Process Gap from Program Integrity", text:"The highlighted callout at the bottom of the document — 'both MRAs are documentation and process gaps' — is not spin. It is a technically accurate distinction that matters enormously to the board and to regulators. An executive who doesn't understand this distinction may over-react. <strong>The compliance professional's job is to calibrate the response to the actual risk — not to the emotional weight of the word 'finding.'</strong>" },
+      { label:"Skills Demonstrated", text:"", pills:["OCC Examination Response","MRA Remediation Planning","Regulatory Relationship Management","Executive Briefing","BSA Program Leadership"] }
+    ]
+  }
+];
+
+function showSample(idx, clickedCard) {
+  document.querySelectorAll('.index-card').forEach(c => c.classList.remove('active'));
+  clickedCard.classList.add('active');
+  renderSample(SAMPLES[idx]);
+}
+
+function renderSample(s) {
+  const annHtml = s.annotations.map(a => {
+    if (a.label === "Skills Demonstrated") {
+      return `<div class="ann-card">
+        <div class="ann-card-label">${a.label}</div>
+        <div class="ann-pill-row">${a.pills.map(p => `<span class="skill-tag teal">${p}</span>`).join('')}</div>
+      </div>`;
+    }
+    return `<div class="ann-card">
+      <div class="ann-card-label">${a.label}</div>
+      <div class="ann-card-text">${a.text}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('sample-area').innerHTML = `
+    <div class="sample-wrap">
+      <div class="doc-pane">
+        <div class="doc-toolbar">
+          <span class="doc-toolbar-label">${s.type}</span>
+          <span class="doc-format-tag">${s.format}</span>
+        </div>
+        <div class="doc-body">${s.doc}</div>
+      </div>
+      <div class="ann-pane">
+        <div class="ann-header">Annotation — Writing Choices</div>
+        <div class="ann-card" style="background:var(--navy3);border-color:rgba(13,148,136,0.2);">
+          <div class="ann-card-label">Audience</div>
+          <div class="ann-card-text">${s.audience}</div>
+        </div>
+        ${annHtml}
+      </div>
+    </div>`;
+}
+
+renderSample(SAMPLES[0]);
+</script>
+</body>
+</html>
